@@ -1,0 +1,31 @@
+/* Cookie consent banner — shared by every page (self-contained colors). */
+.consent { position: fixed; left: 16px; right: 16px; bottom: 16px; z-index: 200; display: flex; justify-content: center; pointer-events: none; }
+.consent[hidden] { display: none; }
+.consent-in {
+  pointer-events: auto; width: min(720px, 100%); max-height: calc(100dvh - 32px); overflow: auto;
+  background: #fff; color: #16204F; border: 1px solid #E2E5EC; border-radius: 20px; padding: 20px 22px;
+  box-shadow: 0 24px 60px -20px rgba(22, 32, 79, .45);
+  font-family: "Archivo", system-ui, sans-serif;
+}
+.consent-title { font-weight: 800; font-size: 16px; margin: 0 0 4px; }
+.consent-body { font-size: 14px; color: #586187; line-height: 1.5; margin: 0; }
+.consent-body a { color: #266AB2; text-decoration: underline; }
+.consent-cats { margin-top: 14px; border: 1px solid #E2E5EC; border-radius: 14px; }
+.consent-cat { display: flex; justify-content: space-between; align-items: center; gap: 16px; padding: 12px 14px; cursor: default; }
+label.consent-cat { cursor: pointer; }
+.consent-cat + .consent-cat { border-top: 1px solid #E2E5EC; }
+.consent-cat b { display: block; font-size: 14.5px; }
+.consent-cat small { display: block; font-size: 13px; color: #586187; }
+.consent-always { flex: none; font-size: 12.5px; font-weight: 700; color: #1b7a4c; }
+.consent-switch { appearance: none; -webkit-appearance: none; flex: none; width: 44px; height: 26px; margin: 0; border-radius: 999px; background: #C9CEDC; position: relative; cursor: pointer; transition: background .2s; }
+.consent-switch::after { content: ""; position: absolute; top: 3px; left: 3px; width: 20px; height: 20px; border-radius: 50%; background: #fff; box-shadow: 0 1px 3px rgba(0, 0, 0, .25); transition: transform .2s; }
+.consent-switch:checked { background: #1E2B7E; }
+.consent-switch:checked::after { transform: translateX(18px); }
+.consent-actions { display: flex; gap: 10px; margin-top: 16px; flex-wrap: wrap; }
+/* Accept and Reject get identical styling: refusing must be as easy as accepting. */
+.consent-btn { flex: 1; min-width: 140px; font: inherit; font-weight: 700; font-size: 14.5px; padding: 12px 16px; border-radius: 11px; cursor: pointer; border: 1.5px solid #1E2B7E; background: #fff; color: #1E2B7E; }
+.consent-btn[data-c="accept"], .consent-btn[data-c="reject"] { background: #1E2B7E; color: #fff; }
+.consent-btn:hover { filter: brightness(1.1); }
+
+@media (max-width: 600px) { .consent-btn { flex-basis: 100%; } }
+.consent :focus-visible { outline: 3px solid #266AB2; outline-offset: 2px; }

@@ -1,0 +1,103 @@
+/* Stratum self-check — motion layer.
+   Gated on .motion-on, which js/autoeval-motion.js adds unless the visitor
+   prefers reduced motion. */
+
+.motion-on { --ease-out: cubic-bezier(.16, 1, .3, 1); }
+
+/* ---------- Screen transitions: direction-aware slide ---------- */
+.motion-on .screen.enter { animation: none; }           /* replace the base fade */
+.motion-on .screen.mo-fwd { animation: from-right .6s var(--ease-out) both; }
+.motion-on .screen.mo-back { animation: from-left .6s var(--ease-out) both; }
+@keyframes from-right { from { opacity: 0; transform: translateX(28px); } }
+@keyframes from-left { from { opacity: 0; transform: translateX(-28px); } }
+.motion-on .screen:has(.pass).mo-fwd { animation: rise .5s var(--ease-out) both; }
+@keyframes rise { from { opacity: 0; transform: translateY(16px); } }
+
+/* ---------- Words rise out of a blur ---------- */
+.motion-on .mo-enter .words .w {
+  display: inline-block; opacity: 0; transform: translateY(.45em); filter: blur(8px);
+  animation: word-in .85s var(--ease-out) forwards;
+  animation-delay: calc(90ms + var(--wi) * 65ms);
+}
+.motion-on .mo-enter .pass-holder .words .w { animation-delay: calc(700ms + var(--wi) * 70ms); }
+@keyframes word-in { to { opacity: 1; transform: none; filter: blur(0); } }
+/* the "Paso 2 de 5" label slides in just before the title words */
+.motion-on .mo-enter .step-kicker { animation: item-in .5s .05s var(--ease-out) both; }
+@keyframes pop { from { opacity: 0; transform: scale(.5); } }
+
+/* ---------- Intro cover builds in ---------- */
+.motion-on .mo-enter .cover { animation: ghost-in .9s var(--ease-out) both; }
+.motion-on .mo-enter .cover::after { animation: spin-in 1.4s .2s var(--ease-out) both; }
+@keyframes spin-in { from { opacity: 0; transform: rotate(0deg) scale(.6); } }
+
+/* ---------- Staggered items on intro/step screens ---------- */
+.motion-on .mo-item { animation: item-in .6s var(--ease-out) both; animation-delay: var(--delay, 0ms); }
+@keyframes item-in { from { opacity: 0; transform: translateY(14px); } }
+
+/* progress: the newly earned segment fills left to right */
+.motion-on .progress i.mo-fill { transform-origin: left; animation: fill .7s .15s var(--ease-out) both; }
+@keyframes fill { from { transform: scaleX(0); } }
+
+/* choosing an option: the check / box pops */
+.motion-on .row.mo-tap[aria-checked="true"] .check,
+.motion-on .row.mo-tap[aria-checked="true"] .box { animation: tap-pop .45s cubic-bezier(.3, 1.6, .5, 1); }
+.motion-on .row.mo-tap { animation: tap-flash .6s ease-out; }
+@keyframes tap-pop { from { transform: scale(.4); } }
+@keyframes tap-flash { from { background: var(--fill); } }
+
+/* primary button: pressed feel + light shine on hover */
+.motion-on .primary { position: relative; overflow: hidden; transition: transform .15s ease, background-color .2s; }
+.motion-on .primary:active { transform: scale(.98); opacity: 1; }
+.motion-on .primary::after {
+  content: ""; position: absolute; inset: 0; transform: translateX(-120%);
+  background: linear-gradient(100deg, transparent 30%, rgba(255, 255, 255, .2) 50%, transparent 70%);
+}
+.motion-on .primary:hover::after { transform: translateX(120%); transition: transform .8s var(--ease-out); }
+
+/* ---------- Results: passport builds in from a ghost state ---------- */
+.motion-on .pass.play { animation: ghost-in 1.1s var(--ease-out) both; }
+@keyframes ghost-in {
+  0% { opacity: 0; transform: translateY(26px) scale(.97); filter: saturate(0); }
+  55% { opacity: .55; filter: saturate(.2); }
+  100% { opacity: 1; transform: none; filter: none; }
+}
+.motion-on .mo-enter .pass-row,
+.motion-on .mo-enter .pass-holder small { animation: item-in .6s .45s var(--ease-out) both; }
+.motion-on .mo-enter .tier-pill { animation: pop .5s 1.05s cubic-bezier(.3, 1.6, .5, 1) both; }
+.motion-on .mo-enter .tier p { animation: item-in .6s 1.15s var(--ease-out) both; }
+.motion-on .mo-enter .pass-fields > div { animation: item-in .6s var(--ease-out) both; }
+.motion-on .mo-enter .pass-fields > div:nth-child(1) { animation-delay: 1.1s; }
+.motion-on .mo-enter .pass-fields > div:nth-child(2) { animation-delay: 1.2s; }
+.motion-on .mo-enter .pass-fields > div:nth-child(3) { animation-delay: 1.3s; }
+.motion-on .mo-enter .perf::before { transform-origin: left; animation: fill .9s 1.2s var(--ease-out) both; }
+.motion-on .mo-enter .save { animation: item-in .6s 1.9s var(--ease-out) both; }
+.motion-on .mo-enter .todo-h { animation: none; }
+.motion-on .meter i { transition: width 1s var(--ease-out); }
+
+/* scroll reveals in the results column */
+.motion-on [data-reveal] {
+  opacity: 0; transform: translateY(20px);
+  transition: opacity .7s var(--ease-out), transform .7s var(--ease-out);
+  transition-delay: var(--delay, 0ms);
+}
+.motion-on [data-reveal].m-in { opacity: 1; transform: none; }
+.motion-on .tcard[data-reveal].m-in:hover { transform: translateY(-2px); transition-delay: 0s; }
+.motion-on .screen.enter .tcard { animation: none; }       /* scroll reveal replaces the time-based one */
+.motion-on .done-chips li[data-reveal] { transform: scale(.85); }
+.motion-on .done-chips li[data-reveal].m-in { transform: none; }
+.motion-on .deck-card[data-reveal] { transform: translateY(34px); }
+.motion-on .deck-card[data-reveal].m-in { transform: none; }
+
+/* headings ink in word by word on scroll */
+.motion-on .ink .w { color: #C5CBDB; transition: color .5s ease; transition-delay: calc(var(--wi) * 70ms); }
+.motion-on .ink.lit-all .w { color: inherit; }
+
+/* calculator outputs bump when they change */
+.motion-on .out .bump { animation: bump .45s var(--ease-out); }
+@keyframes bump { 30% { transform: scale(1.035); } }
+
+/* print is never animated */
+@media print {
+  .motion-on [data-reveal] { opacity: 1 !important; transform: none !important; }
+  .motion-on .ink .w { color: inherit !important; }
+}
