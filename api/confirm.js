@@ -2,11 +2,17 @@
    Verifies the signature, adds the address to Resend Contacts, shows a small page. */
 const { readConfirmLink, addToAudience, esc, lang, SITE_URL } = require("./_lib");
 
-function page(l, ok) {
+// state: "ok" | "invalid" (bad or expired link) | "error" (link fine, saving the contact failed)
+function page(l, state) {
   const L = lang(l);
-  const T = L === "en"
-    ? ok ? ["You're subscribed", "Thanks for confirming. We'll send you Stratum news; you can unsubscribe from any email."] : ["Link not valid", "This confirmation link is invalid or has expired. Sign up again from the site to get a new one."]
-    : ok ? ["¡Suscripción confirmada!", "Gracias por confirmar. Te enviaremos noticias de Stratum; puedes darte de baja desde cualquier correo."] : ["Enlace no válido", "Este enlace de confirmación no es válido o ya expiró. Regístrate otra vez desde el sitio para recibir uno nuevo."];
+  const T = {
+    en: { ok: ["You're subscribed", "Thanks for confirming. We'll send you Stratum news; you can unsubscribe from any email."],
+          invalid: ["Link not valid", "This confirmation link is invalid or has expired. Sign up again from the site to get a new one."],
+          error: ["We couldn't confirm it yet", "Your link is fine, but something went wrong on our side. Please try the same link again in a few minutes."] },
+    es: { ok: ["¡Suscripción confirmada!", "Gracias por confirmar. Te enviaremos noticias de Stratum; puedes darte de baja desde cualquier correo."],
+          invalid: ["Enlace no válido", "Este enlace de confirmación no es válido o ya expiró. Regístrate otra vez desde el sitio para recibir uno nuevo."],
+          error: ["Aún no pudimos confirmarlo", "Tu enlace está bien, pero algo falló de nuestro lado. Intenta con el mismo enlace otra vez en unos minutos."] },
+  }[L][state];
   return `<!DOCTYPE html><html lang="${L}"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="robots" content="noindex"><title>${esc(T[0])} · Stratum</title></head>
 <body style="margin:0;min-height:100vh;display:grid;place-items:center;background:#F3F5FA;font-family:Arial,Helvetica,sans-serif;color:#16204F;padding:24px;">
 <main style="max-width:460px;background:#fff;border:1px solid #E2E5EC;border-radius:20px;padding:32px;text-align:center;">
@@ -22,12 +28,12 @@ module.exports = async (req, res) => {
   try { data = readConfirmLink(q.d, q.sig); } catch (err) { console.error("[confirm]", err); }
   res.setHeader("Content-Type", "text/html; charset=utf-8");
   res.setHeader("Cache-Control", "no-store");
-  if (!data) return res.status(400).send(page(q.l, false));
+  if (!data) return res.status(400).send(page(q.l, "invalid"));
   try {
     await addToAudience({ email: data.e, name: data.n });
-    return res.status(200).send(page(data.l, true));
+    return res.status(200).send(page(data.l, "ok"));
   } catch (err) {
     console.error("[confirm]", err);
-    return res.status(502).send(page(data.l, false));
+    return res.status(502).send(page(data.l, "error"));
   }
 };
