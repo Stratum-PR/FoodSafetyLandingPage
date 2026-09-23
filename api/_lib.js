@@ -161,7 +161,7 @@ function layout({ lang: l, preheader, body }) {
 </td></tr>
 <tr><td style="padding:28px;">${body}</td></tr>
 <tr><td style="padding:18px 28px 24px;border-top:1px solid ${C.line};font-size:12px;line-height:1.5;color:${C.muted};">
-  ${esc(foot)}<br><a href="${SITE_URL()}/privacidad.html" style="color:${C.blue};">${L === "en" ? "Privacy Policy" : "Política de privacidad"}</a> · Stratum PR · <span style="color:${C.muted}">[dirección postal]</span>
+  ${esc(foot)}<br><a href="${SITE_URL()}/privacidad.html" style="color:${C.blue};">${L === "en" ? "Privacy Policy" : "Política de privacidad"}</a> · Stratum PR · Trujillo Alto, Puerto Rico
 </td></tr></table></td></tr></table></body></html>`;
 }
 
