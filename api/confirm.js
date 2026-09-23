@@ -1,5 +1,5 @@
 /* GET /api/confirm?d=…&sig=… — the link in the double opt-in email.
-   Verifies the signature, adds the address to the Resend audience, shows a small page. */
+   Verifies the signature, adds the address to Resend Contacts, shows a small page. */
 const { readConfirmLink, addToAudience, esc, lang, SITE_URL } = require("./_lib");
 
 function page(l, ok) {

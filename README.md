@@ -38,7 +38,7 @@ Every form posts to a Vercel function in `api/` (no dependencies). `api/_lib.js`
 | `/api/guide` | Lead email to `LEADS_TO` |
 | `/api/signup` | Lead email + double opt-in confirmation to the user |
 | `/api/contact` | Message to `LEADS_TO` (Reply-To = sender) |
-| `/api/confirm` | Confirmation link target: adds the address to the Resend audience |
+| `/api/confirm` | Confirmation link target: adds the address to Resend Contacts |
 
 Anyone who ticks a "noticias" box (guide, early access, self-check) gets a confirmation email and joins the mailing list only after clicking it. Until the Azure database exists, **the lead emails in contact@ are the record of submissions**.
 
@@ -50,7 +50,7 @@ The passport email is built on the server from `js/selfcheck-data.js` (looked up
 | --- | --- |
 | `RESEND_API_KEY` | Resend API key with sending access |
 | `RESEND_FROM` | `Stratum <noreply@stratumpr.com>` (the domain must be verified in Resend) |
-| `RESEND_AUDIENCE_ID` | ID of the Resend audience used as the mailing list |
+| `RESEND_SEGMENT` | Optional: name of the Resend segment for confirmed subscribers (default `Food Safety MVP`). `RESEND_SEGMENT_ID` also works and skips the lookup |
 | `LEADS_TO` | `contact@stratumpr.com` |
 | `CONFIRM_SECRET` | A long random string. Signs the confirmation links; required once the API key is set |
 | `SITE_URL` | `https://mvp.stratumpr.com` |
