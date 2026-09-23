@@ -41,7 +41,11 @@ Then open http://localhost:5173.
 3. **Industry insights:** the hero card's numbers live in `INSIGHTS` in `js/main.js`. Add a source for them (a survey or report) before launch.
 4. **Adding analytics later:** add an `analytics` category to `js/consent.js`, load the script only after `StratumConsent.allows("analytics")`, list it in `cookies.html`, and bump `POLICY_VERSION` so everyone is asked again.
 
+## Search engines
+
+The site is **noindex** while it's pre-launch: every page has `<meta name="robots" content="noindex, nofollow">` and `vercel.json` sends an `X-Robots-Tag: noindex, nofollow` header. At launch, remove both (and don't block crawlers in robots.txt, or they can't see the change).
+
 ## Deploy
 
 - **GitHub Pages:** Settings → Pages → Source: `Deploy from a branch` → `main` / `(root)`.
-- **Vercel / Netlify:** import the repo. Choose no framework, no build command, and `.` as the output directory.
+- **Vercel:** project **foodsafetymvp** (team Stratum PR Projects) is connected to this repo; every push to `main` deploys to **https://mvp.stratumpr.com**.
