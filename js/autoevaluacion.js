@@ -15,6 +15,10 @@ const T={
   h1:"¿Qué te falta para vender en Walmart?",
   lede:"En unos 3 minutos recibes tu puntuación y tu lista de pendientes, basadas en los requisitos oficiales de Walmart y la FDA.",
   otherLabel:"Cuéntanos qué tipo de negocio tienes",
+  introSteps:["Contesta 5 pasos cortos sobre tu negocio","Al final, dinos a nombre de quién emitimos tu pasaporte","Recibe tu puntuación, pendientes y guía oficial"],
+  contactKicker:"Último paso", contactTitle:"¿A nombre de quién emitimos tu pasaporte?",
+  contactLead:"Lo usamos para personalizar tu pasaporte y enviarte tus resultados.",
+  seePassport:"Ver mi pasaporte", contactMissing:"Completa tu nombre, negocio y correo electrónico.", contactEmailBad:"Escribe un correo electrónico válido.",
   name:"Nombre", biz:"Negocio", email:"Correo electrónico", phone:"Teléfono (opcional)",
   privacy:"Solo usamos tus datos para enviarte tus resultados y darte seguimiento.", privacyLink:"Política de privacidad",
   start:"Comenzar", next:"Continuar", finish:"Ver mis resultados",
@@ -47,6 +51,10 @@ const T={
   h1:"What are you missing to sell to Walmart?",
   lede:"In about 3 minutes, get your score and gap list, based on Walmart's and the FDA's official requirements.",
   otherLabel:"Tell us what kind of business you have",
+  introSteps:["Answer 5 short steps about your business","At the end, tell us who the passport is issued to","Get your score, to-do list and official guide"],
+  contactKicker:"Last step", contactTitle:"Who should we issue your passport to?",
+  contactLead:"We use this to personalize your passport and send you your results.",
+  seePassport:"See my passport", contactMissing:"Please fill in your name, business and email.", contactEmailBad:"Enter a valid email address.",
   name:"Name", biz:"Business", email:"Email", phone:"Phone (optional)",
   privacy:"We only use your details to send your results and follow up.", privacyLink:"Privacy Policy",
   start:"Start", next:"Continue", finish:"See my results",
@@ -199,7 +207,8 @@ function score(){
 }
 
 /* ---------------- render ---------------- */
-function progress(){
+function progress(all){
+  if(all) return `<div class="progress" aria-label="5/5">${[0,1,2,3,4].map(()=>'<i class="on"></i>').join("")}</div>`;
   const list=stepList(), pos=list.indexOf(S.step);
   // always 5 segments; a skipped step counts as done
   const done = supplier() ? (S.step===0?0:pos+1) : pos;
@@ -218,15 +227,29 @@ function renderIntro(){
     <h1>${esc(t("h1"))}</h1>
     <p>${esc(t("lede"))}</p>
    </div>
-   <div class="group">
-    <label class="field"><span>${esc(t("name"))}</span><input id="f-name" autocomplete="name" value="${esc(c.name||"")}"></label>
-    <label class="field"><span>${esc(t("biz"))}</span><input id="f-biz" autocomplete="organization" value="${esc(c.biz||"")}"></label>
-    <label class="field"><span>${esc(t("email"))}</span><input id="f-email" type="email" inputmode="email" autocomplete="email" value="${esc(c.email||"")}"></label>
-    <label class="field"><span>${esc(t("phone"))}</span><input id="f-phone" type="tel" inputmode="tel" autocomplete="tel" value="${esc(c.phone||"")}"></label>
-   </div>
-   <p class="fine">${esc(t("privacy"))} <a href="privacidad.html" target="_blank" rel="noopener">${esc(t("privacyLink"))}</a></p><p class="fine"><span class="testpill">${esc(t("test"))}</span></p></div>`;
+   <ol class="intro-steps">
+    ${t("introSteps").map((s,i)=>`<li><b>${i+1}</b><span>${esc(s)}</span></li>`).join("")}
+   </ol>
+   <p class="fine"><span class="testpill">${esc(t("test"))}</span></p></div>`;
   primary.textContent=t("start");
   backBtn.classList.remove("show");
+}
+/* Last step before the passport: who it's issued to. */
+function renderContact(){
+  const c=S.c;
+  app.innerHTML=`<div class="screen ${S.anim?'enter':''}">${progress(true)}
+   <div class="step-head"><p class="step-kicker">${esc(t("contactKicker"))}</p><h2 class="step">${esc(t("contactTitle"))}</h2></div>
+   <p class="qhelp contact-lead">${esc(t("contactLead"))}</p>
+   <div class="group">
+    <label class="field"><span>${esc(t("name"))}</span><input id="f-name" autocomplete="name" required value="${esc(c.name||"")}"></label>
+    <label class="field"><span>${esc(t("biz"))}</span><input id="f-biz" autocomplete="organization" required value="${esc(c.biz||"")}"></label>
+    <label class="field"><span>${esc(t("email"))}</span><input id="f-email" type="email" inputmode="email" autocomplete="email" required value="${esc(c.email||"")}"></label>
+    <label class="field"><span>${esc(t("phone"))}</span><input id="f-phone" type="tel" inputmode="tel" autocomplete="tel" value="${esc(c.phone||"")}"></label>
+   </div>
+   <p class="form-error" id="contact-error" role="alert"></p>
+   <p class="fine">${esc(t("privacy"))} <a href="privacidad.html" target="_blank" rel="noopener">${esc(t("privacyLink"))}</a></p></div>`;
+  primary.textContent=t("seePassport");
+  backBtn.classList.add("show");
 }
 function renderStep(){
   const L=S.lang, qs=STEPS[S.step].filter(q=>!q.showIf||q.showIf());
@@ -443,27 +466,48 @@ function render(){
   setTimeout(()=>{S.anim=false;},0);
   if(S.screen==="intro") renderIntro();
   else if(S.screen==="step") renderStep();
+  else if(S.screen==="contact") renderContact();
   else renderResults();
   backBtn.textContent=t("back");
 }
 
 /* ---------------- events ---------------- */
+function contactProblem(){
+  const els=["f-name","f-biz","f-email"].map(id=>document.getElementById(id));
+  const empty=els.filter(el=>!el.value.trim());
+  if(empty.length) return {msg:"contactMissing",els:empty};
+  const email=els[2];
+  if(!email.checkValidity()) return {msg:"contactEmailBad",els:[email]};
+  return null;
+}
 function saveContact(){
   const g=id=>{const el=document.getElementById(id);return el?el.value.trim():"";};
-  if(S.screen==="intro") S.c={name:g("f-name"),biz:g("f-biz"),email:g("f-email"),phone:g("f-phone")};
+  if(S.screen==="contact") S.c={name:g("f-name"),biz:g("f-biz"),email:g("f-email"),phone:g("f-phone")};
 }
 function to(screen,step){
   saveContact(); S.screen=screen; if(step!=null) S.step=step; S.anim=true; render(); window.scrollTo(0,0);
   const h=app.querySelector("h1,h2"); if(h){h.tabIndex=-1;h.focus({preventScroll:true});}
 }
 primary.addEventListener("click",()=>{
-  if(S.screen==="intro"){ saveContact(); send("started"); to("step",0); return; }
+  if(S.screen==="intro"){ send("started"); to("step",0); return; }
+  if(S.screen==="contact"){
+    saveContact();
+    const bad=contactProblem();
+    if(bad){
+      document.getElementById("contact-error").textContent=t(bad.msg);
+      app.querySelectorAll(".group input").forEach(el=>el.toggleAttribute("aria-invalid",bad.els.includes(el)));
+      bad.els[0].focus();
+      return;
+    }
+    send("completed"); to("results"); return;
+  }
   const list=stepList(), i=list.indexOf(S.step);
   if(i<list.length-1) to("step",list[i+1]);
-  else { send("completed"); to("results"); }
+  else to("contact");
 });
 backBtn.addEventListener("click",()=>{
-  if(S.screen==="results") return to("step",4);
+  if(S.screen==="results") return to("contact");
+  if(S.screen==="contact") return to("step",4);
   const list=stepList(), i=list.indexOf(S.step);
   if(i<=0) to("intro"); else to("step",list[i-1]);
 });
@@ -525,6 +569,7 @@ function calc(){
 }
 app.addEventListener("toggle",e=>{ if(e.target.matches(".deck-card")&&e.target.open&&!S.gift){ S.gift=true; send("gift_opened"); } },true);
 app.addEventListener("input",e=>{
+  if(e.target.matches(".group input[aria-invalid]")){ e.target.removeAttribute("aria-invalid"); const er=document.getElementById("contact-error"); if(er) er.textContent=""; }
   if(e.target.dataset.other){ S.v[e.target.dataset.other+"Other"]=e.target.value; return; }
   const i=e.target.dataset.c; if(i!=null){ S.calc[+i]=e.target.value; calc(); }
   if(e.target.id==="simq"){ S.simQ=e.target.value; }
