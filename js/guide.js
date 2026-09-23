@@ -1,5 +1,6 @@
-/* Official links guide, shared by the landing page (#guia) and the self-check results. */
-(function(){
+/* Official links guide, shared by the landing page (#guia), the self-check results
+   and the passport email (api/selfcheck requires this file). */
+(function(root){
 const GUIDE=[
  ["https://walmartpr.com/nosotros/opencall",{es:"Open Call PR 2026: registro y requisitos",en:"Open Call PR 2026: registration and requirements"},"walmartpr.com"],
  ["https://corporate.walmart.com/suppliers",{es:"Requisitos para suplidores de Walmart (incluye EDI)",en:"Walmart supplier requirements (incl. EDI)"},"corporate.walmart.com"],
@@ -22,5 +23,6 @@ const GUIDE_GROUPS=[
  {tone:"registro",es:"Registro del negocio",en:"Business registration",idx:[2,3,4,5]},
  {tone:"fda",es:"FDA e inocuidad",en:"FDA and food safety",idx:[6,8,9,10,12]}
 ];
-window.FSQMSGuide={GUIDE,GUIDE_GROUPS};
-})();
+const DATA={GUIDE,GUIDE_GROUPS};
+if (typeof module !== "undefined" && module.exports) module.exports = DATA; else root.FSQMSGuide = DATA;
+})(typeof window !== "undefined" ? window : globalThis);

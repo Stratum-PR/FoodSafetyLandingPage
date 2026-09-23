@@ -7,9 +7,9 @@ const CONFIG = {
 
   // Endpoints that receive JSON. Formspree ("https://formspree.io/f/xxxx"),
   // Basin, Getform, a Google Apps Script web app or your own API all work.
-  signupEndpoint: "",   // { name, email, business, phone, consent, source, lang }
-  contactEndpoint: "",  // { name, email, business, message, lang }
-  guideEndpoint: "",    // { name, business, email, phone, updates, source, lang } (unlocks the guide)
+  signupEndpoint: "/api/signup",   // { name, email, business, phone, consent, source, lang }
+  contactEndpoint: "/api/contact",  // { name, email, business, message, lang }
+  guideEndpoint: "/api/guide",    // { name, business, email, phone, updates, source, lang } (unlocks the guide)
 };
 
 const LANG_KEY = "fsqms-lang"; // shared with the self-check; saved only with "preferences" consent
