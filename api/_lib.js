@@ -5,7 +5,7 @@
      RESEND_API_KEY      Resend API key. If missing, emails are NOT sent: they're written to
                          .claude/outbox/ (local dev) or logged, so the site keeps working.
      RESEND_FROM         Sender, e.g. "Stratum <noreply@stratumpr.com>" (domain must be verified in Resend)
-     RESEND_AUDIENCE_ID  Resend audience that holds the mailing list (double opt-in only)
+     RESEND_SEGMENT_ID   Optional Resend segment for newsletter subscribers (contacts are added either way)
      LEADS_TO            Where lead notifications go (default contact@stratumpr.com)
      CONFIRM_SECRET      Long random string used to sign the newsletter confirmation links
      SITE_URL            Public site URL (default https://mvp.stratumpr.com)
@@ -92,12 +92,19 @@ async function sendEmail({ to, subject, html, text, replyTo, tag }) {
   return resend("/emails", msg);
 }
 
-/** Add a confirmed subscriber to the Resend audience (the mailing list). */
+/** Add a confirmed subscriber to Resend Contacts (the mailing list), optionally into a segment. */
 async function addToAudience({ email, name }) {
-  const audience = env("RESEND_AUDIENCE_ID");
-  if (DRY_RUN() || !audience) { console.log(`[dry-run] audience += ${email}`); return { dryRun: true }; }
+  if (DRY_RUN()) { console.log(`[dry-run] contacts += ${email}`); return { dryRun: true }; }
   const [first, ...rest] = String(name || "").trim().split(/\s+/);
-  return resend(`/audiences/${audience}/contacts`, { email, first_name: first || undefined, last_name: rest.join(" ") || undefined, unsubscribed: false });
+  const segment = env("RESEND_SEGMENT_ID");
+  const contact = { email, first_name: first || undefined, last_name: rest.join(" ") || undefined, unsubscribed: false };
+  if (segment) contact.segments = [{ id: segment }];
+  try {
+    return await resend("/contacts", contact);
+  } catch (e) {
+    if (/already exists/i.test(e.message)) return { exists: true }; // confirming twice is fine
+    throw e;
+  }
 }
 
 // ---------- signed double opt-in links ----------
