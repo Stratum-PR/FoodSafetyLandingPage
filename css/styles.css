@@ -490,7 +490,7 @@ a:hover { color: var(--navy); }
 .ai { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 520px); gap: 56px; align-items: center; }
 .ai-copy h2 { font-size: clamp(28px, 3vw, 36px); font-weight: 800; line-height: 1.12; margin-bottom: 16px; }
 .ai-copy > p { color: var(--muted); font-size: 17px; line-height: 1.6; margin-bottom: 22px; max-width: 34em; }
-.ai-asks { display: flex; flex-direction: column; gap: 8px; margin-bottom: 28px; }
+.ai-asks { display: flex; flex-direction: column; gap: 8px; }
 .ai-asks li {
   align-self: flex-start; font-size: 14.5px; font-weight: 600; color: var(--blue);
   background: var(--surface); border: 1px solid var(--line); border-radius: 999px; padding: 8px 14px;
@@ -600,7 +600,6 @@ a:hover { color: var(--navy); }
   .audit { grid-template-columns: minmax(0, 1fr); padding: 22px; }
   .deck-card { padding: 0 16px; }
   .deck-title b { font-size: 19px; }
-  .ai-copy .btn { width: 100%; }
   .footer-links { gap: 32px 48px; }
 }
 

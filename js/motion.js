@@ -44,7 +44,7 @@
       [".showcase-copy > p, .showcase-copy > .btn", 1],
       [".checklist li", 1],
       [".audit", 0],
-      [".ai-copy > p, .ai-asks li, .ai-copy > .btn", 1],
+      [".ai-copy > p, .ai-asks li", 1],
       [".chat", 0],
       [".guide-intro > p", 1],
       [".deck-card", 1],

@@ -56,7 +56,7 @@ const EN = {
   aiBody: "StratAI sees your documents, suppliers, findings, sensors and history, and cross-checks them. Ask in English or Spanish and get answers that link back to the records they came from.",
   aiAsksLabel: "Example questions",
   aiQ1: "What am I missing for the audit?", aiQ2: "Which documents are under review?", aiQ3: "Who changed the receiving SOP, and why?",
-  aiCta: "Try StratAI in the demo ↗", aiChatLabel: "Sample conversation with StratAI",
+  aiChatLabel: "Sample conversation with StratAI",
   aiSub: "Quality assistant · live system data",
   aiUser: "How many findings were opened this month, and why?",
   aiAns1: "<span data-month></span> has <strong>6 findings</strong> so far: 4 open, 1 in verification and 1 closed.",
