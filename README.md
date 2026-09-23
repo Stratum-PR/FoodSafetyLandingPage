@@ -50,7 +50,7 @@ The passport email is built on the server from `js/selfcheck-data.js` (looked up
 | --- | --- |
 | `RESEND_API_KEY` | Resend API key with sending access |
 | `RESEND_FROM` | `Stratum <noreply@stratumpr.com>` (the domain must be verified in Resend) |
-| `RESEND_SEGMENT_ID` | Optional: Resend segment ID for newsletter subscribers (confirmed contacts are always added to Contacts) |
+| `RESEND_SEGMENT` | Optional: name of the Resend segment for confirmed subscribers (default `Food Safety MVP`). `RESEND_SEGMENT_ID` also works and skips the lookup |
 | `LEADS_TO` | `contact@stratumpr.com` |
 | `CONFIRM_SECRET` | A long random string. Signs the confirmation links; required once the API key is set |
 | `SITE_URL` | `https://mvp.stratumpr.com` |

@@ -5,7 +5,8 @@
      RESEND_API_KEY      Resend API key. If missing, emails are NOT sent: they're written to
                          .claude/outbox/ (local dev) or logged, so the site keeps working.
      RESEND_FROM         Sender, e.g. "Stratum <noreply@stratumpr.com>" (domain must be verified in Resend)
-     RESEND_SEGMENT_ID   Optional Resend segment for newsletter subscribers (contacts are added either way)
+     RESEND_SEGMENT      Name of the Resend segment for subscribers (default "Food Safety MVP"),
+                         or RESEND_SEGMENT_ID to skip the name lookup
      LEADS_TO            Where lead notifications go (default contact@stratumpr.com)
      CONFIRM_SECRET      Long random string used to sign the newsletter confirmation links
      SITE_URL            Public site URL (default https://mvp.stratumpr.com)
@@ -62,11 +63,11 @@ async function readRequest(req, res) {
 }
 
 // ---------- Resend ----------
-async function resend(pathname, payload) {
+async function resend(pathname, payload, method = "POST") {
   const r = await fetch("https://api.resend.com" + pathname, {
-    method: "POST",
+    method,
     headers: { Authorization: `Bearer ${env("RESEND_API_KEY")}`, "Content-Type": "application/json" },
-    body: JSON.stringify(payload),
+    body: method === "GET" ? undefined : JSON.stringify(payload || {}),
   });
   const text = await r.text();
   if (!r.ok) throw new Error(`Resend ${pathname} ${r.status}: ${text.slice(0, 300)}`);
@@ -92,18 +93,32 @@ async function sendEmail({ to, subject, html, text, replyTo, tag }) {
   return resend("/emails", msg);
 }
 
-/** Add a confirmed subscriber to Resend Contacts (the mailing list), optionally into a segment. */
+/** The segment subscribers go into: RESEND_SEGMENT_ID, or looked up by name (RESEND_SEGMENT, default "Food Safety MVP"). */
+let segmentCache;
+async function segmentId() {
+  if (env("RESEND_SEGMENT_ID")) return env("RESEND_SEGMENT_ID");
+  if (segmentCache) return segmentCache;
+  const want = env("RESEND_SEGMENT", "Food Safety MVP").toLowerCase();
+  const list = await resend("/segments", null, "GET");
+  const hit = (list.data || []).find((s) => String(s.name).trim().toLowerCase() === want);
+  if (!hit) { console.warn(`[contacts] segment "${want}" not found in Resend; contact added without a segment`); return ""; }
+  return (segmentCache = hit.id);
+}
+
+/** Add a confirmed subscriber to Resend Contacts (the mailing list) and to the site's segment. */
 async function addToAudience({ email, name }) {
   if (DRY_RUN()) { console.log(`[dry-run] contacts += ${email}`); return { dryRun: true }; }
   const [first, ...rest] = String(name || "").trim().split(/\s+/);
-  const segment = env("RESEND_SEGMENT_ID");
+  const segment = await segmentId().catch((e) => { console.warn("[contacts] segment lookup failed:", e.message); return ""; });
   const contact = { email, first_name: first || undefined, last_name: rest.join(" ") || undefined, unsubscribed: false };
   if (segment) contact.segments = [{ id: segment }];
   try {
     return await resend("/contacts", contact);
   } catch (e) {
-    if (/already exists/i.test(e.message)) return { exists: true }; // confirming twice is fine
-    throw e;
+    if (!/already exists/i.test(e.message)) throw e;
+    // Already a contact (e.g. confirmed before, or added by hand): just make sure they're in the segment.
+    if (segment) await resend(`/contacts/${encodeURIComponent(email)}/segments/${segment}`).catch((err) => console.warn("[contacts] add to segment:", err.message));
+    return { exists: true };
   }
 }
 
