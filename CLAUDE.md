@@ -47,7 +47,9 @@ the form/email flow and environment variables.
   - the cost calculator shows for every pricing answer except "Sí"
 
 ## Local preview
-`.claude/` is git-ignored, so the local dev server (`.claude/devserver.js`) only exists on the
-original machine. It serves the site on http://localhost:5173 with no caching and runs `/api`
-locally. Without `RESEND_API_KEY`, emails are written to `.claude/outbox`, browsable at `/__outbox`.
-On a fresh clone, recreate a small Node server that does the same.
+`node dev/devserver.js` serves the site on http://localhost:5173 with no caching and runs `/api`
+locally. Without `RESEND_API_KEY`, emails are written to `.claude/outbox` (git-ignored),
+browsable at `/__outbox`.
+
+`.vercelignore` keeps `CLAUDE.md`, `README.md` and `dev/` on GitHub only, so they are never
+deployed to the site.

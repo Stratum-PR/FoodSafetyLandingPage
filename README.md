@@ -60,7 +60,7 @@ Without `RESEND_API_KEY` nothing is sent: the functions run in **dry-run** mode 
 ## Run locally
 
 ```bash
-node .claude/devserver.js
+node dev/devserver.js
 ```
 
 Serves the site at http://localhost:5173 with no caching and runs the `api/` functions in dry-run mode: emails are saved to `.claude/outbox/` and listed at http://localhost:5173/__outbox.
