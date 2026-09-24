@@ -21,8 +21,12 @@ the form/email flow and environment variables.
   The server builds the passport email from item keys only, never from client-sent text.
 
 ## Hosting and services
-- GitHub `Stratum-PR/FoodSafetyMVP` (public) → Vercel project `foodsafetymvp`
+- GitHub `Stratum-PR/FoodSafetyLandingPage` (public) → Vercel project `foodsafetymvp`
   (team `team_6GFJ8BJXaSAgrWrcb4m54NeX`) → https://mvp.stratumpr.com
+  - The repo was renamed from `FoodSafetyMVP`; old URLs redirect, so never create a new repo
+    with that name.
+  - Don't rename the Vercel project: the API origin check allows `foodsafetymvp*.vercel.app` previews.
+- The SaaS product lives in the private repo `Stratum-PR/FoodSafetyMVPApp`, not here.
 - Resend sends all email from `noreply@stratumpr.com`; leads go to `contact@stratumpr.com`.
 - The `RESEND_API_KEY` in Vercel must have **Full access**. A "Sending access" key sends
   mail but can't save contacts.
