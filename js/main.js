@@ -79,7 +79,7 @@ const EN = {
   signupConsent: "I agree to receive communications from Stratum about early access. I can unsubscribe anytime. See the <a href=\"privacidad.html\">Privacy Policy</a>.",
   footDisc: "Stratum PR is not affiliated with Walmart. Requirements vary by product category; confirm them with your buyer.",
   footProduct: "Product", footSelf: "Self-check", footGuide: "Requirements guide", footDemo: "Demo ↗",
-  footAbout: "About us", footContact: "Contact",
+  footAbout: "About us", footContact: "Contact", footPlan: "MVP plan ↗",
   footPrivacy: "Privacy", footTerms: "Terms of use", footCookies: "Cookies", footCookiePrefs: "Cookie preferences",
   contactTitle: "Contact us", close: "Close",
   contactLead: "Tell us about your business and we'll get back to you within 1–2 business days.",

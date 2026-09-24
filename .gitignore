@@ -10,6 +10,11 @@ desktop.ini
 .claude/
 node_modules/
 
+# Private planning docs (the repo is public). The plan page ships only
+# encrypted, as api/_plan-data.js; see dev/encrypt-plan.js.
+docs/saas-plan.md
+docs/plan-page.html
+
 # ---- From the GitHub starter template (Next.js); kept for future use ----
 # See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
 

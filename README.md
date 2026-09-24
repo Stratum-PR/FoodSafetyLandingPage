@@ -54,8 +54,21 @@ The passport email is built on the server from `js/selfcheck-data.js` (looked up
 | `LEADS_TO` | `contact@stratumpr.com` |
 | `CONFIRM_SECRET` | A long random string. Signs the confirmation links; required once the API key is set |
 | `SITE_URL` | `https://mvp.stratumpr.com` |
+| `PLAN_PASSWORD` | Password for the private MVP plan page (`/api/plan`) |
+| `PLAN_KEY` | 32 random bytes in base64. Decrypts the plan page and signs its session cookie |
 
 Without `RESEND_API_KEY` nothing is sent: the functions run in **dry-run** mode and the site keeps working.
+
+## Private MVP plan page
+
+The footer's "Plan del MVP" link opens `/api/plan`, which asks for `PLAN_PASSWORD` and then shows
+the SaaS MVP plan. The repo is public, so the page is committed only **encrypted**
+(`api/_plan-data.js`, AES-256-GCM); the plaintext `docs/plan-page.html` is git-ignored. A correct
+password gives a 12-hour session; after 5 wrong attempts from one IP, the form locks for 15 minutes.
+
+To update the page, edit `docs/plan-page.html`, run `node dev/encrypt-plan.js` (it reads
+`PLAN_KEY` from the environment or a git-ignored `.env.local`; it must be the same key as in
+Vercel), and commit the new `api/_plan-data.js`.
 
 ## Run locally
 
