@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <!-- Pre-launch: keep out of search results. Remove this and vercel.json X-Robots-Tag at launch. -->
+  <meta name="robots" content="noindex, nofollow">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Stratum · Precios</title>
+  <meta name="description" content="Planes de Stratum por planta, con usuarios ilimitados: control de suplidores y documentos, lectura de certificados con IA y cumplimiento FSMA y SQF.">
+  <meta name="theme-color" content="#1E2B7E">
+  <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+  <link rel="preload" href="assets/fonts/archivo-latin.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="css/fonts.css">
+  <link rel="stylesheet" href="css/styles.css">
+  <link rel="stylesheet" href="css/consent.css">
+  <link rel="stylesheet" href="css/precios.css">
+  <script src="js/consent.js"></script>
+  <script src="js/analytics.js"></script>
+  <script src="js/main.js" defer></script>
+  <script src="js/precios.js" defer></script>
+</head>
+<body data-title-es="Stratum · Precios" data-title-en="Stratum · Pricing">
+  <div class="texture" aria-hidden="true"></div>
+
+  <a class="skip-link" href="#main" data-i18n="skip">Saltar al contenido</a>
+
+  <!-- NAV (same as the landing page; section links point back to it) -->
+  <header class="site-header">
+    <div class="container nav">
+      <a class="brand" href="index.html" aria-label="Stratum PR">
+        <img class="brand-logo" src="assets/stratum-logo-4.png" alt="Stratum" width="3834" height="720">
+      </a>
+
+      <nav id="nav-menu" class="nav-menu" aria-label="Principal">
+        <a href="index.html#producto" data-i18n="navProduct">Producto</a>
+        <a href="index.html#como-funciona" data-i18n="navHow">Cómo funciona</a>
+        <a href="precios.html" aria-current="page" data-i18n="navPricing">Precios</a>
+        <a class="btn btn-primary nav-cta" href="autoevaluacion.html" data-assessment-link data-i18n="navCta">Hazte la autoevaluación</a>
+      </nav>
+
+      <div class="nav-tools">
+        <div class="lang-toggle" role="group" aria-label="Idioma / Language">
+          <button type="button" data-lang="es" aria-pressed="true">ES</button>
+          <button type="button" data-lang="en" aria-pressed="false">EN</button>
+        </div>
+        <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="nav-menu">
+          <span class="sr-only" data-i18n="menuOpen">Abrir menú</span>
+          <span class="nav-toggle-bar"></span>
+          <span class="nav-toggle-bar"></span>
+          <span class="nav-toggle-bar"></span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <main id="main">
+    <!-- INTRO -->
+    <section class="section container pr-intro" aria-labelledby="pr-title">
+      <header class="section-head">
+        <div class="eyebrow" data-i18n="prEyebrow">Precios</div>
+        <h1 id="pr-title" class="pr-h1" data-i18n="prTitle">Un precio por planta. Usuarios ilimitados.</h1>
+        <p class="section-lead" data-i18n="prLead">Control de suplidores y documentos, lectura de certificados con IA y registros listos para FSMA y SQF. Todo tu equipo entra sin costo adicional: calidad, compras y almacén.</p>
+        <p class="pr-pilot" data-i18n="prPilot"><strong>Estamos en fase piloto.</strong> Solicita acceso y te contactamos para activar tu cuenta. No se cobra nada hoy.</p>
+      </header>
+
+      <div class="pr-billing" role="group" aria-label="Frecuencia de pago" data-i18n-attr="aria-label:prBillingLabel">
+        <button type="button" data-billing="monthly" aria-pressed="true" data-i18n="prMonthly">Mensual</button>
+        <button type="button" data-billing="annual" aria-pressed="false"><span data-i18n="prAnnual">Anual</span> <span class="pr-save" data-i18n="prSave">2 meses gratis</span></button>
+      </div>
+
+      <!-- TIERS -->
+      <div class="pr-tiers">
+        <article class="pr-tier" data-tier="esencial" data-monthly="179" data-annual="1790">
+          <h2 class="pr-name">Esencial</h2>
+          <p class="pr-for" data-i18n="t1For">Para productores que se preparan para vender a Walmart o para su primera auditoría GFSI.</p>
+          <div class="pr-price"><span class="pr-amount">$179</span><span class="pr-per" data-i18n="prPerMonth">/mes</span></div>
+          <p class="pr-billed" data-billed></p>
+          <button class="btn btn-soft btn-lg pr-cta" type="button" data-request="esencial" data-i18n="prCta">Solicitar acceso</button>
+          <ul class="pr-limits">
+            <li data-i18n="t1L1">Hasta 20 suplidores activos</li>
+            <li data-i18n="t1L2">1 planta · usuarios ilimitados</li>
+            <li data-i18n="t1L3">200 páginas de IA al mes + 2,000 para tu carga inicial</li>
+          </ul>
+          <ul class="pr-feats">
+            <li data-i18n="t1F1">Suplidores y documentos con catálogo editable</li>
+            <li data-i18n="t1F2">Vencimientos y resumen diario por correo</li>
+            <li data-i18n="t1F3">Enlaces para que tus suplidores suban documentos, con recordatorios</li>
+            <li data-i18n="t1F4">Lectura de certificados con IA</li>
+            <li data-i18n="t1F5">Carga masiva desde un ZIP</li>
+            <li data-i18n="t1F6">Historial de cambios y exportación completa</li>
+            <li data-i18n="t1F7">Soporte por correo en español e inglés</li>
+          </ul>
+        </article>
+
+        <article class="pr-tier is-featured" data-tier="profesional" data-monthly="429" data-annual="4290">
+          <p class="pr-badge" data-i18n="prPopular">Para plantas certificadas</p>
+          <h2 class="pr-name">Profesional</h2>
+          <p class="pr-for" data-i18n="t2For">Para manufactureros con certificación SQF que necesitan un programa de suplidores completo.</p>
+          <div class="pr-price"><span class="pr-amount">$429</span><span class="pr-per" data-i18n="prPerMonth">/mes</span></div>
+          <p class="pr-billed" data-billed></p>
+          <button class="btn btn-primary btn-lg pr-cta" type="button" data-request="profesional" data-i18n="prCta">Solicitar acceso</button>
+          <ul class="pr-limits">
+            <li data-i18n="t2L1">Hasta 100 suplidores activos</li>
+            <li data-i18n="t2L2">1 planta (+$199/mes por planta adicional) · usuarios ilimitados</li>
+            <li data-i18n="t2L3">600 páginas de IA al mes + 7,500 para tu carga inicial</li>
+          </ul>
+          <p class="pr-plus" data-i18n="t2Plus">Todo lo de Esencial, y además:</p>
+          <ul class="pr-feats">
+            <li data-i18n="t2F1">Manufacturero y distribuidor por cada ingrediente</li>
+            <li data-i18n="t2F2">Verificación de suplidores por riesgo, según FSMA y SQF</li>
+            <li data-i18n="t2F3">Evaluación de muestras y cuestionario de suplidor en línea</li>
+            <li data-i18n="t2F4">No conformidades, alertas y evaluación anual de desempeño</li>
+            <li data-i18n="t2F5">Roles de compras y almacén</li>
+            <li data-i18n="t2F6">Soporte prioritario (siguiente día laborable)</li>
+          </ul>
+        </article>
+
+        <article class="pr-tier" data-tier="plus" data-monthly="849" data-annual="8490">
+          <h2 class="pr-name">Planta Plus</h2>
+          <p class="pr-for" data-i18n="t3For">Para manufactureros con varias plantas y para distribuidores.</p>
+          <div class="pr-price"><span class="pr-from" data-i18n="prFrom">desde</span> <span class="pr-amount">$849</span><span class="pr-per" data-i18n="prPerMonth">/mes</span></div>
+          <p class="pr-billed" data-billed></p>
+          <button class="btn btn-soft btn-lg pr-cta" type="button" data-request="plus" data-i18n="prCta">Solicitar acceso</button>
+          <ul class="pr-limits">
+            <li data-i18n="t3L1">Suplidores ilimitados</li>
+            <li data-i18n="t3L2">3 plantas (+$149/mes cada una adicional) · usuarios ilimitados</li>
+            <li data-i18n="t3L3">1,500 páginas de IA al mes + 20,000 para tu carga inicial</li>
+          </ul>
+          <p class="pr-plus" data-i18n="t3Plus">Todo lo de Profesional, y además:</p>
+          <ul class="pr-feats">
+            <li data-i18n="t3F1">Vista de suplidores entre plantas</li>
+            <li data-i18n="t3F2">Gerente de implementación</li>
+            <li data-i18n="t3F3">Meta de disponibilidad de 99.5%</li>
+          </ul>
+        </article>
+      </div>
+      <p class="pr-note" data-i18n="prNote">Precios en dólares (EE.UU.), por planta. Un suplidor activo es uno con el que trabajas hoy; los inactivos no cuentan. Prueba de 30 días, sin costo de instalación.</p>
+    </section>
+
+    <!-- COMPARISON -->
+    <section class="section container" aria-labelledby="cmp-title">
+      <header class="section-head">
+        <h2 id="cmp-title" data-i18n="cmpTitle">Compara los planes</h2>
+      </header>
+      <div class="pr-table-wrap">
+        <table class="pr-table">
+          <thead>
+            <tr><th scope="col" data-i18n="cmpFeature">Función</th><th scope="col">Esencial</th><th scope="col">Profesional</th><th scope="col">Planta Plus</th></tr>
+          </thead>
+          <tbody>
+            <tr><th scope="row" data-i18n="c1">Suplidores y documentos, catálogo editable</th><td>✓</td><td>✓</td><td>✓</td></tr>
+            <tr><th scope="row" data-i18n="c2">Vencimientos y resumen diario</th><td>✓</td><td>✓</td><td>✓</td></tr>
+            <tr><th scope="row" data-i18n="c3">Enlaces de carga para suplidores, con recordatorios</th><td>✓</td><td>✓</td><td>✓</td></tr>
+            <tr><th scope="row" data-i18n="c4">Lectura de certificados con IA</th><td>✓</td><td>✓</td><td>✓</td></tr>
+            <tr><th scope="row" data-i18n="c5">Carga masiva desde ZIP, con revisión</th><td>✓</td><td>✓</td><td>✓</td></tr>
+            <tr><th scope="row" data-i18n="c6">Historial de cambios, archivo y exportación completa</th><td>✓</td><td>✓</td><td>✓</td></tr>
+            <tr><th scope="row" data-i18n="c7">Manufacturero y distribuidor por ingrediente</th><td class="pr-no">—</td><td>✓</td><td>✓</td></tr>
+            <tr><th scope="row" data-i18n="c8">Verificación por riesgo (FSMA y SQF)</th><td class="pr-no">—</td><td>✓</td><td>✓</td></tr>
+            <tr><th scope="row" data-i18n="c9">Evaluación de muestras y cuestionario en línea</th><td class="pr-no">—</td><td>✓</td><td>✓</td></tr>
+            <tr><th scope="row" data-i18n="c10">No conformidades y evaluación de desempeño</th><td class="pr-no">—</td><td>✓</td><td>✓</td></tr>
+            <tr><th scope="row" data-i18n="c11">Roles de compras y almacén</th><td class="pr-no">—</td><td>✓</td><td>✓</td></tr>
+            <tr><th scope="row" data-i18n="c12">Varias plantas</th><td class="pr-no">—</td><td data-i18n="c12b">+$199/mes cada una</td><td data-i18n="c12c">3 incluidas</td></tr>
+            <tr class="pr-soon"><th scope="row" data-i18n="c13">Próximamente: acciones correctivas (CAPA) e inspecciones diarias</th><td data-i18n="c13a">CAPA básico</td><td>✓</td><td>✓</td></tr>
+            <tr class="pr-soon"><th scope="row" data-i18n="c14">Próximamente: asistente StratAI</th><td data-i18n="c14a">Opcional</td><td data-i18n="c14b">Con créditos</td><td>✓</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="pr-addons">
+        <div class="pr-addon"><h3 data-i18n="a1T">Más páginas de IA</h3><p data-i18n="a1B">$29 por cada 1,000 páginas adicionales.</p></div>
+        <div class="pr-addon"><h3 data-i18n="a2T">Carga asistida</h3><p data-i18n="a2B">Nosotros cargamos y revisamos tus documentos: $750 hasta 40 suplidores, $1,500 hasta 100.</p></div>
+        <div class="pr-addon"><h3 data-i18n="a3T">Consultoría</h3><p data-i18n="a3B">Apoyo de practicante SQF/PCQI, preparación para Walmart y para auditorías, por hora.</p></div>
+      </div>
+    </section>
+
+    <!-- ROI CALCULATOR -->
+    <section id="roi" class="section container" aria-labelledby="roi-title">
+      <header class="section-head">
+        <div class="eyebrow" data-i18n="roiEyebrow">Calculadora</div>
+        <h2 id="roi-title" data-i18n="roiTitle">¿Cuánto te cuesta hoy manejar documentos de suplidores?</h2>
+        <p class="section-lead" data-i18n="roiLead">Pon tus números. Es un estimado: ajusta el ahorro esperado a tu realidad.</p>
+      </header>
+
+      <div class="roi">
+        <form class="roi-inputs" id="roi-form" novalidate>
+          <label class="field"><span data-i18n="rSup">Suplidores activos</span><input id="r-sup" name="sup" type="number" min="1" max="2000" step="1" value="40" inputmode="numeric"></label>
+          <label class="field"><span data-i18n="rDoc">Horas al mes pidiendo, persiguiendo, archivando y revisando documentos</span><input id="r-doc" name="doc" type="number" min="0" max="400" step="1" value="20" inputmode="numeric"></label>
+          <label class="field"><span data-i18n="rAud">Horas al mes preparando auditorías y contestando pedidos de clientes</span><input id="r-aud" name="aud" type="number" min="0" max="400" step="1" value="8" inputmode="numeric"></label>
+          <label class="field"><span data-i18n="rRate">Costo por hora de esa persona (salario y beneficios, $)</span><input id="r-rate" name="rate" type="number" min="1" max="500" step="1" value="22" inputmode="numeric"></label>
+          <label class="field"><span data-i18n="rCons">Pago mensual a consultores que podrías reducir ($)</span><input id="r-cons" name="cons" type="number" min="0" max="50000" step="50" value="0" inputmode="numeric"></label>
+          <label class="field roi-range"><span><span data-i18n="rSave">Tiempo que esperas ahorrar</span> <output id="r-save-out" for="r-save">60%</output></span><input id="r-save" name="save" type="range" min="20" max="80" step="5" value="60"></label>
+        </form>
+
+        <div class="roi-out" aria-live="polite">
+          <p class="roi-plan"><span data-i18n="rPlan">Plan recomendado</span> <strong id="r-plan">Profesional</strong></p>
+          <dl class="roi-kv">
+            <div><dt data-i18n="rHours">Horas ahorradas al mes</dt><dd id="r-hours">17</dd></div>
+            <div><dt data-i18n="rValue">Valor de ese tiempo y consultoría</dt><dd id="r-value">$370</dd></div>
+            <div><dt data-i18n="rCost">Costo del plan</dt><dd id="r-cost">$429</dd></div>
+          </dl>
+          <p class="roi-net"><span data-i18n="rNet">Diferencia al mes</span> <strong id="r-net">−$59</strong></p>
+          <p class="roi-verdict" id="r-verdict"></p>
+          <p class="roi-foot" data-i18n="rFoot">No incluye lo que más cuesta: una auditoría fallida, una suspensión como suplidor de Walmart o un retiro de producto.</p>
+          <button class="btn btn-yellow btn-lg" type="button" id="roi-cta" data-i18n="rCta">Solicitar acceso a este plan</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- FAQ -->
+    <section class="section container pr-faq-wrap" aria-labelledby="faq-title">
+      <header class="section-head"><h2 id="faq-title" data-i18n="faqTitle">Preguntas frecuentes</h2></header>
+      <div class="pr-faq">
+        <details><summary data-i18n="q1">¿Se cobra algo al solicitar acceso?</summary><p data-i18n="q1a">No. Estamos en fase piloto: te contactamos, conversamos sobre tu operación y activamos una prueba de 30 días. Solo pagas si decides continuar.</p></details>
+        <details><summary data-i18n="q2">¿Qué es un suplidor activo?</summary><p data-i18n="q2a">Un manufacturero o distribuidor con el que trabajas hoy. Los suplidores inactivos o rechazados se quedan en tu historial, pero no cuentan para el límite.</p></details>
+        <details><summary data-i18n="q3">¿Qué son las páginas de IA?</summary><p data-i18n="q3a">Cada página de un documento que la IA lee para proponer tipo, suplidor y fechas. Tu equipo siempre confirma antes de aceptar. Cada plan trae páginas mensuales y un paquete para tu carga inicial.</p></details>
+        <details><summary data-i18n="q4">¿Puedo cambiar de plan?</summary><p data-i18n="q4a">Sí, cuando quieras. Si creces en suplidores o plantas, pasas al siguiente plan; si reduces, bajas al anterior al renovar.</p></details>
+        <details><summary data-i18n="q5">¿Mis datos son míos?</summary><p data-i18n="q5a">Sí. Puedes descargar todo (documentos, registros e historial) cuando quieras. Si cancelas, tus datos quedan en solo lectura por 90 días y luego se borran.</p></details>
+      </div>
+    </section>
+  </main>
+
+  <!-- FOOTER -->
+  <footer class="site-footer">
+    <div class="container footer-inner">
+      <div class="footer-about">
+        <a class="footer-brand" href="https://www.stratumpr.com" rel="noopener" target="_blank">
+          <img src="assets/stratum-logo-2.png" alt="Stratum" width="3834" height="720">
+        </a>
+        <p data-i18n="footDisc">Stratum PR no está afiliado con Walmart. Los requisitos varían por categoría de producto; confírmalos con tu comprador.</p>
+      </div>
+      <div class="footer-links">
+        <nav aria-label="Producto" data-i18n-attr="aria-label:footProduct">
+          <div class="footer-heading" data-i18n="footProduct">Producto</div>
+          <a href="autoevaluacion.html" data-assessment-link data-i18n="footSelf">Autoevaluación</a>
+          <a href="index.html#guia" data-i18n="footGuide">Guía de requisitos</a>
+          <a href="precios.html" data-i18n="footPricing">Precios</a>
+          <a href="https://stratum-demo-one.vercel.app/desktop.html?from=auto" target="_blank" rel="noopener" data-i18n="footDemo">Demo ↗</a>
+        </nav>
+        <nav aria-label="Stratum PR">
+          <div class="footer-heading">Stratum PR</div>
+          <a href="https://www.stratumpr.com" rel="noopener" target="_blank" data-i18n="footAbout">Sobre nosotros</a>
+          <a href="#contacto" data-open-contact data-i18n="footContact">Contacto</a>
+          <a href="/api/plan" target="_blank" rel="noopener" data-i18n="footPlan">Plan del MVP ↗</a>
+        </nav>
+        <nav aria-label="Legal">
+          <div class="footer-heading">Legal</div>
+          <a href="privacidad.html" data-i18n="footPrivacy">Privacidad</a>
+          <a href="terminos.html" data-i18n="footTerms">Términos de uso</a>
+          <a href="cookies.html" data-i18n="footCookies">Cookies</a>
+          <a href="#" data-consent-open data-i18n="footCookiePrefs">Preferencias de cookies</a>
+        </nav>
+      </div>
+    </div>
+    <div class="container footer-base">
+      <p class="copyright">© <span id="year">2026</span> Stratum PR</p>
+    </div>
+  </footer>
+
+  <!-- REQUEST ACCESS (pricing interest) -->
+  <dialog id="solicitar" class="contact" aria-labelledby="req-title">
+    <form id="req-form" novalidate>
+      <div class="contact-head">
+        <h2 id="req-title" data-i18n="reqTitle">Solicita acceso</h2>
+        <button type="button" class="contact-close" data-close-request aria-label="Cerrar" data-i18n-attr="aria-label:close">×</button>
+      </div>
+      <p class="contact-lead" data-i18n="reqLead">Estamos activando las primeras cuentas. Déjanos tus datos y te contactamos en 1 a 2 días laborables. No se cobra nada hoy.</p>
+      <label class="field"><span data-i18n="cName">Nombre</span><input name="name" autocomplete="name" required></label>
+      <label class="field"><span data-i18n="cBizReq">Negocio</span><input name="business" autocomplete="organization" required></label>
+      <label class="field"><span data-i18n="cEmail">Correo electrónico</span><input name="email" type="email" autocomplete="email" required></label>
+      <label class="field"><span data-i18n="cPhone">Teléfono (opcional)</span><input name="phone" type="tel" autocomplete="tel" inputmode="tel"></label>
+      <div class="req-row">
+        <label class="field"><span data-i18n="reqTier">Plan</span>
+          <select name="tier" required>
+            <option value="esencial">Esencial</option>
+            <option value="profesional">Profesional</option>
+            <option value="plus">Planta Plus</option>
+            <option value="unsure" data-i18n="reqUnsure">No estoy seguro</option>
+          </select>
+        </label>
+        <label class="field"><span data-i18n="reqBilling">Pago</span>
+          <select name="billing" required>
+            <option value="monthly" data-i18n="prMonthly">Mensual</option>
+            <option value="annual" data-i18n="prAnnual">Anual</option>
+          </select>
+        </label>
+      </div>
+      <label class="field"><span data-i18n="reqSup">Suplidores activos</span>
+        <select name="suppliers" required>
+          <option value="" data-i18n="reqPick">Selecciona</option>
+          <option value="1-5">1–5</option>
+          <option value="6-20">6–20</option>
+          <option value="21-50">21–50</option>
+          <option value="51-100">51–100</option>
+          <option value="100+">100+</option>
+        </select>
+      </label>
+      <label class="field"><span data-i18n="reqMsg">¿Qué te gustaría resolver primero? (opcional)</span><textarea name="message" rows="3"></textarea></label>
+      <input type="text" name="_gotcha" tabindex="-1" autocomplete="off" class="hp" aria-hidden="true">
+      <p class="contact-privacy" data-i18n="reqPrivacy">Usaremos estos datos solo para contactarte sobre el acceso. Ver la <a href="privacidad.html">Política de privacidad</a>.</p>
+      <p class="contact-status" id="req-status" role="status" aria-live="polite"></p>
+      <button class="btn btn-primary btn-lg contact-submit" type="submit" data-i18n="reqSend">Enviar solicitud</button>
+    </form>
+  </dialog>
+
+  <!-- CONTACT FORM (footer "Contacto") -->
+  <dialog id="contacto" class="contact" aria-labelledby="contact-title">
+    <form id="contact-form" novalidate>
+      <div class="contact-head">
+        <h2 id="contact-title" data-i18n="contactTitle">Contáctanos</h2>
+        <button type="button" class="contact-close" data-close-contact aria-label="Cerrar" data-i18n-attr="aria-label:close">×</button>
+      </div>
+      <p class="contact-lead" data-i18n="contactLead">Cuéntanos sobre tu negocio y te respondemos en 1 a 2 días laborables.</p>
+      <label class="field"><span data-i18n="cName">Nombre</span><input name="name" autocomplete="name" required></label>
+      <label class="field"><span data-i18n="cEmail">Correo electrónico</span><input name="email" type="email" autocomplete="email" required></label>
+      <label class="field"><span data-i18n="cBizReq">Negocio</span><input name="business" autocomplete="organization" required></label>
+      <label class="field"><span data-i18n="cMsg">Mensaje</span><textarea name="message" rows="4" required></textarea></label>
+      <input type="text" name="_gotcha" tabindex="-1" autocomplete="off" class="hp" aria-hidden="true">
+      <p class="contact-privacy" data-i18n="contactPrivacy">Usaremos estos datos solo para responderte. Ver la <a href="privacidad.html">Política de privacidad</a>.</p>
+      <p class="contact-status" id="contact-status" role="status" aria-live="polite"></p>
+      <button class="btn btn-primary btn-lg contact-submit" type="submit" data-i18n="cSend">Enviar mensaje</button>
+    </form>
+  </dialog>
+</body>
+</html>

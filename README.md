@@ -5,6 +5,7 @@ Marketing site for **Stratum PR**: a landing page, the Walmart self-check (with 
 ```
 index.html                 landing page (Spanish in the HTML; English in js/main.js)
 autoevaluacion.html        5-step self-check → Walmart passport, to-do list, guide, calculator
+precios.html               pricing page: tiers, comparison, ROI calculator, "Solicitar acceso" (pilot requests)
 privacidad.html            Privacy Policy     (GDPR / ePrivacy draft; needs legal review)
 terminos.html              Terms of Use       (draft; needs legal review)
 cookies.html               Cookie Policy
@@ -12,12 +13,15 @@ cookies.html               Cookie Policy
 css/fonts.css              self-hosted Archivo (no Google Fonts request)
 css/styles.css             landing + legal page styles; tokens at the top in :root
 css/consent.css            cookie banner, shared by every page
+css/precios.css            pricing page styles
 css/autoevaluacion.css     self-check styles
 css/motion.css             landing animations (skipped for prefers-reduced-motion)
 css/autoeval-motion.css    self-check animations
 js/motion.js               landing animation triggers
 js/autoeval-motion.js      self-check screen transitions and results animations
 js/consent.js              cookie consent manager (window.StratumConsent)
+js/analytics.js            anonymous analytics (Vercel Web Analytics), loaded only with consent
+js/precios.js              pricing page: billing toggle, access requests, ROI calculator, events
 js/main.js                 landing: language, nav, insights card, guide, forms. CONFIG at the top
 js/guide.js                official links for the guide (shared by the landing and the results)
 js/selfcheck-data.js       self-check requirements, tiers, sections (shared with api/selfcheck)
@@ -38,6 +42,7 @@ Every form posts to a Vercel function in `api/` (no dependencies). `api/_lib.js`
 | `/api/guide` | Lead email to `LEADS_TO` |
 | `/api/signup` | Lead email + double opt-in confirmation to the user |
 | `/api/contact` | Message to `LEADS_TO` (Reply-To = sender) |
+| `/api/pricing` | "Solicitar acceso" from the pricing page → lead email to `LEADS_TO` with plan, billing, supplier range and ROI numbers (Reply-To = sender) |
 | `/api/confirm` | Confirmation link target: adds the address to Resend Contacts |
 
 Anyone who ticks a "noticias" box (guide, early access, self-check) gets a confirmation email and joins the mailing list only after clicking it. Until the Azure database exists, **the lead emails in contact@ are the record of submissions**.
@@ -58,6 +63,37 @@ The passport email is built on the server from `js/selfcheck-data.js` (looked up
 | `PLAN_KEY` | 32 random bytes in base64. Decrypts the plan page and signs its session cookie |
 
 Without `RESEND_API_KEY` nothing is sent: the functions run in **dry-run** mode and the site keeps working.
+
+## Pricing page and validation
+
+`precios.html` shows the proposed tiers (Esencial $179, Profesional $429, Planta Plus from $849
+per site a month; annual = 2 months free) to validate them before launch. "Solicitar acceso" is a
+**pilot request, not a purchase**: the page says nothing is charged, and each request becomes a lead
+email with the plan and billing chosen. The ROI calculator estimates the value of time saved against
+the plan price; its numbers travel with the request when someone asks for access from it.
+
+**Analytics** (`js/analytics.js`): Vercel Web Analytics, cookieless, loaded **only** if the visitor
+allows the "Analítica" category in the consent banner (policy version 2). Pages call
+`window.stratumTrack(name, data)`; data is limited to short values (never names, emails or text).
+Events on the pricing page:
+
+| Event | When | Data |
+| --- | --- | --- |
+| `pricing_billing` | Monthly/annual toggled | `billing` |
+| `pricing_cta` | A plan's "Solicitar acceso" (or the calculator's) clicked | `tier`, `billing`, `source` (card/roi) |
+| `request_open` | Request dialog opened | `tier` |
+| `request_submit` | Request sent | `tier`, `billing`, `suppliers` |
+| `request_abandon` | Dialog closed without sending | `tier` |
+| `request_error` | Sending failed | `tier` |
+| `roi_calc` | Calculator used | `tier`, `sup` and `hours` buckets, `result` (pays/short) |
+
+Drop-off per tier = `pricing_cta` vs `request_submit`. To see the data: Vercel → foodsafetymvp →
+**Analytics** (enable Web Analytics there once). Page views work on every plan; **custom events
+need a Vercel Pro plan**. Without it, the lead emails (one per request, with plan and billing) are
+the record. Numbers only include visitors who accepted analytics.
+
+The self-check also asks three unscored sizing questions (active suppliers, hours a month on supplier
+documents, current compliance spend); the answers arrive in the self-check lead email.
 
 ## Private MVP plan page
 

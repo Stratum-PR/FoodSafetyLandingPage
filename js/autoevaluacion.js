@@ -119,7 +119,9 @@ const STEPS=[
    opts:{es:["Me registré en Open Call 2026","Me invitaron a las reuniones","Pienso aplicar más adelante","Solo estoy explorando"],en:["Registered for Open Call 2026","Invited to the buyer meetings","Plan to apply later","Just exploring"]}},
   {id:"p3",type:"pick",es:"¿Qué tipo de negocio tienes?",en:"What kind of business do you have?",
    other:5,
-   opts:{es:["Manufactura o procesamiento de alimentos","Agricultura, finca o pesca","Distribución o importación","Co-packer: manufacturo para otras marcas","Marca: otra empresa manufactura mi producto","Otro"],en:["Food manufacturing or processing","Farming, agriculture or fishing","Distribution or import","Co-packer: I manufacture for other brands","Brand: another company makes my product","Other"]}}
+   opts:{es:["Manufactura o procesamiento de alimentos","Agricultura, finca o pesca","Distribución o importación","Co-packer: manufacturo para otras marcas","Marca: otra empresa manufactura mi producto","Otro"],en:["Food manufacturing or processing","Farming, agriculture or fishing","Distribution or import","Co-packer: I manufacture for other brands","Brand: another company makes my product","Other"]}},
+  {id:"p4",type:"pick",es:"¿Cuántos suplidores activos tienes (ingredientes y empaque)?",en:"How many active suppliers do you have (ingredients and packaging)?",
+   opts:{es:["1 a 5","6 a 20","21 a 50","51 a 100","Más de 100","No sé"],en:["1 to 5","6 to 20","21 to 50","51 to 100","More than 100","Not sure"]}}
  ],
  [ // 1 becoming a supplier (skipped for current suppliers)
   {id:"reg",type:"multi",es:"¿Cuáles de estos ya tienes?",en:"Which of these do you already have?",
@@ -157,6 +159,11 @@ const STEPS=[
    opts:{es:[["Sí, cumple y nombra a Walmart",2],["Tengo seguro, no sé si cumple",1],["No tengo seguro",0]],en:[["Yes, it meets them and names Walmart",2],["I have insurance, not sure it qualifies",1],["No insurance",0]]}},
   {id:"exp",type:"single",item:"exp",es:"¿Cómo controlas cuándo vencen tus certificados y documentos?",en:"How do you track when your certificates and documents expire?",
    opts:{es:[["Sistema o calendario con alertas",2],["Excel o papel",1],["No lo controlo",0]],en:[["A system or calendar with alerts",2],["Spreadsheet or paper",1],["I don't track it",0]]}},
+  {id:"hrs",type:"pick",es:"¿Cuántas horas al mes le dedican a pedir, archivar y revisar documentos de suplidores?",en:"How many hours a month does your team spend requesting, filing and checking supplier documents?",
+   help:{es:"Un estimado está bien. Incluye perseguir certificados vencidos.",en:"An estimate is fine. Include chasing expired certificates."},
+   opts:{es:["Menos de 5","5 a 15","16 a 30","Más de 30","No sé"],en:["Less than 5","5 to 15","16 to 30","More than 30","Not sure"]}},
+  {id:"spend",type:"pick",es:"¿Cuánto pagan hoy al mes por software o consultores de cumplimiento?",en:"How much do you pay today per month for compliance software or consultants?",
+   opts:{es:["Nada","Menos de $200","$200 a $500","$500 a $1,500","Más de $1,500","Prefiero no decir"],en:["Nothing","Less than $200","$200 to $500","$500 to $1,500","More than $1,500","Prefer not to say"]}},
   {id:"dp",type:"pick",es:"¿Quieres ser socio de diseño de Stratum?",en:"Want to be a Stratum design partner?",
    help:{es:"Incluye una revisión gratis de 20 minutos de tus pendientes y acceso temprano.",en:"Includes a free 20-minute review of your gaps and early access."},
    opts:{es:["Sí, me interesa","No por ahora"],en:["Yes, I'm interested","Not right now"]}}

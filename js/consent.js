@@ -3,32 +3,34 @@
    - "Reject all" is as easy and as prominent as "Accept all".
    - Choices can be changed any time (footer link → StratumConsent.open()).
    - Consent expires after 12 months or when POLICY_VERSION changes.
-   Categories actually in use today: necessary (the consent record itself) and
-   preferences (remembering ES/EN). Add "analytics" here before adding any
-   analytics script, and load that script only from onChange(). */
+   Categories: necessary (the consent record itself), preferences (remembering
+   ES/EN) and analytics (anonymous, cookieless visit counts from Vercel Web
+   Analytics, loaded by js/analytics.js only after consent). */
 (function () {
   const KEY = "stratum-consent";
-  const POLICY_VERSION = 1;
+  const POLICY_VERSION = 2; // 2: added the analytics category
   const MAX_AGE_MS = 365 * 24 * 60 * 60 * 1000;
   const PREF_KEYS = ["fsqms-lang", "stratum-guide"]; // storage cleared when preferences are refused
 
   const TEXT = {
     es: {
       title: "Tu privacidad",
-      body: "Usamos almacenamiento estrictamente necesario para que el sitio funcione. Con tu permiso, también recordamos tu idioma. No usamos cookies de publicidad ni de rastreo.",
+      body: "Usamos almacenamiento estrictamente necesario para que el sitio funcione. Con tu permiso, también recordamos tu idioma y contamos visitas de forma anónima para mejorar el sitio. No usamos cookies de publicidad ni de rastreo.",
       policy: "Política de cookies", privacy: "Privacidad",
       accept: "Aceptar todo", reject: "Rechazar todo", customize: "Personalizar", save: "Guardar mis opciones",
       necessary: "Necesarias", necessaryD: "Guardan tu elección de privacidad. Siempre activas.",
       prefs: "Preferencias", prefsD: "Recuerdan tu idioma (español o inglés) y que ya pediste la guía, entre visitas.",
+      analytics: "Analítica", analyticsD: "Cuenta visitas y clics de forma anónima y sin cookies (por ejemplo, qué plan interesa más). No te identifica.",
       always: "Siempre activas", dialog: "Preferencias de privacidad",
     },
     en: {
       title: "Your privacy",
-      body: "We use strictly necessary storage to make the site work. With your permission, we also remember your language. We don't use advertising or tracking cookies.",
+      body: "We use strictly necessary storage to make the site work. With your permission, we also remember your language and count visits anonymously to improve the site. We don't use advertising or tracking cookies.",
       policy: "Cookie policy", privacy: "Privacy",
       accept: "Accept all", reject: "Reject all", customize: "Customize", save: "Save my choices",
       necessary: "Necessary", necessaryD: "Store your privacy choice. Always on.",
       prefs: "Preferences", prefsD: "Remember your language (Spanish or English) and that you already requested the guide, between visits.",
+      analytics: "Analytics", analyticsD: "Counts visits and clicks anonymously, without cookies (for example, which plan gets the most interest). It doesn't identify you.",
       always: "Always on", dialog: "Privacy preferences",
     },
   };
@@ -45,7 +47,7 @@
   }
 
   function write(prefs) {
-    state = { v: POLICY_VERSION, ts: Date.now(), necessary: true, preferences: !!prefs.preferences };
+    state = { v: POLICY_VERSION, ts: Date.now(), necessary: true, preferences: !!prefs.preferences, analytics: !!prefs.analytics };
     try { localStorage.setItem(KEY, JSON.stringify(state)); } catch (e) { /* storage blocked: choice lasts this page view */ }
     if (!state.preferences) PREF_KEYS.forEach((k) => { try { localStorage.removeItem(k); } catch (e) { /* ignore */ } });
     listeners.forEach((fn) => { try { fn(state); } catch (e) { /* ignore */ } });
@@ -66,6 +68,7 @@
       document.body.appendChild(el);
     }
     const prefsOn = state ? state.preferences : false;
+    const analyticsOn = state ? !!state.analytics : false;
     el.setAttribute("aria-label", t("dialog"));
     el.innerHTML = `
       <div class="consent-in">
@@ -80,6 +83,10 @@
           <label class="consent-cat">
             <div><b>${t("prefs")}</b><small>${t("prefsD")}</small></div>
             <input type="checkbox" class="consent-switch" data-cat="preferences" ${prefsOn ? "checked" : ""}>
+          </label>
+          <label class="consent-cat">
+            <div><b>${t("analytics")}</b><small>${t("analyticsD")}</small></div>
+            <input type="checkbox" class="consent-switch" data-cat="analytics" ${analyticsOn ? "checked" : ""}>
           </label>
         </div>` : ""}
         <div class="consent-actions">
@@ -99,10 +106,13 @@
     const b = e.target.closest(".consent [data-c]");
     if (b) {
       const c = b.dataset.c;
-      if (c === "accept") write({ preferences: true });
-      if (c === "reject") write({ preferences: false });
+      if (c === "accept") write({ preferences: true, analytics: true });
+      if (c === "reject") write({ preferences: false, analytics: false });
       if (c === "customize") { render(true); el.querySelector(".consent-switch")?.focus(); }
-      if (c === "save") write({ preferences: el.querySelector('[data-cat="preferences"]').checked });
+      if (c === "save") write({
+        preferences: el.querySelector('[data-cat="preferences"]').checked,
+        analytics: el.querySelector('[data-cat="analytics"]').checked,
+      });
       return;
     }
     const open = e.target.closest("[data-consent-open]");
