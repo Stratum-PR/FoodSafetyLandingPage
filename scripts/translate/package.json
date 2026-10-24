@@ -1,8 +1,8 @@
 {
-  "name": "stratum-translate-fda",
+  "name": "stratum-translate-names",
   "private": true,
   "type": "module",
-  "description": "Translates FDA recall product names to Spanish for Alertas PR (run by .github/workflows/translate-fda.yml)",
+  "description": "Translates FDA and USDA recall product names to Spanish for Alertas PR (run by .github/workflows/translate-names.yml)",
   "dependencies": {
     "@anthropic-ai/sdk": "^1.0.0"
   }

@@ -1,17 +1,21 @@
 /* GET /api/recalls?scope=pr|nat — food recalls for Alertas PR (alertas.html).
    Sources (public domain, no key needed):
    - openFDA food enforcement reports. One entry per recall event (the FDA lists each product of an
-     event separately). Spanish product names come from data/fda-es.json, which the
-     translate-fda GitHub Action keeps up to date (scripts/translate/).
-   - USDA FSIS recalls and public health alerts (meat, poultry, egg products), with their own Spanish
-     titles. FSIS's bot protection may refuse server requests; then the list is FDA only and the
-     answer says usda: false. We never imitate a browser to get around it.
+     event separately).
+   - USDA FSIS recalls and public health alerts (meat, poultry, egg products). FSIS's bot protection
+     may refuse server requests (we never imitate a browser to get around it); then the copy saved by
+     hand in data/fsis-recent.json is used (dev/fsis-snapshot.py), and usda says which one: "live",
+     "saved" or false.
+   Spanish names (FDA products and FSIS titles/products) come from data/names-es.json, kept up to date
+   by the translate-names GitHub Action (scripts/translate/).
    "pr" = distribution names Puerto Rico; "nat" = nationwide. Last 12 months. Cached in memory and at
-   Vercel's edge for 6 h. fetchScope/toEvents are also used by scripts/translate/translate-fda.mjs. */
+   Vercel's edge for 6 h. fetchScope/toEvents/fsisEvents are also used by scripts/translate/translate-names.mjs. */
 const API = "https://api.fda.gov/food/enforcement.json";
 const FSIS_API = "https://www.fsis.usda.gov/fsis/api/recall/v/1";
 let ES = {};
-try { ES = require("../data/fda-es.json").names || {}; } catch (err) { /* no translations yet */ }
+try { ES = require("../data/names-es.json").names || {}; } catch (err) { /* no translations yet */ }
+let FSIS_SAVED = { saved: null, records: [] };
+try { FSIS_SAVED = require("../data/fsis-recent.json"); } catch (err) { /* no saved copy */ }
 const TTL = 6 * 3600 * 1000;
 const cache = new Map();
 
@@ -82,43 +86,45 @@ async function fetchFsis() {
 }
 
 const FSIS_CLS = { "Class I": 1, "Class II": 2, "Class III": 3 };
+const ENT = { quot: '"', amp: "&", apos: "'", "#39": "'", lt: "<", gt: ">", nbsp: " " };
+const fsisText = (s) => clean(String(s || "").replace(/<[^>]+>/g, " ").replace(/&(quot|amp|apos|#39|lt|gt|nbsp);/g, (m, k) => ENT[k]));
 /** FSIS notices of the last 12 months that name Puerto Rico ("pr") or are nationwide ("nat"), in the
     same shape as the FDA events; the Spanish record of each notice gives es (its title). */
 function fsisEvents(recs, scope) {
   const from = ymd(new Date(Date.now() - 365 * 864e5));
   const isEs = (r) => /^span/i.test(r.langcode || "");
-  const esTitle = new Map(recs.filter(isEs).map((r) => [clean(r.field_recall_number).toLowerCase(), clean(r.field_title)]));
+  const esTitle = new Map(recs.filter(isEs).map((r) => [clean(r.field_recall_number).toLowerCase(), fsisText(r.field_title)]));
   const out = [];
   for (const r of recs) {
     if (isEs(r)) continue;
     const d = String(r.field_recall_date || "").slice(0, 10).replace(/-/g, "");
     if (!/^\d{8}$/.test(d) || d < from) continue;
-    const title = clean(r.field_title);
+    const title = fsisText(r.field_title);
     if (/^fsis retracts\b/i.test(title)) continue;
     const states = (r.field_states || []).map(clean);
     const pr = states.some((x) => /puerto\s*rico/i.test(x));
     const nat = states.some((x) => /nationwide/i.test(x));
     if (scope === "pr" ? !pr : !nat) continue;
     const no = clean(r.field_recall_number);
-    const items = (r.field_product_items || []).map((x) => clean(x).slice(0, 240)).filter(Boolean);
+    const items = (r.field_product_items || []).map((x) => fsisText(x).slice(0, 240)).filter(Boolean);
     out.push({
       src: "usda", d, cls: FSIS_CLS[clean(r.field_recall_classification)] || 0,
       pha: clean(r.field_recall_type) === "Public Health Alert",
-      firm: clean(r.field_establishment), product: title.slice(0, 240), es: esTitle.get(no.toLowerCase()) || "",
+      firm: clean([].concat(r.field_establishment || []).join(", ")), product: title.slice(0, 240), es: esTitle.get(no.toLowerCase()) || "",
       reason: (r.field_recall_reason || []).map(clean).filter(Boolean).join(", "),
       num: no, ev: `fsis-${no}`, n: Math.max(1, items.length), prods: items.slice(0, 40),
-      txt: states.join(", ").slice(0, 400), url: /^https:\/\/www\.fsis\.usda\.gov\//.test(r.field_recall_url || "") ? r.field_recall_url : "",
+      txt: states.join(", ").slice(0, 400),
+      url: /^https?:\/\/www\.fsis\.usda\.gov\//.test(r.field_recall_url || "") ? r.field_recall_url.replace(/^http:/, "https:") : "",
     });
   }
   return out;
 }
 
-/** Spanish names for FDA products (data/fda-es.json): es = the event's main product, prods_es = per product. */
+/** Spanish names (data/names-es.json): es = the event's main product or title, prods_es = per product. */
 function addSpanish(items) {
   for (const x of items) {
-    if (x.src === "usda") continue;
-    x.src = "fda";
-    x.es = ES[x.product] || "";
+    x.src = x.src || "fda";
+    x.es = x.es || ES[x.product] || "";
     if (x.prods.some((p) => ES[p])) x.prods_es = x.prods.map((p) => ES[p] || "");
   }
   return items;
@@ -133,9 +139,11 @@ module.exports = async (req, res) => {
       const [fda, fsis] = await Promise.allSettled([fetchScope(scope), fetchFsis()]);
       if (fda.status === "rejected") throw fda.reason; // the FDA is required; FSIS is a bonus
       if (fsis.status === "rejected") console.warn("[recalls] FSIS unavailable:", fsis.reason?.message);
-      const usda = fsis.status === "fulfilled" ? fsisEvents(fsis.value, scope) : [];
-      const items = addSpanish(toEvents(fda.value.results, scope)).concat(usda).sort((a, b) => (a.d < b.d ? 1 : a.d > b.d ? -1 : 0));
-      hit = { at: Date.now(), body: { ok: true, scope, updated: fda.value.updated, usda: fsis.status === "fulfilled", items } };
+      const live = fsis.status === "fulfilled";
+      const usda = fsisEvents(live ? fsis.value : FSIS_SAVED.records || [], scope);
+      const items = addSpanish(toEvents(fda.value.results, scope).concat(usda)).sort((a, b) => (a.d < b.d ? 1 : a.d > b.d ? -1 : 0));
+      hit = { at: Date.now(), body: { ok: true, scope, updated: fda.value.updated,
+        usda: live ? "live" : usda.length || (FSIS_SAVED.records || []).length ? "saved" : false, usdaSaved: live ? null : FSIS_SAVED.saved, items } };
       cache.set(scope, hit);
     }
     res.setHeader("Cache-Control", "public, s-maxage=21600, stale-while-revalidate=86400");
@@ -149,3 +157,4 @@ module.exports = async (req, res) => {
 };
 module.exports.fetchScope = fetchScope;
 module.exports.toEvents = toEvents;
+module.exports.fsisEvents = fsisEvents;

@@ -1,0 +1,1391 @@
+{
+ "saved": "2026-10-17",
+ "source": "https://www.fsis.usda.gov/fsis/api/recall/v/1",
+ "records": [
+  {
+   "field_recall_number": "026-2026",
+   "field_recall_date": "2026-10-17",
+   "field_title": "Kayem Foods Inc. Recalls Meat and Poultry Products Due to Possible Temperature Abuse",
+   "field_states": [
+    "Nationwide"
+   ],
+   "field_product_items": [
+    "Full product list available in PDF format - Various RTE meat and poultry products bearing “EST. M/P 7839,” “EST. P 20935A” and “EST. M 9520” inside the USDA mark of inspection. "
+   ],
+   "field_recall_reason": [
+    "Processing Defect"
+   ],
+   "field_recall_classification": "Class I",
+   "field_recall_type": "Active Recall",
+   "field_establishment": [
+    "Kayem Foods Inc."
+   ],
+   "field_recall_url": "http://www.fsis.usda.gov/recalls-alerts/kayem-foods-inc--recalls-meat-and-poultry-products-due-possible-temperature-abuse",
+   "langcode": "English"
+  },
+  {
+   "field_recall_number": "PHA-10062026-01",
+   "field_recall_date": "2026-10-06",
+   "field_title": "FSIS Issues Public Health Alert for Ineligible Chicken Vienna-Style Sausage Products Illegally Imported From Jamaica",
+   "field_states": [
+    "Alabama",
+    "Florida",
+    "Georgia",
+    "Maryland",
+    "Texas"
+   ],
+   "field_product_items": [
+    "•\t140-g. cans of “GRACE READY TO EAT CHICKEN VIENNA SAUSAGES.” ",
+    "•\t140-g. cans of “GRACE READY TO EAT CHICKEN VIENNA SAUSAGES HOT &amp; SPICY.” "
+   ],
+   "field_recall_reason": [
+    "Import Violation"
+   ],
+   "field_recall_classification": "Public Health Alert",
+   "field_recall_type": "Public Health Alert",
+   "field_establishment": [],
+   "field_recall_url": "http://www.fsis.usda.gov/recalls-alerts/fsis-issues-public-health-alert-ineligible-chicken-vienna-style-sausage-products",
+   "langcode": "English"
+  },
+  {
+   "field_recall_number": "025-2026",
+   "field_recall_date": "2026-10-02",
+   "field_title": "Inexport Logistics LLC Recalls Ineligible Pork Cracklings Products Imported From The Republic of Colombia",
+   "field_states": [
+    "Arizona",
+    "California",
+    "Colorado",
+    "Florida",
+    "Illinois",
+    "Kentucky",
+    "Minnesota",
+    "Texas"
+   ],
+   "field_product_items": [
+    "• 60-g. foil bags of “YUPI GOLPE CON TODO SABOR BBQ” mixed chips with “Clásicas,” “PLATANOS,” and “Chicharrón Fred.”"
+   ],
+   "field_recall_reason": [
+    "Import Violation"
+   ],
+   "field_recall_classification": "Class I",
+   "field_recall_type": "Active Recall",
+   "field_establishment": [],
+   "field_recall_url": "http://www.fsis.usda.gov/recalls-alerts/inexport-logistics-llc-recalls-ineligible-pork-cracklings-products-imported-republic",
+   "langcode": "English"
+  },
+  {
+   "field_recall_number": "024-2026",
+   "field_recall_date": "2026-09-25",
+   "field_title": "Sempio Food Services Inc. Recalls Ready-To-Eat Chicken Stew Products Imported Without the Benefit of Import Reinspection",
+   "field_states": [
+    "Florida",
+    "Georgia",
+    "Illinois",
+    "Maryland",
+    "New Jersey",
+    "New York",
+    "Pennsylvania",
+    "Virginia"
+   ],
+   "field_product_items": [
+    "Cardboard boxes containing pouches of 31.75-oz (900 g) “Sempio Korean Ginseng CHICKEN STEW CLASSIC” ",
+    "Cardboard boxes containing pouches of 31.75-oz (900 g) “Sempio Korean Ginseng CHICKEN STEW RICH”"
+   ],
+   "field_recall_reason": [
+    "Import Violation"
+   ],
+   "field_recall_classification": "Class I",
+   "field_recall_type": "Active Recall",
+   "field_establishment": [],
+   "field_recall_url": "http://www.fsis.usda.gov/recalls-alerts/sempio-food-services-inc--recalls-ready-eat-chicken-stew-products-imported-without",
+   "langcode": "English"
+  },
+  {
+   "field_recall_number": "023-2026",
+   "field_recall_date": "2026-09-25",
+   "field_title": "Fontanini Foods LLC Recalls Raw, Frozen Pork Sausage Products Due to Possible Foreign Matter Contamination",
+   "field_states": [
+    "California",
+    "Florida",
+    "Michigan",
+    "Nevada"
+   ],
+   "field_product_items": [
+    "10-lb. cardboard box cases containing “Fontanini PORK SAUSAGE LINKS” with “ITEM 393” printed on the box and “PACKED ON 06/23/2026” printed on the shipping label."
+   ],
+   "field_recall_reason": [
+    "Product Contamination"
+   ],
+   "field_recall_classification": "Class I",
+   "field_recall_type": "Active Recall",
+   "field_establishment": [
+    "Fontanini Foods, LLC"
+   ],
+   "field_recall_url": "http://www.fsis.usda.gov/recalls-alerts/fontanini-foods-llc-recalls-raw-frozen-pork-sausage-products-due-possible-foreign",
+   "langcode": "English"
+  },
+  {
+   "field_recall_number": "022-2026",
+   "field_recall_date": "2026-09-22",
+   "field_title": "Star Meat Delivery Inc. Recalls Raw Pork, Beef, and Goat Products Produced Without the Benefit of Inspection",
+   "field_states": [
+    "Nationwide"
+   ],
+   "field_product_items": [
+    "•\tVarious weight cardboard boxes containing individually vacuum-packed A&amp;D Foods “GOAT CUT 1-1/2&quot; 10.00 LBS”",
+    "•\tVarious weight cardboard boxes containing individually vacuum-packed A&amp;D Foods “GOAT BURN SKIN ON CUT 1-1/2&quot; 10.00 LBS”",
+    "•\tVarious weight cardboard boxes containing individually vacuum-packed A&amp;D Foods “SLICE RIBEYE 4oz 10.00 LBS”",
+    "•\tVarious weight cardboard boxes containing individually vacuum-packed A&amp;D Foods “BEEF CHUCK THIN SLICED KBQ 4 MM 20.00 LBS”",
+    "•\tVarious weight cardboard boxes containing individually vacuum-packed A&amp;D Foods “BEEF OXTAIL CUT 10.00LBS”",
+    "•\tVarious weight cardboard boxes containing individually vacuum-packed A&amp;D Foods “BEEF SHORT RIBS SLD 3/8&quot; REGULAR 10.00 LBS”",
+    "•\tVarious weight cardboard boxes containing individually vacuum-packed A&amp;D Foods “SHANKS BONE IN CUT 1.5 10.00 LBS”",
+    "•\tVarious weight cardboard boxes containing individually vacuum-packed A&amp;D Foods “PORK GROUND 10.00LBS”",
+    "•\tVarious weight cardboard boxes containing individually vacuum-packed A&amp;D Foods “PORK CHORIZO 10.00 LBS”",
+    "•\tVarious weight cardboard boxes containing individually vacuum-packed A&amp;D Foods “PORK CHOP B/I 10.00 LBS”",
+    "•\tVarious weight cardboard boxes containing individually vacuum-packed A&amp;D Foods “PORK FEET CUT 8 PCS 10.00 LBS”",
+    "•\tVarious weight cardboard boxes containing individually vacuum-packed A&amp;D Foods “PORK FEET CUT 6 PCS 10.00 LBS”",
+    "•\tVarious weight cardboard boxes containing individually vacuum-packed A&amp;D Foods “PORK RIB PIECES PREM 1&quot; 10.00 LBS”",
+    "•\tVarious weight cardboard boxes containing individually vacuum-packed A&amp;D Foods “PORK BOSTON DICED 10.00 LBS”",
+    "•\tVarious weight cardboard boxes containing individually vacuum-packed A&amp;D Foods “PORK BOSTON SLICE 1 INCH 20.00 LBS”",
+    "•\tVarious weight cardboard boxes containing individually vacuum-packed A&amp;D Foods “Menudo Mix 30.00 LBS”",
+    "•\tVarious weight cardboard boxes containing individually vacuum-packed A&amp;D Foods “PORK BOSTON THIN SLICED 3.5MM 20.00 LBS”",
+    "•\tVarious weight cardboard boxes containing individually vacuum-packed A&amp;D Foods “PORK HOCK SLICED 10.00 LBS”",
+    "•\tVarious weight cardboard boxes containing individually vacuum-packed A&amp;D Foods Beef Ribs 4Bone 2&quot; C. Cut P/Caldo",
+    "•\tVarious weight cardboard boxes containing individually vacuum-packed A&amp;D Foods Beef Short Rib Thin Sliced",
+    "•\tVarious weight cardboard boxes containing individually vacuum-packed A&amp;D Foods Pork Boston Butt Sliced 4MM",
+    "•\tVarious weight cardboard boxes containing individually vacuum-packed A&amp;D Foods Beef Short Ribs SLD 3/8&quot; Premium C. Cut",
+    "•\tVarious weight cardboard boxes containing individually vacuum-packed A&amp;D Foods Beef Feet Cut"
+   ],
+   "field_recall_reason": [
+    "Produced Without Benefit of Inspection"
+   ],
+   "field_recall_classification": "Class I",
+   "field_recall_type": "Active Recall",
+   "field_establishment": [],
+   "field_recall_url": "http://www.fsis.usda.gov/recalls-alerts/star-meat-delivery-inc--recalls-raw-pork-beef-and-goat-products-produced-without",
+   "langcode": "English"
+  },
+  {
+   "field_recall_number": "021-2026",
+   "field_recall_date": "2026-09-09",
+   "field_title": "El Eden Import Distributor Corp Recalls Ineligible Pork Cracklings Products Imported from The Republic of Colombia",
+   "field_states": [
+    "New Jersey",
+    "Utah",
+    "Massachusetts",
+    "New York",
+    "Connecticut",
+    "Illinois"
+   ],
+   "field_product_items": [
+    "•  45-g. foil bags of “De Todito NATURAL” mixed chips with “CHICHARRÓN AMERICANO JACKS,” “Margarita,” and “NATU CHIPS.”",
+    "• 45-g. foil bags of “De Todito BBQ” mixed chips with “CHICHARRÓN AMERICANO JACKS,” “Margarita,” and “NatuChips.”"
+   ],
+   "field_recall_reason": [
+    "Import Violation"
+   ],
+   "field_recall_classification": "Class I",
+   "field_recall_type": "Active Recall",
+   "field_establishment": [],
+   "field_recall_url": "http://www.fsis.usda.gov/recalls-alerts/el-eden-import-distributor-corp-recalls-ineligible-pork-cracklings-products-imported",
+   "langcode": "English"
+  },
+  {
+   "field_recall_number": "019-020-2026",
+   "field_recall_date": "2026-09-06",
+   "field_title": "Prime Line Distributors, Inc. and Ferrarini USA, Inc. Recall Imported Ready-To-Eat Pork Guanciale Products Due to Possible Listeria Contamination",
+   "field_states": [
+    "Texas",
+    "Idaho",
+    "New York",
+    "New Jersey",
+    "Florida",
+    "Texas",
+    "Illinois",
+    "Mississippi",
+    "California",
+    "Florida"
+   ],
+   "field_product_items": [
+    "•\tVarious weight cardboard cases containing two pieces of individually vacuumed packed “PRIME LINE DISTRIBUTORS, INC. GUANCIALE PORK JOWL PRODUCT OF ITALY” with “LOT: 263311US” and “BEST IF USE BY DATE: 05.16.27” printed on the label.",
+    "•\tVarious weight individually vacuumed packaged “GUANCIALE PORK JOWL PRODUCT OF ITALY” with “LOT: 263311US” and “BEST IF USE BY: 05.16.27” printed on the label. The product has an additional label with “DOK GUANCIALE” on the packaging.",
+    "•\tVarious weight cardboard cases containing two pieces of individually vacuumed packed “GUANCIALE PORK JOWL PRODUCT OF ITALY” with “LOT: 263311US” and “BEST IF USE BY DATE: 05.16.27” printed on the label.",
+    "•\tVarious weight individually vacuumed packaged “FERRARINI GUANCIALE DRY-CURED PORK JOWL” with “LOT: 263311US” and “BEST IF USE BY DATE: 05.16.27” printed on the label."
+   ],
+   "field_recall_reason": [
+    "Product Contamination"
+   ],
+   "field_recall_classification": "Class I",
+   "field_recall_type": "Active Recall",
+   "field_establishment": [],
+   "field_recall_url": "http://www.fsis.usda.gov/recalls-alerts/prime-line-distributors-inc--and-ferrarini-usa-inc--recall-imported-ready-eat-pork",
+   "langcode": "English"
+  },
+  {
+   "field_recall_number": "018-2026",
+   "field_recall_date": "2026-08-26",
+   "field_title": "Shanghai Ravioli Corporation Recalls Not Ready-To-Eat Frozen Buffalo Chicken Products Produced Without the Benefit of Inspection",
+   "field_states": [
+    "Maine",
+    "Massachusetts",
+    "New Hampshire",
+    "Rhode Island",
+    "Vermont"
+   ],
+   "field_product_items": [
+    "Cardboard boxes containing 100 pieces of “BUFFALO CHICKEN RANGOON” and “Sell By” dates from July 8, 2026, to June 29, 2027, represented on the label.",
+    "Cardboard boxes containing 120 pieces of “BENEDETTO’S BUFFALO CHICKEN MOZZARELLA STICK” and “Sell By” dates from July 8, 2026, to June 29, 2027, represented on the label."
+   ],
+   "field_recall_reason": [
+    "Produced Without Benefit of Inspection"
+   ],
+   "field_recall_classification": "Class I",
+   "field_recall_type": "Closed Recall",
+   "field_establishment": [],
+   "field_recall_url": "http://www.fsis.usda.gov/recalls-alerts/shanghai-ravioli-corporation-recalls-not-ready-eat-frozen-buffalo-chicken-products",
+   "langcode": "English"
+  },
+  {
+   "field_recall_number": "017-2026",
+   "field_recall_date": "2026-08-17",
+   "field_title": "Indus Foods, LLC DBA Gangothri Foods Recalls Ready-To-Eat Pickled Goat and Chicken Products Produced Without Benefit of Inspection",
+   "field_states": [
+    "Nationwide"
+   ],
+   "field_product_items": [
+    "8-oz. glass jars containing “Gangothri Goat Pickle” ",
+    "8-oz. glass jars containing “Gangothri Gongura Goat Pickle” ",
+    "8-oz. glass jars containing “Gangothri Chicken Pickle” ",
+    "8-oz. glass jars containing “Gangothri Gongura Chicken Pickle” "
+   ],
+   "field_recall_reason": [
+    "Produced Without Benefit of Inspection"
+   ],
+   "field_recall_classification": "Class I",
+   "field_recall_type": "Active Recall",
+   "field_establishment": [],
+   "field_recall_url": "http://www.fsis.usda.gov/recalls-alerts/indus-foods-llc-dba-gangothri-foods-recalls-ready-eat-pickled-goat-and-chicken",
+   "langcode": "English"
+  },
+  {
+   "field_recall_number": "016-2026",
+   "field_recall_date": "2026-08-17",
+   "field_title": "Asian America Trading, Inc. Recalls Ineligible Siluriformes Fish Products Imported From the People’s Republic of China",
+   "field_states": [
+    "California"
+   ],
+   "field_product_items": [
+    "50-g plastic bag packages containing “CRISPY FISH SKIN CRACKERS, SALTED EGG.” ",
+    "50-g plastic bag packages containing “FISH SKIN CRACKERS, SPICY FLAVOUR”",
+    "50-g plastic bag packages containing “UN CHI CRISP FISH SKIN, Wasabi Flavour”",
+    "50-g plastic bag packages containing “UN CHI CRISP FISH SKIN, Laver Flavour.”"
+   ],
+   "field_recall_reason": [
+    "Import Violation"
+   ],
+   "field_recall_classification": "Class I",
+   "field_recall_type": "Closed Recall",
+   "field_establishment": [],
+   "field_recall_url": "http://www.fsis.usda.gov/recalls-alerts/asian-america-trading-inc--recalls-ineligible-siluriformes-fish-products-imported",
+   "langcode": "English"
+  },
+  {
+   "field_recall_number": "PHA-08082026-01",
+   "field_recall_date": "2026-08-08",
+   "field_title": "FSIS Issues Public Health Alert for Various Meat and Poultry Products Containing FDA-Regulated Jalapeños That Have Been Recalled Due To Possible Salmonella Contamination",
+   "field_states": [
+    "Nationwide"
+   ],
+   "field_product_items": [],
+   "field_recall_reason": [
+    "Product Contamination"
+   ],
+   "field_recall_classification": "Public Health Alert",
+   "field_recall_type": "Public Health Alert",
+   "field_establishment": [],
+   "field_recall_url": "http://www.fsis.usda.gov/recalls-alerts/fsis-issues-public-health-alert-various-meat-and-poultry-products-containing-fda-0",
+   "langcode": "English"
+  },
+  {
+   "field_recall_number": "015-2026",
+   "field_recall_date": "2026-08-08",
+   "field_title": "  City Foods, Inc. Recalls Ready-To-Eat Pastrami and Corned Beef Products Due To Possible Listeria Contamination",
+   "field_states": [
+    "Nationwide"
+   ],
+   "field_product_items": [
+    "10-lb. cardboard boxes containing 2- to 5-lb. pieces of “Midamar Premium Beef Pastrami” with case code “19410” printed on the box label.",
+    "Various weight 20- to 30-lb. cardboard boxes containing 2-3 pieces of “BEA’S BEST COOKED CORNED BEEF BRISKET” with case code “18919” printed on the box label.",
+    "Various weight 20- to 30-lb. cardboard boxes containing 2-3 pieces of “KIRSCH DELICATESSEN STYLE COOKED CORNED BEEF BRISKET” with case code “19751” printed on the box label."
+   ],
+   "field_recall_reason": [
+    "Product Contamination"
+   ],
+   "field_recall_classification": "Class I",
+   "field_recall_type": "Closed Recall",
+   "field_establishment": [
+    "City Foods, Inc./Bea&#039;s Best Corned Beef"
+   ],
+   "field_recall_url": "http://www.fsis.usda.gov/recalls-alerts/city-foods-inc--recalls-ready-eat-pastrami-and-corned-beef-products-due-possible",
+   "langcode": "English"
+  },
+  {
+   "field_recall_number": "014-2026",
+   "field_recall_date": "2026-08-07",
+   "field_title": "Shan Distribution Network, Inc. Recalls Ineligible Frozen Siluriformes Breaded Fish Fillet and Stick Products Imported from the United Arab Emirates",
+   "field_states": [
+    "Illinois",
+    "Indiana",
+    "Iowa",
+    "Michigan",
+    "Minnesota",
+    "Missouri",
+    "Ohio",
+    "Wisconsin"
+   ],
+   "field_product_items": [
+    "13.75-oz. boxes containing Al Kabeer spicy “Zing Fish Fillets Breaded Partially Cooke&quot;d Swai Fish Fillets”",
+    "10.58-oz. boxes containing Al Kabeer “Fish Sticks Breaded Swai Fish&quot;",
+    "330-g boxes containing Al Kabeer “Breaded Fish Fillets”"
+   ],
+   "field_recall_reason": [
+    "Import Violation"
+   ],
+   "field_recall_classification": "Class I",
+   "field_recall_type": "Active Recall",
+   "field_establishment": [],
+   "field_recall_url": "http://www.fsis.usda.gov/recalls-alerts/shan-distribution-network-inc--recalls-ineligible-frozen-siluriformes-breaded-fish",
+   "langcode": "English"
+  },
+  {
+   "field_recall_number": "013-2026",
+   "field_recall_date": "2026-08-07",
+   "field_title": "Corte Argentino USA LLC Recalls Raw Beef Products Imported Without The Benefit Of Import Reinspection",
+   "field_states": [
+    "Florida",
+    "Texas"
+   ],
+   "field_product_items": [
+    "Various weight cardboard boxes containing “FRIGORIFICO GORINA SAIC” boneless beef “TOP SIRLOIN BUTT” (“CUADRIL SIN TAPA”)",
+    "Various weight cardboard boxes containing “FRIGORIFICO GORINA SAIC” boneless beef “EYE ROUND” (“PECETO”)",
+    "Various weight cardboard boxes containing “FRIGORIFICO GORINA SAIC” boneless beef “TOPSIDE CAP OFF” (“NALGA AD S/TAPA”)",
+    "Various weight cardboard boxes containing “FRIGORIFICO GORINA SAIC” boneless beef “FLAT” (“CARNAZA CUADRADA”)",
+    "Various weight cardboard boxes containing “FRIGORIFICO GORINA SAIC” boneless beef “KNUCKLE” (“BOLA DE LOMO”)"
+   ],
+   "field_recall_reason": [
+    "Import Violation"
+   ],
+   "field_recall_classification": "Class I",
+   "field_recall_type": "Active Recall",
+   "field_establishment": [],
+   "field_recall_url": "http://www.fsis.usda.gov/recalls-alerts/corte-argentino-usa-llc-recalls-raw-beef-products-imported-without-benefit-import",
+   "langcode": "English"
+  },
+  {
+   "field_recall_number": "012-2026",
+   "field_recall_date": "2026-07-31",
+   "field_title": "Ukrop&#039;s Homestyle Foods Recalls Spaghetti and Chicken Products Due to Possible Foreign Matter Contamination",
+   "field_states": [
+    "North Carolina",
+    "Virginia",
+    "West Virginia"
+   ],
+   "field_product_items": [
+    "62.4-oz. ALUMINUM PAN WITH PLASTIC OVERWRAP containing &quot;Ukrop&#039;s Baked Spaghetti - Bulk&quot; and BEST BY dates from 07/08/26 through 08/05/26 on the label and bears establishment number &quot;EST. 19979&quot; in the mark of inspection.",
+    "14.8-oz. CARDBOARD TRAY WITH PLASTIC OVERWRAP containing &quot;Ukrop&#039;s Baked Spaghetti&quot; and BEST BY dates from 07/08/26 through 08/05/26 on the label and bears establishment number &quot;EST. 19979&quot; in the mark of inspection.",
+    "48-oz. ALUMINUM PAN WITH PLASTIC OVERWRAP containing &quot;Ukrop&#039;s Chicken Cobbler - Bulk&quot; and BEST BY dates from 07/08/26 through 08/05/26 on the label and bears establishment number &quot;P-19979&quot; in the mark of inspection.",
+    "11.6-oz. CARDBOARD TRAY WITH PLASTIC OVERWRAP containing &quot;Ukrop&#039;s Chicken Cobbler&quot; and BEST BY dates from 07/08/26 through 08/05/26 on the label and bears establishment number &quot;P-19979&quot; in the mark of inspection."
+   ],
+   "field_recall_reason": [
+    "Product Contamination"
+   ],
+   "field_recall_classification": "Class I",
+   "field_recall_type": "Closed Recall",
+   "field_establishment": [
+    "Ukrop&#039;s Homestyle Foods"
+   ],
+   "field_recall_url": "http://www.fsis.usda.gov/recalls-alerts/ukrops-homestyle-foods-recalls-spaghetti-and-chicken-products-due-possible-foreign",
+   "langcode": "English"
+  },
+  {
+   "field_recall_number": "PHA-07302026-01",
+   "field_recall_date": "2026-07-30",
+   "field_title": "FSIS Issues Public Health Alert for Chicken Salad Product that May Be Contaminated with Listeria",
+   "field_states": [
+    "Oregon",
+    "Washington"
+   ],
+   "field_product_items": [
+    "8-oz. plastic packages containing portions of &quot;CURRY CHICKEN SALAD&quot; with a USE BY: 07/30/2026 date stamp on the lid.   "
+   ],
+   "field_recall_reason": [
+    "Product Contamination"
+   ],
+   "field_recall_classification": "Public Health Alert",
+   "field_recall_type": "Public Health Alert",
+   "field_establishment": [
+    "Mary&#039;s Harvest Fresh Foods, Inc."
+   ],
+   "field_recall_url": "http://www.fsis.usda.gov/recalls-alerts/fsis-issues-public-health-alert-chicken-salad-product-may-be-contaminated-listeria",
+   "langcode": "English"
+  },
+  {
+   "field_recall_number": "PHA-07292026-01",
+   "field_recall_date": "2026-07-29",
+   "field_title": "FSIS Issues Public Health Alert for Steak Burrito Product Due to Misbranding and Undeclared Allergen",
+   "field_states": [
+    "Illinois",
+    "Michigan",
+    "Minnesota"
+   ],
+   "field_product_items": [
+    "3-lb 2-oz. carton containing 10 individually wrapped &quot;RED&#039;S STEAK CILANTRO AND LIME BURRITO&quot; on the front package label with production lots, L1 SD6170 1503, L1 SD6170 1535, L1 SD6170 1606, L1 SD6170 1639, L1 SD6170 1717, L1 SD6170 1750, L1 SD6170 1831, L"
+   ],
+   "field_recall_reason": [
+    "Misbranding",
+    "Unreported Allergens"
+   ],
+   "field_recall_classification": "Public Health Alert",
+   "field_recall_type": "Public Health Alert",
+   "field_establishment": [
+    "RED&#039;S ALL NATURAL, LLC."
+   ],
+   "field_recall_url": "http://www.fsis.usda.gov/recalls-alerts/fsis-issues-public-health-alert-steak-burrito-product-due-misbranding-and-undeclared",
+   "langcode": "English"
+  },
+  {
+   "field_recall_number": "011-2026",
+   "field_recall_date": "2026-07-24",
+   "field_title": "  Maple Leaf Foods Inc. Recalls Not Ready-To-Eat (NRTE) Bacon Product Imported without the Benefit of Import Reinspection",
+   "field_states": [
+    "Idaho",
+    "Oregon",
+    "Washington"
+   ],
+   "field_product_items": [
+    "12-oz vacuum package of &quot;Royale Natural Applewood Smoked ALL NATURAL Uncured Bacon Product of Canada&quot; with sell by dates of &quot;SEP 01 2026&quot; and &quot;SEP 07 2026&quot; printed on the side of the package",
+    "12-oz vacuum package of &quot;TOP VALU Uncured Hardwood Smoked Bacon PRODUCT OF CANADA&quot; with various sell by dates of &quot;SEP 01 2026&quot;, &quot;SEP 02 2026&quot;, &quot;SEP 04 2026&quot;, &quot;SEP 05 2026&quot;, and &quot;SEP 07 2026&quot; printed on the side of the package"
+   ],
+   "field_recall_reason": [
+    "Import Violation"
+   ],
+   "field_recall_classification": "Class I",
+   "field_recall_type": "Active Recall",
+   "field_establishment": [],
+   "field_recall_url": "http://www.fsis.usda.gov/recalls-alerts/maple-leaf-foods-inc--recalls-not-ready-eat-nrte-bacon-product-imported-without",
+   "langcode": "English"
+  },
+  {
+   "field_recall_number": "010-2026",
+   "field_recall_date": "2026-07-23",
+   "field_title": "BCI Foods, Inc. Recalls Chicken Noodle Soup Product Imported without the Benefit of Import Reinspection",
+   "field_states": [
+    "Oklahoma"
+   ],
+   "field_product_items": [
+    "10.5-oz can of &quot;tasty KITCHEN Chicken Noodle Condensed Soup PRODUCT OF CANADA&quot; with best by date of &quot;2028 FE 04&quot; and lot code &quot;5 9 2 26 035&quot;"
+   ],
+   "field_recall_reason": [
+    "Import Violation"
+   ],
+   "field_recall_classification": "Class I",
+   "field_recall_type": "Active Recall",
+   "field_establishment": [],
+   "field_recall_url": "http://www.fsis.usda.gov/recalls-alerts/bci-foods-inc--recalls-chicken-noodle-soup-product-imported-without-benefit-import",
+   "langcode": "English"
+  },
+  {
+   "field_recall_number": "PHA-07032026-01",
+   "field_recall_date": "2026-07-03",
+   "field_title": " FSIS Issues Public Health Alert for A Ready-To-Eat Beef Jerky Product Due to Misbranding and Undeclared Allergen",
+   "field_states": [
+    "Oklahoma"
+   ],
+   "field_product_items": [
+    "2.5-oz. plastic bag packages of “STREET’S BEEF Jerky TERIYAKI FLAVOR” with lot codes 0701271, 0520271, 04014271, 0415271, 0211271, 1015261, 1016261, 1029261, 0909261, 0806261, and 0820261 shown on a sticker on the packaging."
+   ],
+   "field_recall_reason": [
+    "Unreported Allergens"
+   ],
+   "field_recall_classification": "Public Health Alert",
+   "field_recall_type": "Public Health Alert",
+   "field_establishment": [
+    "GoodTimes Beef Jerky"
+   ],
+   "field_recall_url": "http://www.fsis.usda.gov/recalls-alerts/fsis-issues-public-health-alert-a-ready-eat-beef-jerky-product-due-misbranding-and",
+   "langcode": "English"
+  },
+  {
+   "field_recall_number": "PHA-06252026-02",
+   "field_recall_date": "2026-06-25",
+   "field_title": "FSIS Issues Public Health Alert for Boneless Chicken Breast Product Due to Misbranding and Undeclared Allergens",
+   "field_states": [
+    "Alabama",
+    "Alaska",
+    "Idaho",
+    "Illinois",
+    "Indiana",
+    "Kentucky",
+    "Tennessee",
+    "Oregon",
+    "Washington"
+   ],
+   "field_product_items": [
+    "21-oz. vacuum-packed packages of “PRIVATE SELECTION Honey Dijon Boneless Skinless Chicken Breasts with Rib Meat” with “BEST IF USED BY: JUN 28 2026” and lot code “15326A” printed on the packaging. "
+   ],
+   "field_recall_reason": [
+    "Misbranding",
+    "Unreported Allergens"
+   ],
+   "field_recall_classification": "Public Health Alert",
+   "field_recall_type": "Public Health Alert",
+   "field_establishment": [
+    "FW Farms LLC."
+   ],
+   "field_recall_url": "http://www.fsis.usda.gov/recalls-alerts/fsis-issues-public-health-alert-boneless-chicken-breast-product-due-misbranding-and",
+   "langcode": "English"
+  },
+  {
+   "field_recall_number": "PHA-06252026-01",
+   "field_recall_date": "2026-06-25",
+   "field_title": "FSIS Issues Public Health Alert for Ready-To-Eat Chicken Caesar Wrap Products That May Be Contaminated With Listeria",
+   "field_states": [
+    "Minnesota",
+    "Wisconsin"
+   ],
+   "field_product_items": [
+    "8.7-oz. clear plastic wrapped packages of “FRESH SEASONS Kitchen Chicken Caesar Wrap” with “Sell By:6/24/2026” printed on the back label above the ingredients. "
+   ],
+   "field_recall_reason": [
+    "Product Contamination"
+   ],
+   "field_recall_classification": "Public Health Alert",
+   "field_recall_type": "Public Health Alert",
+   "field_establishment": [
+    "Taher, Inc."
+   ],
+   "field_recall_url": "http://www.fsis.usda.gov/recalls-alerts/fsis-issues-public-health-alert-ready-eat-chicken-caesar-wrap-products-may-be",
+   "langcode": "English"
+  },
+  {
+   "field_recall_number": "009-2026",
+   "field_recall_date": "2026-06-25",
+   "field_title": "Reser’s Fine Foods, Inc. Recalls Ready-To-Eat Pasta Salad Product Due to Misbranding and Undeclared Allergens",
+   "field_states": [
+    "Alabama",
+    "Florida",
+    "North Carolina",
+    "New Jersey",
+    "South Carolina",
+    "Tennessee",
+    "Virginia"
+   ],
+   "field_product_items": [
+    "5-lb. plastic tub packages of “Molly’s Kitchen California Style Pasta Salad” with “USE BY JUL/16/26 430” printed on the side of the plastic tub."
+   ],
+   "field_recall_reason": [
+    "Misbranding",
+    "Unreported Allergens"
+   ],
+   "field_recall_classification": "Class I",
+   "field_recall_type": "Closed Recall",
+   "field_establishment": [
+    "Reser&#039;s Fine Foods"
+   ],
+   "field_recall_url": "http://www.fsis.usda.gov/recalls-alerts/resers-fine-foods-inc--recalls-ready-eat-pasta-salad-product-due-misbranding-and",
+   "langcode": "English"
+  },
+  {
+   "field_recall_number": "008-2026",
+   "field_recall_date": "2026-06-18",
+   "field_title": "Power Plate Meals, LLC Recalls Frozen Meatloaf Products Due to Misbranding and Undeclared Allergens",
+   "field_states": [
+    "Minnesota",
+    "North Dakota",
+    "South Dakota"
+   ],
+   "field_product_items": [
+    "13.3-oz. vacuum sealed plastic tray packages containing “POWER PLATE MEALS MEATLOAF WITH GARLIC MASHED POTATOES” and “USE BY” dates between 6/25/26 and 6/10/27."
+   ],
+   "field_recall_reason": [
+    "Unreported Allergens"
+   ],
+   "field_recall_classification": "Class II",
+   "field_recall_type": "Active Recall",
+   "field_establishment": [],
+   "field_recall_url": "http://www.fsis.usda.gov/recalls-alerts/power-plate-meals-llc-recalls-frozen-meatloaf-products-due-misbranding-and",
+   "langcode": "English"
+  },
+  {
+   "field_recall_number": "007-2026",
+   "field_recall_date": "2026-05-31",
+   "field_title": "Synear Foods USA, LLC Recalls Frozen Pork and Crab Soup Dumpling Products Due to Misbranding and Undeclared Allergens",
+   "field_states": [
+    "California",
+    "New Jersey",
+    "Washington"
+   ],
+   "field_product_items": [
+    "13.23-oz. plastic bag packages containing “Synear SUPREME SOUP DUMPLING PORK &amp; CRAB” and “BEST BY” dates 15 OCT 2026, 10 NOV 2026, 23 DEC 2026, 26 JAN 2027, or 23 FEB 2027.",
+    "375-g. plastic bag packages containing “Synear SUPREME SOUP DUMPLING DUMPLINGS À LA SOUPE SUPRÊME PORK &amp; CRAB PORC ET CRABE” with “Product of USA/Produit des E.-U” and best by dates 2026 OC 15 or 2027 JA 26. "
+   ],
+   "field_recall_reason": [
+    "Misbranding",
+    "Unreported Allergens"
+   ],
+   "field_recall_classification": "Class I",
+   "field_recall_type": "Closed Recall",
+   "field_establishment": [
+    "Synear Foods USA, LLC"
+   ],
+   "field_recall_url": "http://www.fsis.usda.gov/recalls-alerts/synear-foods-usa-llc-recalls-frozen-pork-and-crab-soup-dumpling-products-due",
+   "langcode": "English"
+  },
+  {
+   "field_recall_number": "PHA-05242026-01",
+   "field_recall_date": "2026-05-24",
+   "field_title": "FSIS Issues Public Health Alert for Beef Kofta Products Served at The Kebab Shop Restaurant Locations Due to Possible E. Coli O157:H7 Contamination",
+   "field_states": [
+    "California",
+    "Texas",
+    "Florida"
+   ],
+   "field_product_items": [],
+   "field_recall_reason": [
+    "Product Contamination"
+   ],
+   "field_recall_classification": "Public Health Alert",
+   "field_recall_type": "Public Health Alert",
+   "field_establishment": [
+    "Olympia Food Industries, Inc."
+   ],
+   "field_recall_url": "http://www.fsis.usda.gov/recalls-alerts/fsis-issues-public-health-alert-beef-kofta-products-served-kebab-shop-restaurant",
+   "langcode": "English"
+  },
+  {
+   "field_recall_number": "PHA-05092026-01",
+   "field_recall_date": "2026-05-09",
+   "field_title": "FSIS Issues Public Health Alert for Headcheese Deli Meat Products That May Be Contaminated With Listeria",
+   "field_states": [
+    "Indiana",
+    "Illinois"
+   ],
+   "field_product_items": [
+    "Various weight packages packed or sliced in retail delis, containing “DAISY BRAND Meat Products HEADCHEESE,” with a “USE BY” date of “MAR 26 2026.” ",
+    "Various weight packages packed or sliced in retail delis, containing “DAISY BRAND Meat Products HEADCHEESE,” with a red sticker indicating “HOT” and a “USE BY” date of “MAR 26 2026.”  "
+   ],
+   "field_recall_reason": [
+    "Product Contamination"
+   ],
+   "field_recall_classification": "Public Health Alert",
+   "field_recall_type": "Public Health Alert",
+   "field_establishment": [
+    "Crawford Sausage Co., Inc."
+   ],
+   "field_recall_url": "http://www.fsis.usda.gov/recalls-alerts/fsis-issues-public-health-alert-headcheese-deli-meat-products-may-be-contaminated",
+   "langcode": "English"
+  },
+  {
+   "field_recall_number": "PHA-05042026-01",
+   "field_recall_date": "2026-05-04",
+   "field_title": "FSIS Issues Public Health Alert for Ravioli Pasta With Beef Sauce Due to Misbranding and Undeclared Allergens",
+   "field_states": [
+    "Maryland",
+    "New Jersey"
+   ],
+   "field_product_items": [
+    "•\t32-oz. plastic bag packages containing “Giovanni Rana RANA Rustic Beef Sauce &amp; Creamy Burrata Cheese Ravioli” with “use by” dates ranging 05/14/2026 – 06/25/2026"
+   ],
+   "field_recall_reason": [
+    "Mislabeling",
+    "Unreported Allergens"
+   ],
+   "field_recall_classification": "Public Health Alert",
+   "field_recall_type": "Public Health Alert",
+   "field_establishment": [
+    "Rana Meal Solutions, LLC"
+   ],
+   "field_recall_url": "http://www.fsis.usda.gov/recalls-alerts/fsis-issues-public-health-alert-ravioli-pasta-beef-sauce-due-misbranding-and",
+   "langcode": "English"
+  },
+  {
+   "field_recall_number": "PHA-04302026-01",
+   "field_recall_date": "2026-04-30",
+   "field_title": "FSIS Issues Public Health Alert for Various Meat and Poultry Products Containing FDA-Regulated Dairy Products That Have Been Recalled Due to Possible Salmonella Contamination",
+   "field_states": [
+    "Nationwide"
+   ],
+   "field_product_items": [],
+   "field_recall_reason": [
+    "Product Contamination"
+   ],
+   "field_recall_classification": "Public Health Alert",
+   "field_recall_type": "Public Health Alert",
+   "field_establishment": [],
+   "field_recall_url": "http://www.fsis.usda.gov/recalls-alerts/fsis-issues-public-health-alert-various-meat-and-poultry-products-containing-fda",
+   "langcode": "English"
+  },
+  {
+   "field_recall_number": "PHA-04092026-01",
+   "field_recall_date": "2026-04-09",
+   "field_title": "FSIS Issues Public Health Alert for Beef and Pork Products  Due to Misbranding and Undeclared Allergen",
+   "field_states": [
+    "Florida",
+    "Maryland",
+    "New Jersey",
+    "Virginia"
+   ],
+   "field_product_items": [
+    "•\t1.5-lb. clear plastic containers with safety lids containing “QUALITY MEAT SKY RANCH PREMIUM PROVISIONS MARINATED BEEF RIBEYE ROLL /BULGOGI” with “SELL BY” dates of “DEC.11.25” through “APR.16.26”. ",
+    "•\t1.5-lb. clear plastic containers with safety lids containing “QUALITY MEAT SKY RANCH PREMIUM PROVISIONS MARINATED PORK TENDERIZED CT BUTT” with “SELL BY” dates of “DEC.11.25” through “APR.16.26”. ",
+    "•\t1.5-lb. clear plastic containers with safety lids containing “QUALITY MEAT SKY RANCH PREMIUM PROVISIONS MARINATED BEEF SLICED SHORT RIBS /LA STYLE” with “SELL BY” dates of “DEC.11.25” through “APR.16.26”. ",
+    "•\t1.5-lb. clear plastic containers with safety lids containing “QUALITY MEAT SKY RANCH PREMIUM PROVISIONS MRN PORK SINGLE BELLY CHOP / JUMULLEOK” with “SELL BY” dates of “DEC.11.25” through “APR.16.26”. "
+   ],
+   "field_recall_reason": [
+    "Misbranding",
+    "Unreported Allergens"
+   ],
+   "field_recall_classification": "Public Health Alert",
+   "field_recall_type": "Public Health Alert",
+   "field_establishment": [
+    "Sky Ranch Meat LLC"
+   ],
+   "field_recall_url": "http://www.fsis.usda.gov/recalls-alerts/fsis-issues-public-health-alert-beef-and-pork-products-due-misbranding-and",
+   "langcode": "English"
+  },
+  {
+   "field_recall_number": "PHA-04012026-01",
+   "field_recall_date": "2026-04-06",
+   "field_title": "FSIS Retracts Public Health Alert for Frozen, Ready-to-Eat Chicken Nuggets Due to Updated Laboratory Result",
+   "field_states": [
+    "Nationwide"
+   ],
+   "field_product_items": [
+    "29-oz. plastic bags containing approx. 36 “GREAT VALUE FULLY COOKED DINO SHAPED CHICKEN BREAST NUGGETS” with “BEST IF USED BY” date “FEB 10 2027,” lot code” 0416DPO1215,” and establishment number “P44164” printed on the back of the bag."
+   ],
+   "field_recall_reason": [
+    "Product Contamination"
+   ],
+   "field_recall_classification": "Public Health Alert",
+   "field_recall_type": "Public Health Alert",
+   "field_establishment": [
+    "Dorada Foods"
+   ],
+   "field_recall_url": "http://www.fsis.usda.gov/recalls-alerts/fsis-issues-public-health-alert-frozen-dinosaur-shaped-ready-eat-chicken-nuggets-due",
+   "langcode": "English"
+  },
+  {
+   "field_recall_number": "PHA-03252026-01",
+   "field_recall_date": "2026-03-25",
+   "field_title": "FSIS Issues Public Health Alert for Beef and Pork Products Produced Without the Benefit of Inspection",
+   "field_states": [
+    "Nationwide"
+   ],
+   "field_product_items": [
+    "5-lb. box of 8-oz. packages containing a VACUUM-PACKED piece of &quot;BLACKWING ORGANIC MEATS ORGANIC BEEF NEW YORK STRIP STEAK,&quot; with &quot;EST. 1996&quot; inside the USDA mark of inspection.",
+    "10-lb. box of 16-oz. packages containing a VACUUM-PACKED package of &quot;BLACKWING ORGANIC MEATS ORGANIC GROUND BEEF.&quot;",
+    "5-lb. box of 8-oz. packages containing a VACUUM-PACKED package of &quot;BLACKWING ORGANIC MEATS GRASS FED ORGANIC BEEF STEW MEAT,&quot; with &quot;EST. 1996&quot; inside the USDA mark of inspection.",
+    "5-lb. box of 8-oz. packages containing a VACUUM-PACKED piece of &quot;BLACKWING ORGANIC MEATS ORGANIC BEEF STEAK STRIPS,&quot; with &quot;EST. 1996&quot; inside the USDA mark of inspection.",
+    "1-lb. VACUUM-PACKED package of &quot;BLACKWING MEATS BLACKWING BEEF GROUND FROM ORGANIC BEEF,&quot; without USDA mark of inspection.",
+    "12-oz. VACUUM-PACKED package of &quot;BLACKWING MEATS PORK GROUND MADE FROM ORGANIC PORK,&quot; without USDA mark of inspection.",
+    "12-oz. VACUUM-PACKED package of &quot;BLACKWING MEATS Boneless Center Cut Pork Chops 2-6oz Made from Organic Pork,&quot; without the USDA mark of inspection."
+   ],
+   "field_recall_reason": [
+    "Produced Without Benefit of Inspection"
+   ],
+   "field_recall_classification": "Public Health Alert",
+   "field_recall_type": "Public Health Alert",
+   "field_establishment": [],
+   "field_recall_url": "http://www.fsis.usda.gov/recalls-alerts/fsis-issues-public-health-alert-beef-and-pork-products-produced-without-benefit",
+   "langcode": "English"
+  },
+  {
+   "field_recall_number": "PHA-03232026-01",
+   "field_recall_date": "2026-03-23",
+   "field_title": "FSIS Issues Public Health Alert for Ground Beef Products Due to Possible Foreign Material Contamination",
+   "field_states": [
+    "District of Columbia",
+    "Massachusetts",
+    "Maryland",
+    "New Jersey",
+    "Pennsylvania",
+    "Virginia"
+   ],
+   "field_product_items": [
+    "16oz (1 lb.) PLASTIC, VACUUM-PACKED, packages containing &quot;WHITE OAK PASTURES, RADICALLY TRADITIONAL FARMING, GRASSFED GROUND BEEF&quot;."
+   ],
+   "field_recall_reason": [
+    "Product Contamination"
+   ],
+   "field_recall_classification": "Public Health Alert",
+   "field_recall_type": "Public Health Alert",
+   "field_establishment": [
+    "White Oak Pastures"
+   ],
+   "field_recall_url": "http://www.fsis.usda.gov/recalls-alerts/fsis-issues-public-health-alert-ground-beef-products-due-possible-foreign-material",
+   "langcode": "English"
+  },
+  {
+   "field_recall_number": "PHA-03132026-01",
+   "field_recall_date": "2026-03-13",
+   "field_title": "FSIS Issues Public Health Alert For Frozen Ready-To-Eat Turkey Stuffed Pastry Products Due To Misbranding",
+   "field_states": [
+    "Midwest"
+   ],
+   "field_product_items": [
+    " 25.4-oz. boxes containing eight pieces of “LA BOULANGERIE TURKEY PESTO &amp; SWISS CHEESE POCKETS” with lot code 04926 and “best by” date 02/18/27 printed on the packaging."
+   ],
+   "field_recall_reason": [
+    "Misbranding"
+   ],
+   "field_recall_classification": "Public Health Alert",
+   "field_recall_type": "Public Health Alert",
+   "field_establishment": [
+    "Shaw Bakers LLC"
+   ],
+   "field_recall_url": "http://www.fsis.usda.gov/recalls-alerts/fsis-issues-public-health-alert-frozen-ready-eat-turkey-stuffed-pastry-products-due",
+   "langcode": "English"
+  },
+  {
+   "field_recall_number": "005-2026-EXP",
+   "field_recall_date": "2026-03-03",
+   "field_title": "Ajinomoto Foods North America, Inc. Expands Recall for Chicken and Pork Fried Rice, Ramen, and Shu Mai Products Due to Possible Foreign Matter Contamination",
+   "field_states": [
+    "Nationwide"
+   ],
+   "field_product_items": [],
+   "field_recall_reason": [
+    "Product Contamination"
+   ],
+   "field_recall_classification": "Class I",
+   "field_recall_type": "Closed Recall",
+   "field_establishment": [
+    "Ajinomoto Foods North America",
+    "Ajinomoto Toyo Frozen Noodle, Inc.",
+    "Ajinomoto Foods North America"
+   ],
+   "field_recall_url": "http://www.fsis.usda.gov/recalls-alerts/ajinomoto-foods-north-america-inc--expands-recall-chicken-and-pork-fried-rice-ramen",
+   "langcode": "English"
+  },
+  {
+   "field_recall_number": "PHA-03012026-01",
+   "field_recall_date": "2026-03-01",
+   "field_title": "FSIS Issues Public Health Alert for Ready-To-Eat Beef Jerky Products Due to Misbranding and Undeclared Allergen",
+   "field_states": [
+    "Nationwide"
+   ],
+   "field_product_items": [
+    "6-oz. plastic packages containing &quot;DRIED HAWAIIAN STYLE BEEF CRISPS, ORIGINAL SALT &amp;amp; PEPPER FLAVOR&quot;, and bearing establishment number &quot;EST. 2625&quot; inside the USDA mark of inspection.",
+    "4-oz. plastic packages containing &quot;PUNAHELE JERKY COMPANY INC UNCLE K&#039;S BEEF CRISPS&quot;.",
+    "4-oz. plastic packages containing &quot;PUNAHELE JERKY COMPANY INC KILAUEA FIRE SPICY BEEF CRISPS&quot;."
+   ],
+   "field_recall_reason": [
+    "Unreported Allergens"
+   ],
+   "field_recall_classification": "Public Health Alert",
+   "field_recall_type": "Public Health Alert",
+   "field_establishment": [
+    "Punahele Jerky Company, Inc."
+   ],
+   "field_recall_url": "http://www.fsis.usda.gov/recalls-alerts/fsis-issues-public-health-alert-ready-eat-beef-jerky-products-due-misbranding-and",
+   "langcode": "English"
+  },
+  {
+   "field_recall_number": "006-2026",
+   "field_recall_date": "2026-02-22",
+   "field_title": "Rosina Food Products, Inc. Recalls Ready-To-Eat Frozen Meatball Products Due To Possible Foreign Matter Contamination",
+   "field_states": [
+    "Nationwide"
+   ],
+   "field_product_items": [
+    " • 32-oz. printed poly film bag packages of fully cooked frozen “Bremer FAMILY SIZE ITALIAN STYLE MEATBALLS” containing “about 64 meatballs per package” with “BEST BY” date of “10/30/26” with timestamps between 17:08 through 18:20 printed on the back of t"
+   ],
+   "field_recall_reason": [
+    "Product Contamination"
+   ],
+   "field_recall_classification": "Class I",
+   "field_recall_type": "Closed Recall",
+   "field_establishment": [
+    "Rosina Food Products, Inc."
+   ],
+   "field_recall_url": "http://www.fsis.usda.gov/recalls-alerts/rosina-food-products-inc--recalls-ready-eat-frozen-meatball-products-due-possible",
+   "langcode": "English"
+  },
+  {
+   "field_recall_number": "005-2026",
+   "field_recall_date": "2026-02-19",
+   "field_title": "Ajinomoto Foods North America, Inc. Recalls Chicken Fried Rice Products Due to Possible Foreign Matter Contamination",
+   "field_states": [
+    "Nationwide"
+   ],
+   "field_product_items": [
+    "1.53-kg. cardboard packages containing 6 bags of frozen “AJINOMOTO YAKITORI CHICKEN WITH JAPANESE-STYLE FRIED RICE” with BEST BEFORE/MEILLEUR AVANT dates 26 SE 09 through 26 NO 12.",
+    "20-oz. (1 lb. 4 oz.) plastic bag packages containing frozen “TRADER JOE’S Chicken Fried Rice with stir fried rice, vegetables, seasoned dark chicken meat and eggs” with BEST BY dates 9/8/2026 through 11/17/2026."
+   ],
+   "field_recall_reason": [
+    "Product Contamination"
+   ],
+   "field_recall_classification": "Class I",
+   "field_recall_type": "Closed Recall",
+   "field_establishment": [
+    "Ajinomoto Foods North America"
+   ],
+   "field_recall_url": "http://www.fsis.usda.gov/recalls-alerts/ajinomoto-foods-north-america-inc--recalls-chicken-fried-rice-products-due-0",
+   "langcode": "English"
+  },
+  {
+   "field_recall_number": "004-2026",
+   "field_recall_date": "2026-02-19",
+   "field_title": "Sobico USA LLC Recalls Siluriformes Fish Products Imported  Without The Benefit of Import Reinspection",
+   "field_states": [
+    "Indiana",
+    "Michigan",
+    "Nebraska",
+    "New York",
+    "Ohio"
+   ],
+   "field_product_items": [
+    " • 36-lb. cardboard cases containing individually, vacuum-packed and frozen  packages of “Shera BROADHEAD CLARIAS FISH WHOLE/GUTTED” weighing 10-18 oz/pc (300 – 500gr) each. ",
+    " • 36-lb. cardboard cases containing individually, vacuum-packed and frozen  packages of “Shera BROADHEAD CLARIAS FISH STEAKS” weighing 1.8-lbs/package"
+   ],
+   "field_recall_reason": [
+    "Import Violation"
+   ],
+   "field_recall_classification": "Class I",
+   "field_recall_type": "Closed Recall",
+   "field_establishment": [],
+   "field_recall_url": "http://www.fsis.usda.gov/recalls-alerts/sobico-usa-llc-recalls-siluriformes-fish-products-imported-without-benefit-import",
+   "langcode": "English"
+  },
+  {
+   "field_recall_number": "003-2026",
+   "field_recall_date": "2026-02-11",
+   "field_title": "CS Beef Packers, LLC Recalls Ground Beef Products That May be Contaminated With E. Coli O145 ",
+   "field_states": [
+    "California",
+    "Idaho",
+    "Oregon"
+   ],
+   "field_product_items": [
+    "•\tCardboard cases containing eight 10-lb. chubs of “BEEF, COARSE GROUND, 73 L” with case code 18601, “Use/Freeze By: 02/04/26” and time stamps between 07:03 and 08:32 printed on two stickers placed on the outside of the case. The date and time stamps are ",
+    "•\tCardboard cases containing four 10-lb. chubs of “FIRE RIVER FARMS CLASSIC BEEF FINE GROUND 73L” with case code 19583, “Use/Freeze By: 02/04/26” and time stamps between 07:03 and 08:32 printed on two stickers placed on the outside of the case. The date a",
+    "•\tCardboard cases containing four 10-lb. chubs of “FIRE RIVER FARMS CLASSIC BEEF FINE GROUND 81L” with case code 19563, “Use/Freeze By: 02/04/26” and time stamps between 07:03 and 08:32 printed on two stickers placed on the outside of the case. The date a"
+   ],
+   "field_recall_reason": [
+    "Product Contamination"
+   ],
+   "field_recall_classification": "Class I",
+   "field_recall_type": "Closed Recall",
+   "field_establishment": [
+    "CS Beef Packers, LLC"
+   ],
+   "field_recall_url": "http://www.fsis.usda.gov/recalls-alerts/cs-beef-packers-llc-recalls-ground-beef-products-may-be-contaminated-e--coli-o145",
+   "langcode": "English"
+  },
+  {
+   "field_recall_number": "002-2026",
+   "field_recall_date": "2026-02-03",
+   "field_title": "Mays Chemical Company of Puerto Rico Recalls Frozen, Raw Pork Boneless Loins Imported Without Benefit of Import Reinspection",
+   "field_states": [
+    "Puerto Rico"
+   ],
+   "field_product_items": [
+    "Variable weight cardboard boxes bearing a Canadian mark of inspection with an export mark indicating “Cert. No. Cert 336662” and containing “FROZEN PORK LOIN,BONELESS, CENTER 520MM” in plastic liners."
+   ],
+   "field_recall_reason": [
+    "Import Violation"
+   ],
+   "field_recall_classification": "Class I",
+   "field_recall_type": "Closed Recall",
+   "field_establishment": [],
+   "field_recall_url": "http://www.fsis.usda.gov/recalls-alerts/mays-chemical-company-puerto-rico-recalls-frozen-raw-pork-boneless-loins-imported",
+   "langcode": "English"
+  },
+  {
+   "field_recall_number": "001-2026",
+   "field_recall_date": "2026-01-16",
+   "field_title": "Suzanna’s Kitchen Recalls Ready-To-Eat Grilled Chicken Breast Fillet Products due to Possible Listeria Contamination",
+   "field_states": [
+    "Alabama",
+    "Florida",
+    "Georgia",
+    "Missouri",
+    "New Hampshire",
+    "North Carolina",
+    "Ohio"
+   ],
+   "field_product_items": [
+    "•\t10-lb. cases containing two 5 lb. bags of fully cooked grilled chicken breast fillets with rib meat, with lot code 60104 P1382 287 5 J14 on the side of the case and on the package. "
+   ],
+   "field_recall_reason": [
+    "Product Contamination"
+   ],
+   "field_recall_classification": "Class I",
+   "field_recall_type": "Closed Recall",
+   "field_establishment": [
+    "Suzanna&#039;s Kitchen Inc"
+   ],
+   "field_recall_url": "http://www.fsis.usda.gov/recalls-alerts/suzannas-kitchen-recalls-ready-eat-grilled-chicken-breast-fillet-products-due",
+   "langcode": "English"
+  },
+  {
+   "field_recall_number": "042-2025",
+   "field_recall_date": "2025-12-27",
+   "field_title": "Mountain West Food Group, LLC Recalls Ground Beef Products Due To Possible E. Coli O26 Contamination",
+   "field_states": [
+    "California",
+    "Colorado",
+    "Idaho",
+    "Montana",
+    "Pennsylvania",
+    "Washington"
+   ],
+   "field_product_items": [
+    "• 16-oz. (1-lb.) vacuum-sealed packages containing “FORWARD FARMS GRASS-FED GROUND BEEF” with “USE OF FREEZE BY 01/13/26 EST 2083” printed on the side of the packaging. "
+   ],
+   "field_recall_reason": [
+    "Product Contamination"
+   ],
+   "field_recall_classification": "Class I",
+   "field_recall_type": "Closed Recall",
+   "field_establishment": [
+    "Mountain West Food Group LLC"
+   ],
+   "field_recall_url": "http://www.fsis.usda.gov/recalls-alerts/mountain-west-food-group-llc-recalls-ground-beef-products-due-possible-e--coli-o26",
+   "langcode": "English"
+  },
+  {
+   "field_recall_number": "041-2025",
+   "field_recall_date": "2025-12-19",
+   "field_title": "Olympia Provisions Recalls Ready-to-Eat Holiday Kielbasa Sausage Products Due to Possible Foreign Matter Contamination",
+   "field_states": [
+    "Nationwide"
+   ],
+   "field_product_items": [
+    "•\t16-oz. vacuum-sealed plastic packages containing one, fully cooked “OLYMPIA PROVISIONS UNCURED HOLIDAY KIELBASA” with “BEST IF USED BY” date “02/19/26” printed on the side of the label."
+   ],
+   "field_recall_reason": [
+    "Product Contamination"
+   ],
+   "field_recall_classification": "Class I",
+   "field_recall_type": "Closed Recall",
+   "field_establishment": [
+    "Olympia Provisions"
+   ],
+   "field_recall_url": "http://www.fsis.usda.gov/recalls-alerts/olympia-provisions-recalls-ready-eat-holiday-kielbasa-sausage-products-due-possible",
+   "langcode": "English"
+  },
+  {
+   "field_recall_number": "040-2025",
+   "field_recall_date": "2025-12-19",
+   "field_title": "Maître Saladier Inc. Recalls Lorraine Quiche Products Imported Without Benefit of Import Reinspection",
+   "field_states": [
+    "Georgia",
+    "Louisiana",
+    "Maryland",
+    "North Carolina",
+    "Texas"
+   ],
+   "field_product_items": [
+    "•\t19.8-lb. cardboard boxes containing “Lorraine Quiche (with pork) La Madeleine” in metal trays wrapped in plastic. "
+   ],
+   "field_recall_reason": [
+    "Import Violation"
+   ],
+   "field_recall_classification": "Class I",
+   "field_recall_type": "Closed Recall",
+   "field_establishment": [],
+   "field_recall_url": "http://www.fsis.usda.gov/recalls-alerts/maitre-saladier-inc--recalls-lorraine-quiche-products-imported-without-benefit",
+   "langcode": "English"
+  },
+  {
+   "field_recall_number": "039-2025",
+   "field_recall_date": "2025-12-14",
+   "field_title": "La Guadalupana Foods LLC Recalls Ready-To-Eat Frozen Tamales Due to Misbranding and an Undeclared Allergen",
+   "field_states": [
+    "Illinois",
+    "Iowa",
+    "Ohio",
+    "Wisconsin"
+   ],
+   "field_product_items": [
+    "10.9-lb. plastic-lined boxes containing 50 frozen tamales and labeled as “La Guadalupana MILD PORK TAMALES Wrapped in Corn Husks,” with pack date “10/07/25” and best buy date “10/08/26” represented on the label."
+   ],
+   "field_recall_reason": [
+    "Misbranding",
+    "Unreported Allergens"
+   ],
+   "field_recall_classification": "Class I",
+   "field_recall_type": "Closed Recall",
+   "field_establishment": [
+    "La Guadalupana"
+   ],
+   "field_recall_url": "http://www.fsis.usda.gov/recalls-alerts/la-guadalupana-foods-llc-recalls-ready-eat-frozen-tamales-due-misbranding-and",
+   "langcode": "English"
+  },
+  {
+   "field_recall_number": "038-2025",
+   "field_recall_date": "2025-12-12",
+   "field_title": "Suzanna’s Kitchen Recalls Fully Cooked Breaded Chicken Products Due to Misbranding and an Undeclared Allergen",
+   "field_states": [
+    "Nationwide"
+   ],
+   "field_product_items": [
+    "18-lb. cases containing four units of “FULLY COOKED BREADED CHICKEN PORTIONS,” with case code “P-1380 126237 B30851 23:11 K04” printed on the side of the packaging."
+   ],
+   "field_recall_reason": [
+    "Misbranding",
+    "Unreported Allergens"
+   ],
+   "field_recall_classification": "Class I",
+   "field_recall_type": "Closed Recall",
+   "field_establishment": [
+    "Suzanna&#039;s Kitchen"
+   ],
+   "field_recall_url": "http://www.fsis.usda.gov/recalls-alerts/suzannas-kitchen-recalls-fully-cooked-breaded-chicken-products-due-misbranding-and",
+   "langcode": "English"
+  },
+  {
+   "field_recall_number": "037-2025",
+   "field_recall_date": "2025-12-09",
+   "field_title": "Ghanaianway Restaurant and Grocery LLC Recalls Fresh Salted Lamb Products Produced Without Benefit of Inspection",
+   "field_states": [
+    "Connecticut",
+    "Maryland",
+    "Massachusetts",
+    "Minnesota",
+    "New Jersey",
+    "New York",
+    "Pennsylvania"
+   ],
+   "field_product_items": [
+    "15-lb. plastic-lined boxes containing “GHANAIANWAY AFRICAN FOODS SALTED LAMB (KOOBI).” "
+   ],
+   "field_recall_reason": [
+    "Produced Without Benefit of Inspection"
+   ],
+   "field_recall_classification": "Class I",
+   "field_recall_type": "Closed Recall",
+   "field_establishment": [],
+   "field_recall_url": "http://www.fsis.usda.gov/recalls-alerts/ghanaianway-restaurant-and-grocery-llc-recalls-fresh-salted-lamb-products-produced",
+   "langcode": "English"
+  },
+  {
+   "field_recall_number": "036-2025",
+   "field_recall_date": "2025-11-04",
+   "field_title": "Brazilian Taste Recalls Frozen Chicken and Beef Croquette Products Due to Misbranding and an Undeclared Allergen",
+   "field_states": [
+    "Nationwide"
+   ],
+   "field_product_items": [
+    " •\t17.63-oz. plastic bag packages containing 5 “SAINT COXINHA XL CHICKEN CROQUETTES” with “best by” dates ranging “11/04/2025” to “04/19/2026” printed on the back of the packaging.",
+    " •\t15.8-oz. plastic bag packages containing 15 “SAINT COXINHA CHICKEN CROQUETTES” with “best by” dates ranging “11/04/2025” to “04/19/2026” printed on the back of the packaging.",
+    "•\t13.7-oz. plastic bag packages containing 13 “SAINT COXINHA GROUND BEEF CROQUETTE RISOLE DE CARNE” with “best by” date “02/02/2026” printed on the back of the packaging."
+   ],
+   "field_recall_reason": [
+    "Misbranding",
+    "Unreported Allergens"
+   ],
+   "field_recall_classification": "Class I",
+   "field_recall_type": "Closed Recall",
+   "field_establishment": [
+    "Brazilian Taste"
+   ],
+   "field_recall_url": "http://www.fsis.usda.gov/recalls-alerts/brazilian-taste-recalls-frozen-chicken-and-beef-croquette-products-due-misbranding",
+   "langcode": "English"
+  },
+  {
+   "field_recall_number": "035-2025",
+   "field_recall_date": "2025-10-27",
+   "field_title": "E.A. Sween Company Recalls Pulled Pork Sandwich Products Due to Possible Foreign Matter Contamination",
+   "field_states": [
+    "Nationwide"
+   ],
+   "field_product_items": [
+    "5.5-oz. paper wrapped “Deli EXPRESS BBQ PULLED PORK on a sesame bun” sandwiches.   "
+   ],
+   "field_recall_reason": [
+    "Product Contamination"
+   ],
+   "field_recall_classification": "Class I",
+   "field_recall_type": "Closed Recall",
+   "field_establishment": [
+    "E.A. Sween Company"
+   ],
+   "field_recall_url": "http://www.fsis.usda.gov/recalls-alerts/e-a--sween-company-recalls-pulled-pork-sandwich-products-due-possible-foreign-matter",
+   "langcode": "English"
+  },
+  {
+   "field_recall_number": "034-2025",
+   "field_recall_date": "2025-10-25",
+   "field_title": "Hormel Foods Corporation Recalls Ready-To-Eat Frozen Chicken Products Due to Possible Foreign Matter Contamination",
+   "field_states": [
+    "Nationwide"
+   ],
+   "field_product_items": [
+    "•\t13.9-lb. cases containing “Hormel FIRE BRAISED MEATS ALL NATURAL BONELESS CHICKEN THIGH MEAT,” with item code “65009” printed on the label.",
+    "•\t13.8-lb. cases containing 3-oz.“Hormel FIRE BRAISED MEATS ALL NATURAL BONELESS CHICKEN BREAST,” with item code “77531” printed on the label.",
+    "•\t13.8-lb. cases containing 4-oz.“Hormel FIRE BRAISED MEATS ALL NATURAL BONELESS CHICKEN BREAST,” with item code “46750” printed on the label.",
+    "•\t23.8-lb. cases containing 5-oz.“Hormel FIRE BRAISED MEATS ALL NATURAL BONELESS CHICKEN BREAST,” with item code “86206” printed on the label.",
+    "•\t13.95-lb. cases containing “BONELESS CHICKEN BREAST WITH RIB MEAT,” with item code “134394” printed on the label."
+   ],
+   "field_recall_reason": [
+    "Product Contamination"
+   ],
+   "field_recall_classification": "Class I",
+   "field_recall_type": "Closed Recall",
+   "field_establishment": [
+    "Hormel Foods Corporation"
+   ],
+   "field_recall_url": "http://www.fsis.usda.gov/recalls-alerts/hormel-foods-corporation-recalls-ready-eat-frozen-chicken-products-due-possible",
+   "langcode": "English"
+  },
+  {
+   "field_recall_number": "033-2025",
+   "field_recall_date": "2025-10-24",
+   "field_title": "LSI, Inc. Recalls BBQ Pork Jerky Product  Due To Possible Foreign Matter Contamination",
+   "field_states": [
+    "Nationwide"
+   ],
+   "field_product_items": [],
+   "field_recall_reason": [
+    "Product Contamination"
+   ],
+   "field_recall_classification": "Class I",
+   "field_recall_type": "Closed Recall",
+   "field_establishment": [
+    "Link Snacks, Inc."
+   ],
+   "field_recall_url": "http://www.fsis.usda.gov/recalls-alerts/lsi-inc--recalls-bbq-pork-jerky-product-due-possible-foreign-matter-contamination",
+   "langcode": "English"
+  },
+  {
+   "field_recall_number": "032-2025",
+   "field_recall_date": "2025-10-18",
+   "field_title": "M.C.I. Foods, Inc. Recalls Ready-To-Eat Breakfast Burrito and Wrap Products Due to Possible Listeria Contamination",
+   "field_states": [
+    "Nationwide"
+   ],
+   "field_product_items": [],
+   "field_recall_reason": [
+    "Product Contamination"
+   ],
+   "field_recall_classification": "Class I",
+   "field_recall_type": "Closed Recall",
+   "field_establishment": [
+    "M.C.I. Foods, Inc."
+   ],
+   "field_recall_url": "http://www.fsis.usda.gov/recalls-alerts/m-c-i--foods-inc--recalls-ready-eat-breakfast-burrito-and-wrap-products-due-possible",
+   "langcode": "English"
+  },
+  {
+   "field_recall_number": "PHA-10072025-01",
+   "field_recall_date": "2025-10-07",
+   "field_title": "FSIS Issues Public Health Alert For Ready-To-Eat Meals Containing Riced Cauliflower That May Be Contaminated With Listeria ",
+   "field_states": [
+    "Nationwide"
+   ],
+   "field_product_items": [
+    " Sold by Blue Apron: 13.05-oz. plastic tray packages labeled &quot;DISH by Blue Apron Cheesy Chicken Mac with Vegetables&quot; with lot codes 25240 and 25247. The product bears establishment number &quot;P-3081.&quot;",
+    "Sold by Marley Spoon: 10.5-oz. packages labeled “BALANCE by Marley Spoon BBQ Sauce Beef Meatballs with Cheesy Cauliflower” with lot code 25255.  The product bears establishment number “Est. 47718.”"
+   ],
+   "field_recall_reason": [
+    "Product Contamination"
+   ],
+   "field_recall_classification": "Public Health Alert",
+   "field_recall_type": "Public Health Alert",
+   "field_establishment": [
+    "Freshrealm",
+    "FreshRealm"
+   ],
+   "field_recall_url": "http://www.fsis.usda.gov/recalls-alerts/fsis-issues-public-health-alert-ready-eat-meals-containing-riced-cauliflower-may-be",
+   "langcode": "English"
+  },
+  {
+   "field_recall_number": "PHA-10062025-01",
+   "field_recall_date": "2025-10-06",
+   "field_title": "FSIS Issues Public Health Alert For Ready-To-Eat Meals Containing Spinach That May Be Contaminated With Listeria ",
+   "field_states": [
+    "Nationwide"
+   ],
+   "field_product_items": [
+    "•\t10.1-oz. containers of “HELLO FRESH READY MADE MEALS CHEESY PULLED PORK PEPPER PASTA” with establishment number “Est. 47718” and lot code 49107 or establishment number “Est. 2937” and lot codes 48158 or 48840. This item was shipped directly to consumers",
+    " •\t10-oz. containers of “HELLO FRESH READY MADE MEALS UNSTUFFED PEPPERS WITH GROUND TURKEY” with establishment number “P-47718” and lot codes 49569, 50069, 50073, or 50698. This item was shipped directly to consumers by HelloFresh."
+   ],
+   "field_recall_reason": [
+    "Product Contamination"
+   ],
+   "field_recall_classification": "Public Health Alert",
+   "field_recall_type": "Public Health Alert",
+   "field_establishment": [
+    "FreshRealm",
+    "FreshRealm",
+    "FreshRealm"
+   ],
+   "field_recall_url": "http://www.fsis.usda.gov/recalls-alerts/fsis-issues-public-health-alert-ready-eat-meals-containing-spinach-may-be",
+   "langcode": "English"
+  },
+  {
+   "field_recall_number": "031-2025",
+   "field_recall_date": "2025-10-04",
+   "field_title": "Foster Poultry Farms, LLC Recalls Chicken Corn Dog and Ground Turkey on a Stick Products Due To Possible Extraneous Matter Contamination",
+   "field_states": [
+    "Nationwide"
+   ],
+   "field_product_items": [],
+   "field_recall_reason": [
+    "Product Contamination"
+   ],
+   "field_recall_classification": "Class I",
+   "field_recall_type": "Closed Recall",
+   "field_establishment": [
+    "Foster Poultry Farms, LLC"
+   ],
+   "field_recall_url": "http://www.fsis.usda.gov/recalls-alerts/foster-poultry-farms-llc-recalls-chicken-corn-dog-and-ground-turkey-a-stick-products",
+   "langcode": "English"
+  },
+  {
+   "field_recall_number": "030-2025",
+   "field_recall_date": "2025-09-27",
+   "field_title": "The Hillshire Brands Company Recalls Corn Dog and Sausage On A Stick Products Due To Possible Extraneous Matter Contamination",
+   "field_states": [
+    "Nationwide"
+   ],
+   "field_product_items": [],
+   "field_recall_reason": [
+    "Product Contamination"
+   ],
+   "field_recall_classification": "Class I",
+   "field_recall_type": "Closed Recall",
+   "field_establishment": [
+    "The Hillshire Brands Company"
+   ],
+   "field_recall_url": "http://www.fsis.usda.gov/recalls-alerts/hillshire-brands-company-recalls-corn-dog-and-sausage-a-stick-products-due-possible",
+   "langcode": "English"
+  },
+  {
+   "field_recall_number": "PHA-09252025-01",
+   "field_recall_date": "2025-09-25",
+   "field_title": "FSIS Issues Public Health Alert For Ready-To-Eat Meals Containing Pasta That May Be Contaminated with Listeria ",
+   "field_states": [
+    "Nationwide"
+   ],
+   "field_product_items": [
+    "12-oz. clear plastic tray packages labeled “MARKETSIDE LINGUINE WITH BEEF MEATBALLS &amp; MARINARA SAUCE” with “best if used by” dates SEP 22, 2025; SEP 24, 2025; SEP 25, 2025; SEP 29, 2025; SEP 30, 2025; and OCT 01, 2025.",
+    "16-oz. plastic tray packages labeled “TRADER JOE’S CAJUN STYLE BLACKENED CHICKEN BREAST FETTUCINE ALFREDO” with “best if used by” dates 9/20/2025, 9/24/2025, or 9/27/2025 printed on the front label of the packaging. The product bears establishment number "
+   ],
+   "field_recall_reason": [
+    "Product Contamination"
+   ],
+   "field_recall_classification": "Public Health Alert",
+   "field_recall_type": "Public Health Alert",
+   "field_establishment": [
+    "Freshrealm",
+    "FreshRealm",
+    "California Ranch Food Company"
+   ],
+   "field_recall_url": "http://www.fsis.usda.gov/recalls-alerts/fsis-issues-public-health-alert-ready-eat-meals-containing-pasta-may-be-contaminated",
+   "langcode": "English"
+  }
+ ]
+}

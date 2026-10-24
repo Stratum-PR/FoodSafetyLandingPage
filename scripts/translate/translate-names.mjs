@@ -1,9 +1,10 @@
-/* Spanish names for the FDA recall products shown on Alertas PR.
-   Fetches the last 12 months of FDA recalls exactly as /api/recalls does (Puerto Rico + nationwide),
-   asks Claude for a short Spanish name for every product not translated yet, and writes
-   data/fda-es.json ({ updated, model, names: { "<FDA product text>": "<nombre en español>" } }).
+/* Spanish names for the recall products shown on Alertas PR.
+   Collects the last 12 months exactly as /api/recalls does (Puerto Rico + nationwide): FDA recalls
+   live from openFDA, USDA FSIS notices from the copy saved in data/fsis-recent.json (FSIS blocks
+   scripts). Asks Claude for a short Spanish name for every product or title not translated yet and
+   writes data/names-es.json ({ updated, model, names: { "<English text>": "<nombre en español>" } }).
    Names that no longer appear are dropped, so the file only covers the current year.
-   Run by .github/workflows/translate-fda.yml; locally: ANTHROPIC_API_KEY=… node scripts/translate/translate-fda.mjs */
+   Run by .github/workflows/translate-names.yml; locally: ANTHROPIC_API_KEY=… node scripts/translate/translate-names.mjs */
 import Anthropic from "@anthropic-ai/sdk";
 import fs from "node:fs";
 import path from "node:path";
@@ -13,17 +14,19 @@ import { fileURLToPath } from "node:url";
 const require = createRequire(import.meta.url);
 const recalls = require("../../api/recalls.js"); // same queries and product text as the site
 const here = path.dirname(fileURLToPath(import.meta.url));
-const OUT = path.join(here, "../../data/fda-es.json");
+const OUT = path.join(here, "../../data/names-es.json");
+const FSIS = path.join(here, "../../data/fsis-recent.json");
 const MODEL = "claude-opus-5-5";
 const BATCH = 40;
 
-const SYSTEM = `You translate U.S. FDA food recall product descriptions into short Spanish product names for shoppers in Puerto Rico.
+const SYSTEM = `You translate U.S. FDA and USDA food recall product descriptions and notice titles into short Spanish product names for shoppers in Puerto Rico.
 For each item, write the name a shopper would recognize on the shelf: the kind of product, then the brand and the flavor or variety when the text gives them (for example "Galletas de vainilla Great Value" or "Lechuga romana picada Taylor Farms").
 Rules:
 - Keep brand names and trademarks exactly as written; never translate them.
 - Leave out UPC codes, lot codes, weights, package counts and case counts.
 - Use the Spanish used in Puerto Rico (maní, habichuelas, guineo, mantecado, salchichas).
 - If the text is already in Spanish, clean it up the same way.
+- For a USDA notice title ("X Recalls Y Due to Z"), name the product and the company, for example "Salchichas de pollo de Example Farms".
 - At most 80 characters. If the text names several products, name the main one and add "y otros".
 Return one entry per input item, with the same i.`;
 
@@ -80,10 +83,15 @@ async function main() {
     const { results } = await recalls.fetchScope(scope);
     for (const ev of recalls.toEvents(results, scope)) for (const p of ev.prods) names.add(p);
   }
+  let saved = [];
+  try { saved = JSON.parse(fs.readFileSync(FSIS, "utf8")).records || []; } catch (err) { /* no USDA copy */ }
+  for (const scope of ["pr", "nat"]) {
+    for (const ev of recalls.fsisEvents(saved, scope)) for (const p of [ev.product, ...ev.prods]) names.add(p);
+  }
   let old = {};
   try { old = JSON.parse(fs.readFileSync(OUT, "utf8")).names || {}; } catch (err) { /* first run */ }
   const todo = [...names].filter((n) => !old[n]);
-  console.log(`${names.size} FDA products in the last 12 months; ${names.size - todo.length} already translated; ${todo.length} to translate`);
+  console.log(`${names.size} FDA/USDA names in the last 12 months; ${names.size - todo.length} already translated; ${todo.length} to translate`);
 
   const fresh = {};
   let failed = 0;
@@ -105,7 +113,7 @@ async function main() {
   for (const n of [...names].sort()) if (old[n] || fresh[n]) merged[n] = old[n] || fresh[n];
   if (JSON.stringify(merged) === JSON.stringify(old)) { console.log("no changes"); return; } // keep the file (and its date) as is
   fs.writeFileSync(OUT, JSON.stringify({ updated: new Date().toISOString().slice(0, 10), model: MODEL, names: merged }, null, 1) + "\n");
-  console.log(`wrote ${Object.keys(merged).length} names to data/fda-es.json (${Object.keys(fresh).length} new, ${failed} failed)`);
+  console.log(`wrote ${Object.keys(merged).length} names to data/names-es.json (${Object.keys(fresh).length} new, ${failed} failed)`);
   if (todo.length && !Object.keys(fresh).length) process.exitCode = 1; // nothing worked: show the run as failed
 }
 

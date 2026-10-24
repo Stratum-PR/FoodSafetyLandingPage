@@ -1,19 +1,23 @@
-# Keeps data/fda-es.json (Spanish names for FDA recall products on Alertas PR) up to date.
-# Runs every Monday and on demand (Actions → "Translate FDA product names" → Run workflow).
+# Keeps data/names-es.json (Spanish names for FDA and USDA recall products on Alertas PR) up to date.
+# Runs every Monday, when a new USDA copy (data/fsis-recent.json) is pushed, and on demand
+# (Actions → "Translate product names" → Run workflow).
 # Needs the repository secret ANTHROPIC_API_KEY. A changed file is committed to main, which
 # deploys the site with the new names.
-name: Translate FDA product names
+name: Translate product names
 
 on:
   schedule:
     - cron: "41 10 * * 1" # Mondays, 6:41 a.m. in Puerto Rico
   workflow_dispatch:
+  push:
+    branches: [main]
+    paths: [data/fsis-recent.json]
 
 permissions:
   contents: write
 
 concurrency:
-  group: translate-fda
+  group: translate-names
   cancel-in-progress: false
 
 jobs:
@@ -28,15 +32,15 @@ jobs:
       - name: Install the Anthropic SDK
         working-directory: scripts/translate
         run: npm ci --no-audit --no-fund
-      - name: Translate new product names
+      - name: Translate new names
         env:
           ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
-        run: node scripts/translate/translate-fda.mjs
+        run: node scripts/translate/translate-names.mjs
       - name: Commit the names
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add data/fda-es.json
+          git add data/names-es.json
           if git diff --cached --quiet; then echo "No new names."; exit 0; fi
-          git commit -m "Alertas PR: update Spanish names for FDA products"
+          git commit -m "Alertas PR: update Spanish product names"
           git push

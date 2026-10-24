@@ -27,12 +27,15 @@ the form/email flow and environment variables.
   browser only, with preferences consent). The previous Walmart self-check home is on branch
   `archivo/landing-fsqms-2026-10`.
 - Alertas PR sources: openFDA (live) and USDA FSIS (meat, poultry, egg products). `/api/recalls` tries the
-  public FSIS Recall API from the server; FSIS's bot protection may refuse it, and then the list is FDA only
-  (`usda: false`). Never imitate a browser to get around it. FSIS notices carry their own Spanish titles.
-- Spanish names for FDA products live in `data/fda-es.json`, written by `.github/workflows/translate-fda.yml`
-  (Mondays + on demand) with `scripts/translate/translate-fda.mjs` (Claude API, needs the GitHub repository
-  secret `ANTHROPIC_API_KEY`). It only translates new names and commits to `main`, which redeploys the site.
-  `.vercelignore` keeps `scripts/` and `.github/` off the site.
+  public FSIS Recall API from the server; FSIS's bot protection may refuse it, and then it uses the copy saved
+  by hand in `data/fsis-recent.json` (`usda: "saved"`). Never imitate a browser to get around it. To refresh
+  the copy: open https://www.fsis.usda.gov/fsis/api/recall/v/1 in a browser, save it (JSON or Safari
+  `.webarchive`), run `python3 dev/fsis-snapshot.py <file>` and commit `data/fsis-recent.json`.
+- Spanish names for FDA products and USDA titles live in `data/names-es.json`, written by
+  `.github/workflows/translate-names.yml` (Mondays, on a new FSIS copy, and on demand) with
+  `scripts/translate/translate-names.mjs` (Claude API, needs the GitHub repository secret `ANTHROPIC_API_KEY`).
+  It only translates new names and commits to `main`, which redeploys the site. FSIS stopped publishing
+  Spanish notices in 2025. `.vercelignore` keeps `scripts/` and `.github/` off the site.
 - Branch `version-pronto` is the "coming soon" variant: Alertas PR is the home (`index.html`), with a
   "StratumScan estará disponible pronto" note and the early-access form (`/api/signup`); `alertas.html`
   only redirects to `/`. The full StratumScan home lives on `home-branding`.
