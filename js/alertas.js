@@ -15,6 +15,8 @@
       loading: "Cargando retiros de la FDA…", fail: "No pudimos cargar los retiros. Inténtalo otra vez en unos minutos.",
       none: "No hay retiros que coincidan con tu búsqueda.",
       shown: (a, b, d) => `Mostrando ${a} de ${b}${d ? ` · Datos de la FDA al ${d}` : ""}`,
+      browse: { 3: "Retiros de los últimos 3 meses", 12: "Retiros del último año" },
+      noneRecent: "No hubo retiros en los últimos 3 meses con estos filtros.", seeYear: "Ver el último año",
       sev: { 1: "Grave · Clase I", 2: "Moderado · Clase II", 3: "Leve · Clase III", 0: "Sin clasificar" },
       more: "Ver más", orig: "Texto original de la FDA:", products: (n) => `y ${n} ${n === 1 ? "producto más" : "productos más"}`,
       notice: (num) => `Buscar el aviso en la FDA (${num})`, share: "Compartir", copied: "Enlace copiado",
@@ -55,6 +57,8 @@
       loading: "Loading FDA recalls…", fail: "We couldn't load the recalls. Try again in a few minutes.",
       none: "No recalls match your search.",
       shown: (a, b, d) => `Showing ${a} of ${b}${d ? ` · FDA data as of ${d}` : ""}`,
+      browse: { 3: "Recalls from the last 3 months", 12: "Recalls from the last year" },
+      noneRecent: "No recalls in the last 3 months with these filters.", seeYear: "See the last year",
       sev: { 1: "Serious · Class I", 2: "Moderate · Class II", 3: "Minor · Class III", 0: "Unclassified" },
       more: "Show more", orig: "Original FDA text:", products: (n) => `and ${n} more ${n === 1 ? "product" : "products"}`,
       notice: (num) => `Look up the notice at the FDA (${num})`, share: "Share", copied: "Link copied",
@@ -116,7 +120,7 @@
   const norm = (s) => s.normalize("NFD").replace(/[̀-ͯ]/g, "").toLowerCase().trim();
   const canKeep = () => !!window.StratumConsent?.allows("preferences");
 
-  const state = { scope: "pr", filter: "all", q: "", shown: PAGE, data: {}, error: false, list: [], checked: false, seenAtLoad: {}, counted: {} };
+  const state = { scope: "pr", period: 3, filter: "all", q: "", shown: PAGE, data: {}, error: false, list: [], checked: false, seenAtLoad: {}, counted: {} };
 
   // ---- storage (only with "preferences" consent) ---------------------------
   function readJSON(k, fallback) {
@@ -332,14 +336,19 @@
     nb.hidden = !fresh; nb.textContent = fresh ? t.newSince(fresh) : "";
 
     const q = norm(state.q);
+    $("#a-browse-title").textContent = t.browse[state.period];
+    // the list opens on the last 3 months; the pulse and "Revisa tu lista" always cover the year
+    const since = new Date(); since.setMonth(since.getMonth() - state.period);
+    const cutoff = `${since.getFullYear()}${String(since.getMonth() + 1).padStart(2, "0")}${String(since.getDate()).padStart(2, "0")}`;
     const items = d.items.filter((x) => {
+      if (x.d < cutoff) return false;
       if (state.filter === "serious" && x.cls !== 1) return false;
       if (["allergen", "micro", "foreign"].includes(state.filter) && !kinds(x)[state.filter]) return false;
       if (state.filter === "mine" && !hitsFor(x).length) return false;
       return !q || haystack(x).includes(q);
     });
     const shown = items.slice(0, state.shown);
-    status.textContent = items.length ? t.shown(shown.length, items.length, fmtDate(d.updated, l)) : t.none;
+    status.textContent = items.length ? t.shown(shown.length, items.length, fmtDate(d.updated, l)) : state.period === 3 ? t.noneRecent : t.none;
 
     list.innerHTML = shown.map((x, i) => {
       const s = summary(x, t), type = mainType(x), hits = hitsFor(x), g = t.g[type];
@@ -357,10 +366,12 @@
           <div class="a-links"><a href="${FDA_SEARCH}" target="_blank" rel="noopener">${esc(t.notice(x.num))}</a><button type="button" data-share="${i}">${esc(t.share)}</button></div>
         </div>
       </article>`;
-    }).join("") + (items.length > shown.length ? `<button type="button" class="btn btn-soft a-more" data-more>${esc(t.more)}</button>` : "");
+    }).join("") + (items.length > shown.length ? `<button type="button" class="btn btn-soft a-more" data-more>${esc(t.more)}</button>` : "")
+      + (!items.length && state.period === 3 ? `<button type="button" class="btn btn-soft a-more" data-year>${esc(t.seeYear)}</button>` : "");
 
     list.onclick = async (e) => {
       if (e.target.closest("[data-more]")) { state.shown += PAGE; render(); return; }
+      if (e.target.closest("[data-year]")) { setPeriod(12); render(); return; }
       const b = e.target.closest("[data-share]");
       if (!b) return;
       const x = shown[+b.dataset.share];
@@ -370,6 +381,11 @@
         else { await navigator.clipboard.writeText(`${text} ${url}`); b.textContent = t.copied; }
       } catch (err) { /* share sheet closed */ }
     };
+  }
+
+  function setPeriod(p) {
+    state.period = p; state.shown = PAGE;
+    document.querySelectorAll("[data-period]").forEach((c) => c.setAttribute("aria-pressed", String(+c.dataset.period === p)));
   }
 
   function setFilter(f) {
@@ -396,7 +412,8 @@
       await show(b.dataset.scope);
       if (state.list.length && state.checked) runCheck();
     }));
-    document.querySelectorAll("[data-filter]").forEach((b) => b.addEventListener("click", () => { setFilter(b.dataset.filter); render(); }));
+    document.querySelectorAll("[data-filter]").forEach((b) => b.addEventListener("click", () => { setFilter(b.dataset.filter); if (b.dataset.filter === "mine") setPeriod(12); render(); }));
+    document.querySelectorAll("[data-period]").forEach((b) => b.addEventListener("click", () => { setPeriod(+b.dataset.period); render(); }));
     $("#a-q").addEventListener("input", (e) => { state.q = e.target.value; state.shown = PAGE; render(); });
 
     $("#a-add").addEventListener("submit", (e) => {
@@ -418,7 +435,7 @@
       }
       if (e.target.closest("#a-run")) { runCheck(); return; }
       if (e.target.closest("[data-see-mine]")) {
-        setFilter("mine"); render();
+        setFilter("mine"); setPeriod(12); render(); // matches come from the whole year
         $("#a-browse-title").scrollIntoView({ behavior: REDUCED ? "auto" : "smooth", block: "start" });
       }
     });
