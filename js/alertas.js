@@ -1,7 +1,13 @@
-/* Alertas PR — list of FDA food recalls from /api/recalls. The FDA's own text is in English,
-   so the most common reasons get a short Spanish/English summary and the original stays below. */
+/* Alertas PR — FDA food recalls from /api/recalls, plus three things that make it personal:
+   "Revisa tu lista" (the visitor's own products checked against the recalls), a pulse of the
+   year in numbers, and plain-language "what it means / what to do" on every card.
+   The FDA's own text is in English, so the most common reasons get a short Spanish/English
+   summary and the original stays below. The visitor's list never leaves the browser; it is
+   remembered across visits only with "preferences" consent (keys listed on cookies.html). */
 (() => {
   const PAGE = 15;
+  const LIST_KEY = "alertas-list";
+  const SEEN_KEY = "alertas-seen";
   const T = {
     es: {
       lead: (n) => `Gratis, de la FDA. ${n} ${n === 1 ? "retiro mencionó" : "retiros mencionaron"} a Puerto Rico en el último año.`,
@@ -12,11 +18,36 @@
       sev: { 1: "Grave · Clase I", 2: "Moderado · Clase II", 3: "Leve · Clase III", 0: "Sin clasificar" },
       more: "Ver más", orig: "Texto original de la FDA:", products: (n) => `y ${n} ${n === 1 ? "producto más" : "productos más"}`,
       notice: (num) => `Buscar el aviso en la FDA (${num})`, share: "Compartir", copied: "Enlace copiado",
-      shareText: (x) => `Retiro de alimentos: ${x}. Más en Alertas PR por Stratum:`,
+      shareText: (x) => `Retiro de alimentos: ${x}. Revisa si te afecta en Alertas PR por StratumScan:`,
       allergen: "Alérgeno no declarado", micro: { listeria: "Posible Listeria", salmonella: "Posible Salmonella", ecoli: "Posible E. coli", botulism: "Riesgo de botulismo", mold: "Moho", cronobacter: "Posible Cronobacter" },
       foreign: "Objeto extraño", glass: "vidrio", plastic: "plástico", metal: "metal", stones: "piedras",
       cgmp: "Fallas en buenas prácticas de manufactura", drug: "Contiene medicamentos no declarados", leadMetal: "Plomo",
       allergens: { milk: "leche", soy: "soya", wheat: "trigo", egg: "huevo", peanut: "maní", "tree nut": "nueces", walnut: "nueces", almond: "almendra", cashew: "cajuil", hazelnut: "avellana", pistachio: "pistacho", pecan: "pecana", sesame: "ajonjolí", fish: "pescado", shellfish: "mariscos", shrimp: "camarón", coconut: "coco" },
+      // Check your list
+      suggest: ["Leche", "Queso", "Maní", "Huevo", "Pollo", "Camarones", "Arándanos", "Harina", "Chocolate", "Especias"],
+      remove: (x) => `Quitar ${x}`, emptyList: "Añade al menos un producto para revisar.",
+      scanning: "Revisando tu lista…",
+      clearT: "¡Todo bien!", clearB: (n, area) => `Ninguno de tus ${n} ${n === 1 ? "producto aparece" : "productos aparece"} en los retiros ${area} de los últimos 12 meses.`,
+      areaPR: "que afectan a Puerto Rico", areaNat: "nacionales",
+      hitT: (h, n) => `${h} de tus ${n} ${n === 1 ? "producto aparece" : "productos aparecen"} en retiros`,
+      hitB: (e) => `Encontramos ${e} ${e === 1 ? "retiro relacionado" : "retiros relacionados"}. Revisa cada aviso: la coincidencia es por palabras y puede no ser tu mismo producto.`,
+      seeMine: "Ver solo mis coincidencias", keep: "Guardamos tu lista en este navegador para tu próxima visita.",
+      keepOff: "Para recordar tu lista en tu próxima visita, acepta las cookies de preferencias.",
+      newSince: (n) => `${n} ${n === 1 ? "aviso nuevo" : "avisos nuevos"} desde tu última visita`,
+      isNew: "Nuevo", inList: "En tu lista:",
+      // Pulse
+      pTotal: "retiros en el último año", pSerious: "graves (Clase I)", pSince: "días desde el último Clase I", pNone: "sin Clase I este año",
+      pMonths: "Retiros por mes", pCauses: "Por qué se retiraron", pMonthTip: (m, n) => `${m}: ${n} ${n === 1 ? "retiro" : "retiros"}`,
+      cause: { micro: "Bacterias u hongos", allergen: "Alérgenos", foreign: "Objetos extraños", other: "Otras causas" },
+      // Guidance
+      guideSum: "Qué significa y qué hacer", gYou: "Si lo tienes en casa", gBiz: "Si tienes un negocio",
+      cls: { 1: "Clase I: la FDA considera que puede causar problemas serios de salud o la muerte.", 2: "Clase II: puede causar problemas de salud temporales o reversibles.", 3: "Clase III: es poco probable que cause problemas de salud.", 0: "La FDA aún no lo ha clasificado." },
+      g: {
+        micro: ["El producto podría tener bacterias u hongos que causan enfermedad.", "No lo consumas. Devuélvelo a la tienda o deséchalo, y limpia las superficies que tocó. Si tienes síntomas, consulta a tu médico.", "Verifica si recibiste ese lote, sepáralo en retención y documenta la acción y su disposición."],
+        allergen: ["La etiqueta no declara un alérgeno que el producto contiene.", "Si tú o alguien en tu casa es alérgico a ese ingrediente, no lo consumas. Si no hay alergia, el riesgo es bajo.", "Revisa si lo usas como ingrediente y si la etiqueta de tus productos debe declararlo."],
+        foreign: ["Podría tener pedazos de un material que no debe estar en el alimento.", "No lo consumas. Devuélvelo a la tienda o deséchalo.", "Revisa el lote recibido y si tu proceso tiene controles para detectarlo, como un detector de metales."],
+        other: ["La FDA lo retiró por otra causa. Lee el texto original del aviso.", "Sigue las instrucciones de la empresa o de la FDA en el aviso.", "Verifica si lo recibiste y documenta tu revisión."],
+      },
     },
     en: {
       lead: (n) => `Free, from the FDA. ${n} ${n === 1 ? "recall" : "recalls"} named Puerto Rico in the last year.`,
@@ -27,23 +58,83 @@
       sev: { 1: "Serious · Class I", 2: "Moderate · Class II", 3: "Minor · Class III", 0: "Unclassified" },
       more: "Show more", orig: "Original FDA text:", products: (n) => `and ${n} more ${n === 1 ? "product" : "products"}`,
       notice: (num) => `Look up the notice at the FDA (${num})`, share: "Share", copied: "Link copied",
-      shareText: (x) => `Food recall: ${x}. More on Alertas PR by Stratum:`,
+      shareText: (x) => `Food recall: ${x}. Check whether it affects you on Alertas PR by StratumScan:`,
       allergen: "Undeclared allergen", micro: { listeria: "Possible Listeria", salmonella: "Possible Salmonella", ecoli: "Possible E. coli", botulism: "Botulism risk", mold: "Mold", cronobacter: "Possible Cronobacter" },
       foreign: "Foreign object", glass: "glass", plastic: "plastic", metal: "metal", stones: "stones",
       cgmp: "Good manufacturing practice failures", drug: "Contains undeclared drugs", leadMetal: "Lead",
       allergens: null,
+      suggest: ["Milk", "Cheese", "Peanuts", "Eggs", "Chicken", "Shrimp", "Blueberries", "Flour", "Chocolate", "Spices"],
+      remove: (x) => `Remove ${x}`, emptyList: "Add at least one product to check.",
+      scanning: "Checking your list…",
+      clearT: "All clear!", clearB: (n, area) => `None of your ${n} ${n === 1 ? "product shows" : "products show"} up in ${area} recalls from the last 12 months.`,
+      areaPR: "Puerto Rico", areaNat: "nationwide",
+      hitT: (h, n) => `${h} of your ${n} ${n === 1 ? "product shows" : "products show"} up in recalls`,
+      hitB: (e) => `We found ${e} related ${e === 1 ? "recall" : "recalls"}. Check each notice: matching is by words and may not be your exact product.`,
+      seeMine: "Show only my matches", keep: "We saved your list in this browser for your next visit.",
+      keepOff: "To remember your list on your next visit, allow preference cookies.",
+      newSince: (n) => `${n} new ${n === 1 ? "alert" : "alerts"} since your last visit`,
+      isNew: "New", inList: "On your list:",
+      pTotal: "recalls in the last year", pSerious: "serious (Class I)", pSince: "days since the last Class I", pNone: "no Class I this year",
+      pMonths: "Recalls per month", pCauses: "Why they were recalled", pMonthTip: (m, n) => `${m}: ${n} ${n === 1 ? "recall" : "recalls"}`,
+      cause: { micro: "Bacteria or mold", allergen: "Allergens", foreign: "Foreign objects", other: "Other causes" },
+      guideSum: "What it means and what to do", gYou: "If you have it at home", gBiz: "If you run a business",
+      cls: { 1: "Class I: the FDA considers it could cause serious health problems or death.", 2: "Class II: it may cause temporary or reversible health problems.", 3: "Class III: it is unlikely to cause health problems.", 0: "The FDA hasn't classified it yet." },
+      g: {
+        micro: ["The product may carry bacteria or mold that cause illness.", "Don't eat it. Return it to the store or throw it away, and clean surfaces it touched. If you have symptoms, see your doctor.", "Check whether you received that lot, put it on hold and document the action and its disposition."],
+        allergen: ["The label doesn't declare an allergen the product contains.", "If you or someone at home is allergic to that ingredient, don't eat it. Without an allergy, the risk is low.", "Check whether you use it as an ingredient and whether your own labels must declare it."],
+        foreign: ["It may contain pieces of a material that shouldn't be in food.", "Don't eat it. Return it to the store or throw it away.", "Check the lot you received and whether your process has controls to catch it, such as a metal detector."],
+        other: ["The FDA recalled it for another reason. Read the original notice text.", "Follow the company's or the FDA's instructions in the notice.", "Check whether you received it and document your review."],
+      },
     },
   };
   const FDA_SEARCH = "https://www.accessdata.fda.gov/scripts/ires/index.cfm";
   const MICRO = [["listeria", /listeria/i], ["salmonella", /salmonella/i], ["ecoli", /e\.?\s?coli|stec/i], ["botulism", /botulin|clostridium/i], ["cronobacter", /cronobacter/i], ["mold", /\bmou?ld/i]];
   const ALLERGENS = ["milk", "soy", "wheat", "egg", "peanut", "tree nut", "walnut", "almond", "cashew", "hazelnut", "pistachio", "pecan", "sesame", "shellfish", "shrimp", "fish", "coconut"];
 
+  // Spanish (and English) words → stems found in the FDA's English text. Keys are accent-free,
+  // singular. Anything not listed is matched as typed (brands, firms, products).
+  const SYN = {
+    leche: "milk|dairy", queso: "cheese", mantequilla: "butter", yogur: "yogurt|yoghurt", yogurt: "yogurt|yoghurt", helado: "ice cream",
+    huevo: "egg", mani: "peanut", cacahuate: "peanut", nuez: "tree nut|walnut|pecan|almond|cashew|hazelnut|pistachio", nuece: "tree nut|walnut|pecan|almond|cashew|hazelnut|pistachio",
+    almendra: "almond", ajonjoli: "sesame", sesamo: "sesame", soya: "soy", trigo: "wheat", harina: "flour", pan: "bread|bun\\b|rolls?\\b",
+    galleta: "cookie|cracker|biscuit", arroz: "rice", pasta: "pasta|noodle", chocolate: "chocolate|cocoa", cafe: "coffee", jugo: "juice",
+    pollo: "chicken|poultry", res: "beef", carne: "meat|beef|pork", cerdo: "pork", jamon: "ham\\b", salchicha: "sausage|hot dog|frank",
+    pescado: "fish", atun: "tuna", salmon: "salmon", camaron: "shrimp|prawn", marisco: "shellfish|seafood",
+    arandano: "blueberr", fresa: "strawberr", mango: "mango", pina: "pineapple", melon: "melon|cantaloupe", lechuga: "lettuce",
+    espinaca: "spinach", tomate: "tomato", cebolla: "onion", pepino: "cucumber", aguacate: "avocado", especia: "spice|seasoning",
+    canela: "cinnamon", pimienta: "pepper", ajo: "garlic", coco: "coconut", azucar: "sugar", miel: "honey", avena: "oat",
+    maiz: "corn\\b|maize", habichuela: "bean", frijol: "bean", brocoli: "broccoli", zanahoria: "carrot", uva: "grape", manzana: "apple",
+    naranja: "orange", limon: "lemon|lime\\b", refresco: "soda|soft drink", bebida: "beverage|drink", suplemento: "supplement",
+    papa: "potato", aceite: "\\boil\\b", dulce: "candy|confection", cereal: "cereal|granola", ensalada: "salad", sopa: "soup",
+    peanut: "peanut", milk: "milk|dairy", egg: "egg", shrimp: "shrimp|prawn", blueberrie: "blueberr", spice: "spice|seasoning",
+  };
+
   const $ = (s) => document.querySelector(s);
   const esc = (s) => String(s).replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
   const L = () => (document.documentElement.lang === "en" ? "en" : "es");
+  const REDUCED = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  const norm = (s) => s.normalize("NFD").replace(/[̀-ͯ]/g, "").toLowerCase().trim();
+  const canKeep = () => !!window.StratumConsent?.allows("preferences");
 
-  const state = { scope: "pr", filter: "all", q: "", shown: PAGE, data: {}, error: false };
+  const state = { scope: "pr", filter: "all", q: "", shown: PAGE, data: {}, error: false, list: [], checked: false, seenAtLoad: {}, counted: {} };
 
+  // ---- storage (only with "preferences" consent) ---------------------------
+  function readJSON(k, fallback) {
+    try { const v = JSON.parse(localStorage.getItem(k) || "null"); return v ?? fallback; } catch (e) { return fallback; }
+  }
+  function saveList() {
+    if (!canKeep()) return;
+    try { localStorage.setItem(LIST_KEY, JSON.stringify(state.list)); } catch (e) { /* storage blocked */ }
+  }
+  function markSeen(scope, items) {
+    if (!canKeep() || !items.length) return;
+    const seen = readJSON(SEEN_KEY, {});
+    seen[scope] = items[0].d; // items are newest first
+    try { localStorage.setItem(SEEN_KEY, JSON.stringify(seen)); } catch (e) { /* ignore */ }
+  }
+  const isNew = (x) => { const s = state.seenAtLoad[state.scope]; return !!s && x.d > s; };
+
+  // ---- classification ------------------------------------------------------
   function kinds(x) {
     const r = x.reason;
     return {
@@ -51,6 +142,11 @@
       micro: MICRO.some(([, re]) => re.test(r)) || /pathogen|bacteri/i.test(r),
       foreign: /foreign|glass|plastic|metal|stone|rubber/i.test(r),
     };
+  }
+  /** One main type per recall, for its icon, guidance and the causes chart. */
+  function mainType(x) {
+    const k = kinds(x);
+    return k.micro ? "micro" : k.allergen ? "allergen" : k.foreign ? "foreign" : "other";
   }
 
   /** Short summary of the FDA reason in the page language, or "" when no rule fits. */
@@ -74,13 +170,142 @@
     return "";
   }
 
-  const title = (p) => {
-    const cut = p.length > 110 ? p.slice(0, 110).replace(/[\s,;.:]+\S*$/, "") + "…" : p;
-    return cut;
+  // ---- the visitor's list --------------------------------------------------
+  const reCache = new Map();
+  function termRe(term) {
+    if (reCache.has(term)) return reCache.get(term);
+    const n = norm(term);
+    const stem = [n, n.replace(/es$/, ""), n.replace(/s$/, "")].map((k) => SYN[k]).find(Boolean);
+    const literal = n.replace(/[.*+?^${}()|[\]\\]/g, "\\$&").replace(/\s+/g, "\\s+");
+    // short words ("res", "pan") must match whole words, or they'd hit "residue", "panel"…
+    const re = new RegExp(`\\b(?:${stem ? stem + "|" : ""}${literal}${n.length < 4 ? "\\b" : ""})`, "i");
+    reCache.set(term, re);
+    return re;
+  }
+  const haystack = (x) => norm(`${x.product} ${x.firm} ${x.reason}`);
+  const hitsFor = (x) => state.list.filter((term) => termRe(term).test(haystack(x)));
+
+  function addTerm(raw) {
+    const term = raw.replace(/\s+/g, " ").trim().slice(0, 40);
+    if (!term || state.list.some((x) => norm(x) === norm(term)) || state.list.length >= 20) return false;
+    state.list.push(term);
+    state.checked = false;
+    saveList();
+    return true;
+  }
+
+  function renderMine() {
+    const t = T[L()], d = state.data[state.scope];
+    const mine = $("#a-mine");
+    mine.innerHTML = state.list.map((term, i) => {
+      const n = state.checked && d ? d.items.filter((x) => termRe(term).test(haystack(x))).length : null;
+      const cls = n === null ? "" : n ? " is-hit" : " is-clear";
+      return `<li class="a-chip${cls}" style="--i:${i}"><span>${esc(term)}</span>${n ? `<b>${n}</b>` : n === 0 ? '<i aria-hidden="true"></i>' : ""}<button type="button" data-remove="${i}" aria-label="${esc(t.remove(term))}">×</button></li>`;
+    }).join("");
+    const lower = state.list.map(norm);
+    $("#a-suggest").innerHTML = t.suggest.filter((s) => !lower.includes(norm(s))).slice(0, 8)
+      .map((s) => `<button type="button" data-suggest="${esc(s)}">+ ${esc(s)}</button>`).join("");
+    const chip = document.querySelector('[data-filter="mine"]');
+    chip.hidden = !state.list.length;
+    if (chip.hidden && state.filter === "mine") setFilter("all");
+  }
+
+  function renderResult() {
+    const l = L(), t = T[l], d = state.data[state.scope], box = $("#a-result");
+    if (!state.checked || !d) { box.innerHTML = ""; box.className = "a-result"; return; }
+    const hitTerms = state.list.filter((term) => d.items.some((x) => termRe(term).test(haystack(x))));
+    const events = d.items.filter((x) => hitsFor(x).length).length;
+    const keep = `<p class="a-keep">${esc(canKeep() ? t.keep : t.keepOff)}</p>`;
+    if (!hitTerms.length) {
+      box.className = "a-result is-clear";
+      box.innerHTML = `<span class="a-badge" aria-hidden="true"><svg viewBox="0 0 52 52"><circle cx="26" cy="26" r="23"/><path d="M15 27l7 7 15-16"/></svg></span>
+        <div><p class="a-result-t">${esc(t.clearT)}</p><p>${esc(t.clearB(state.list.length, state.scope === "pr" ? t.areaPR : t.areaNat))}</p>${keep}</div>`;
+    } else {
+      box.className = "a-result is-hit";
+      box.innerHTML = `<span class="a-badge" aria-hidden="true"><svg viewBox="0 0 52 52"><circle cx="26" cy="26" r="23"/><path d="M26 14v15M26 37h.01"/></svg></span>
+        <div><p class="a-result-t">${esc(t.hitT(hitTerms.length, state.list.length))}</p><p>${esc(t.hitB(events))}</p>
+        <button type="button" class="btn btn-yellow" data-see-mine>${esc(t.seeMine)}</button>${keep}</div>`;
+    }
+  }
+
+  async function runCheck() {
+    const t = T[L()], box = $("#a-check");
+    if (!state.list.length) { $("#a-result").className = "a-result"; $("#a-result").innerHTML = `<p>${esc(t.emptyList)}</p>`; $("#a-term").focus(); return; }
+    state.checked = false; renderMine(); renderResult();
+    if (!REDUCED) {
+      $("#a-result").innerHTML = `<p class="a-scanning">${esc(t.scanning)}</p>`;
+      box.classList.remove("is-scanning"); void box.offsetWidth; box.classList.add("is-scanning");
+      await new Promise((r) => setTimeout(r, 1300 + state.list.length * 90));
+      box.classList.remove("is-scanning");
+    }
+    state.checked = true;
+    renderMine(); renderResult();
+    if (state.filter === "mine") render();
+  }
+
+  // ---- pulse ---------------------------------------------------------------
+  const ymdDate = (s) => new Date(`${s.slice(0, 4)}-${s.slice(4, 6)}-${s.slice(6, 8)}T12:00:00`);
+  function renderPulse() {
+    const l = L(), t = T[l], d = state.data[state.scope], el = $("#a-pulse");
+    if (!d || state.error) { el.innerHTML = ""; return; }
+    const items = d.items;
+    const serious = items.filter((x) => x.cls === 1);
+    const lastI = serious[0] ? Math.max(0, Math.floor((Date.now() - ymdDate(serious[0].d)) / 864e5)) : null;
+    // last 12 months, oldest first
+    const now = new Date(), months = [];
+    for (let i = 11; i >= 0; i--) {
+      const m = new Date(now.getFullYear(), now.getMonth() - i, 1);
+      months.push({ key: `${m.getFullYear()}${String(m.getMonth() + 1).padStart(2, "0")}`, date: m, n: 0 });
+    }
+    items.forEach((x) => { const b = months.find((m) => m.key === x.d.slice(0, 6)); if (b) b.n += 1; });
+    const max = Math.max(1, ...months.map((m) => m.n));
+    const loc = l === "en" ? "en-US" : "es-PR";
+    const causes = { micro: 0, allergen: 0, foreign: 0, other: 0 };
+    items.forEach((x) => { causes[mainType(x)] += 1; });
+    const total = Math.max(1, items.length);
+
+    el.innerHTML = `
+      <div class="a-stats">
+        <div class="a-stat"><b data-count="${items.length}">${items.length}</b><span>${esc(t.pTotal)}</span></div>
+        <div class="a-stat a-stat-bad"><b data-count="${serious.length}">${serious.length}</b><span>${esc(t.pSerious)}</span></div>
+        <div class="a-stat">${lastI === null ? `<b>—</b><span>${esc(t.pNone)}</span>` : `<b data-count="${lastI}">${lastI}</b><span>${esc(t.pSince)}</span>`}</div>
+      </div>
+      <figure class="a-chart">
+        <figcaption>${esc(t.pMonths)}</figcaption>
+        <div class="a-bars">${months.map((m, i) => {
+          const name = m.date.toLocaleDateString(loc, { month: "short", year: "numeric" });
+          return `<span class="a-bar${i === 11 ? " is-now" : ""}" tabindex="0" style="--h:${(m.n / max) * 100}%;--i:${i}" data-tip="${esc(t.pMonthTip(name, m.n))}" aria-label="${esc(t.pMonthTip(name, m.n))}"><i></i><small>${esc(m.date.toLocaleDateString(loc, { month: "narrow" }))}</small></span>`;
+        }).join("")}</div>
+      </figure>
+      <figure class="a-chart">
+        <figcaption>${esc(t.pCauses)}</figcaption>
+        <ul class="a-causes">${Object.entries(causes).sort((a, b) => b[1] - a[1]).map(([k, n], i) => `
+          <li style="--w:${(n / total) * 100}%;--i:${i}" tabindex="0" data-tip="${esc(`${t.cause[k]}: ${n}`)}"><span>${esc(t.cause[k])}</span><b>${Math.round((n / total) * 100)}%</b><i></i></li>`).join("")}
+        </ul>
+      </figure>`;
+    el.classList.remove("is-in"); void el.offsetWidth; el.classList.add("is-in");
+    // numbers count up the first time each area is shown
+    if (!REDUCED && !state.counted[state.scope]) {
+      state.counted[state.scope] = true;
+      el.querySelectorAll("[data-count]").forEach((b) => {
+        const to = +b.dataset.count, t0 = performance.now();
+        const step = (now) => { const p = Math.min(1, (now - t0) / 1100); b.textContent = Math.round(to * (1 - Math.pow(1 - p, 3))); if (p < 1) requestAnimationFrame(step); };
+        requestAnimationFrame(step);
+      });
+    }
+  }
+
+  // ---- list ----------------------------------------------------------------
+  const ICONS = {
+    micro: '<circle cx="12" cy="12" r="5"/><path d="M12 3v4M12 17v4M3 12h4M17 12h4M5.6 5.6l2.8 2.8M15.6 15.6l2.8 2.8M5.6 18.4l2.8-2.8M15.6 8.4l2.8-2.8"/>',
+    allergen: '<path d="M12 3c3 3 5 6 5 9a5 5 0 0 1-10 0c0-3 2-6 5-9z"/><path d="M12 21v-6"/>',
+    foreign: '<path d="M12 3l9 16H3z"/><path d="M12 10v4M12 17h.01"/>',
+    other: '<circle cx="12" cy="12" r="9"/><path d="M12 8v5M12 16h.01"/>',
   };
+  const title = (p) => (p.length > 110 ? p.slice(0, 110).replace(/[\s,;.:]+\S*$/, "") + "…" : p);
   const fmtDate = (s, l) => {
     if (!s) return "";
-    const d = /^\d{8}$/.test(s) ? new Date(`${s.slice(0, 4)}-${s.slice(4, 6)}-${s.slice(6, 8)}T12:00:00`) : new Date(`${s}T12:00:00`);
+    const d = /^\d{8}$/.test(s) ? ymdDate(s) : new Date(`${s}T12:00:00`);
     return d.toLocaleDateString(l === "en" ? "en-US" : "es-PR", { day: "numeric", month: "short", year: "numeric" });
   };
 
@@ -97,26 +322,40 @@
     const l = L(), t = T[l];
     const list = $("#a-list"), status = $("#a-status"), lead = $("#a-lead");
     const d = state.data[state.scope];
-    if (state.error) { lead.textContent = ""; status.textContent = t.fail; list.innerHTML = ""; return; }
+    renderMine(); renderResult();
+    if (state.error) { lead.textContent = ""; status.textContent = t.fail; list.innerHTML = ""; renderPulse(); return; }
     if (!d) { status.textContent = t.loading; return; }
 
     lead.textContent = (state.scope === "pr" ? t.lead : t.leadNat)(d.items.length);
-    const q = state.q.trim().toLowerCase();
+    const fresh = d.items.filter(isNew).length;
+    const nb = $("#a-new");
+    nb.hidden = !fresh; nb.textContent = fresh ? t.newSince(fresh) : "";
+
+    const q = norm(state.q);
     const items = d.items.filter((x) => {
       if (state.filter === "serious" && x.cls !== 1) return false;
       if (["allergen", "micro", "foreign"].includes(state.filter) && !kinds(x)[state.filter]) return false;
-      return !q || `${x.product} ${x.firm} ${x.reason}`.toLowerCase().includes(q);
+      if (state.filter === "mine" && !hitsFor(x).length) return false;
+      return !q || haystack(x).includes(q);
     });
     const shown = items.slice(0, state.shown);
     status.textContent = items.length ? t.shown(shown.length, items.length, fmtDate(d.updated, l)) : t.none;
 
     list.innerHTML = shown.map((x, i) => {
-      const s = summary(x, t);
-      return `<article class="a-item">
-        <div class="a-meta"><span class="a-sev a-sev-${x.cls}">${esc(t.sev[x.cls])}</span><span>${esc(fmtDate(x.d, l))} · ${esc(x.firm)}</span></div>
-        <h2>${esc(title(x.product))}${x.n > 1 ? ` <span class="a-orig">${esc(t.products(x.n - 1))}</span>` : ""}</h2>
-        ${s ? `<p class="a-reason">${esc(s)}</p><p class="a-orig">${esc(t.orig)} ${esc(x.reason)}</p>` : `<p class="a-reason">${esc(x.reason)}</p>`}
-        <div class="a-links"><a href="${FDA_SEARCH}" target="_blank" rel="noopener">${esc(t.notice(x.num))}</a><button type="button" data-share="${i}">${esc(t.share)}</button></div>
+      const s = summary(x, t), type = mainType(x), hits = hitsFor(x), g = t.g[type];
+      return `<article class="a-item a-cls-${x.cls}${hits.length ? " is-mine" : ""}">
+        <span class="a-ico a-ico-${type}" aria-hidden="true"><svg viewBox="0 0 24 24">${ICONS[type]}</svg></span>
+        <div class="a-body">
+          <div class="a-meta"><span class="a-sev a-sev-${x.cls}">${esc(t.sev[x.cls])}</span>${isNew(x) ? `<span class="a-flag">${esc(t.isNew)}</span>` : ""}<span>${esc(fmtDate(x.d, l))} · ${esc(x.firm)}</span></div>
+          <h2>${esc(title(x.product))}${x.n > 1 ? ` <span class="a-orig">${esc(t.products(x.n - 1))}</span>` : ""}</h2>
+          ${hits.length ? `<p class="a-hits">${esc(t.inList)} <b>${esc(hits.join(", "))}</b></p>` : ""}
+          ${s ? `<p class="a-reason">${esc(s)}</p><p class="a-orig">${esc(t.orig)} ${esc(x.reason)}</p>` : `<p class="a-reason">${esc(x.reason)}</p>`}
+          <details class="a-guide"><summary>${esc(t.guideSum)}</summary>
+            <p>${esc(g[0])} ${esc(t.cls[x.cls])}</p>
+            <div class="a-guide-cols"><div><b>${esc(t.gYou)}</b><p>${esc(g[1])}</p></div><div><b>${esc(t.gBiz)}</b><p>${esc(g[2])}</p></div></div>
+          </details>
+          <div class="a-links"><a href="${FDA_SEARCH}" target="_blank" rel="noopener">${esc(t.notice(x.num))}</a><button type="button" data-share="${i}">${esc(t.share)}</button></div>
+        </div>
       </article>`;
     }).join("") + (items.length > shown.length ? `<button type="button" class="btn btn-soft a-more" data-more>${esc(t.more)}</button>` : "");
 
@@ -133,24 +372,59 @@
     };
   }
 
+  function setFilter(f) {
+    state.filter = f; state.shown = PAGE;
+    document.querySelectorAll("[data-filter]").forEach((c) => c.setAttribute("aria-pressed", String(c.dataset.filter === f)));
+  }
+
   async function show(scope) {
     state.scope = scope; state.shown = PAGE; state.error = false;
     document.querySelectorAll("[data-scope]").forEach((b) => b.setAttribute("aria-pressed", String(b.dataset.scope === scope)));
     render();
     try { await load(scope); } catch (err) { console.error("[alertas]", err); state.error = true; }
-    if (state.scope === scope) render();
+    if (state.scope !== scope) return;
+    render(); renderPulse();
+    if (state.data[scope]) markSeen(scope, state.data[scope].items);
   }
 
   document.addEventListener("DOMContentLoaded", () => {
-    document.querySelectorAll("[data-scope]").forEach((b) => b.addEventListener("click", () => show(b.dataset.scope)));
-    document.querySelectorAll("[data-filter]").forEach((b) => b.addEventListener("click", () => {
-      state.filter = b.dataset.filter; state.shown = PAGE;
-      document.querySelectorAll("[data-filter]").forEach((c) => c.setAttribute("aria-pressed", String(c === b)));
-      render();
+    const saved = canKeep() ? readJSON(LIST_KEY, []) : [];
+    state.list = Array.isArray(saved) ? saved.filter((x) => typeof x === "string").slice(0, 20) : [];
+    state.seenAtLoad = canKeep() ? readJSON(SEEN_KEY, {}) : {};
+
+    document.querySelectorAll("[data-scope]").forEach((b) => b.addEventListener("click", async () => {
+      await show(b.dataset.scope);
+      if (state.list.length && state.checked) runCheck();
     }));
+    document.querySelectorAll("[data-filter]").forEach((b) => b.addEventListener("click", () => { setFilter(b.dataset.filter); render(); }));
     $("#a-q").addEventListener("input", (e) => { state.q = e.target.value; state.shown = PAGE; render(); });
-    // main.js switches <html lang>; redraw the list in the new language
-    new MutationObserver(render).observe(document.documentElement, { attributes: true, attributeFilter: ["lang"] });
-    show("pr");
+
+    $("#a-add").addEventListener("submit", (e) => {
+      e.preventDefault();
+      const input = $("#a-term");
+      input.value.split(",").forEach(addTerm);
+      input.value = "";
+      renderMine(); renderResult();
+    });
+    $("#a-check").addEventListener("click", (e) => {
+      const s = e.target.closest("[data-suggest]");
+      if (s) { addTerm(s.dataset.suggest); renderMine(); renderResult(); return; }
+      const r = e.target.closest("[data-remove]");
+      if (r) {
+        state.list.splice(+r.dataset.remove, 1); saveList();
+        if (!state.list.length) state.checked = false;
+        renderMine(); renderResult(); if (state.filter === "mine") render();
+        return;
+      }
+      if (e.target.closest("#a-run")) { runCheck(); return; }
+      if (e.target.closest("[data-see-mine]")) {
+        setFilter("mine"); render();
+        $("#a-browse-title").scrollIntoView({ behavior: REDUCED ? "auto" : "smooth", block: "start" });
+      }
+    });
+
+    // main.js switches <html lang>; redraw everything in the new language
+    new MutationObserver(() => { render(); renderPulse(); }).observe(document.documentElement, { attributes: true, attributeFilter: ["lang"] });
+    show("pr").then(() => { if (state.list.length && state.data.pr) runCheck(); });
   });
 })();

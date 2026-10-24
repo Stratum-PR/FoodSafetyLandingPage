@@ -6,7 +6,7 @@
   <meta name="robots" content="noindex, nofollow">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Alertas PR · Retiros de alimentos que afectan a Puerto Rico</title>
-  <meta name="description" content="Consulta gratis los retiros de alimentos de la FDA que mencionan a Puerto Rico. Por Stratum.">
+  <meta name="description" content="Revisa gratis si tus productos aparecen en los retiros de alimentos de la FDA que mencionan a Puerto Rico. Por StratumScan.">
   <meta name="theme-color" content="#1E2B7E">
   <meta property="og:type" content="website">
   <meta property="og:title" content="Alertas PR · Retiros de alimentos que afectan a Puerto Rico">
@@ -30,8 +30,9 @@
 
   <header class="site-header">
     <div class="container nav a-wrap">
-      <a class="a-brand" href="alertas.html" aria-label="Alertas PR por Stratum">
-        <b>Alertas PR</b><span data-i18n="aBy">por</span><img src="assets/stratum-logo-4.png" alt="Stratum" width="3834" height="720">
+      <a class="a-brand" href="alertas.html" aria-label="Alertas PR por StratumScan">
+        <b>Alertas PR</b><span data-i18n="aBy">por</span>
+        <span class="a-scan"><svg viewBox="0 0 60 44" aria-hidden="true"><rect x="4" y="8" width="26" height="26" rx="6" transform="rotate(45 17 21)" fill="#E6E09E"/><rect x="17" y="8" width="26" height="26" rx="6" transform="rotate(45 30 21)" fill="#5FA3DA" fill-opacity=".92"/><rect x="30" y="8" width="26" height="26" rx="6" transform="rotate(45 43 21)" fill="#1E2B7E" fill-opacity=".95"/></svg>StratumScan</span>
       </a>
       <div class="nav-tools">
         <div class="lang-toggle" role="group" aria-label="Idioma / Language">
@@ -42,10 +43,40 @@
     </div>
   </header>
 
+  <div class="texture" aria-hidden="true"></div>
+
   <main id="main" class="container a-wrap">
     <section class="a-hero" aria-labelledby="a-title">
       <h1 id="a-title" data-i18n="aTitle">Retiros de alimentos que afectan a Puerto Rico</h1>
       <p id="a-lead" aria-live="polite"></p>
+    </section>
+
+    <!-- A. Check your list: the visitor's own products against the current recalls -->
+    <section class="a-check" id="a-check" aria-labelledby="a-check-title">
+      <div class="a-check-deco" aria-hidden="true"></div>
+      <div class="a-check-copy">
+        <h2 id="a-check-title" data-i18n="aCheckTitle">Revisa tu lista</h2>
+        <p data-i18n="aCheckBody">Escribe los productos, ingredientes o marcas que usas. Te decimos al instante si aparecen en algún retiro.</p>
+      </div>
+      <form class="a-add" id="a-add" novalidate>
+        <label class="sr-only" for="a-term" data-i18n="aTermLabel">Producto, ingrediente o marca</label>
+        <input id="a-term" class="a-term" autocomplete="off" maxlength="40" placeholder="Ej.: leche, maní, una marca" data-i18n-attr="placeholder:aTermPh">
+        <button class="btn btn-soft" type="submit" data-i18n="aAdd">Añadir</button>
+      </form>
+      <div class="a-suggest" id="a-suggest" aria-label="Sugerencias" data-i18n-attr="aria-label:aSuggestLabel"></div>
+      <ul class="a-mine" id="a-mine" aria-label="Tu lista" data-i18n-attr="aria-label:aMineLabel"></ul>
+      <div class="a-check-actions">
+        <button class="btn btn-yellow btn-lg" type="button" id="a-run" data-i18n="aRun">Revisar mi lista</button>
+        <span class="a-new" id="a-new" hidden></span>
+      </div>
+      <div class="a-result" id="a-result" role="status" aria-live="polite"></div>
+    </section>
+
+    <!-- B. Pulse: headline numbers + month bars + causes, for the selected area -->
+    <section class="a-pulse" id="a-pulse" aria-label="Resumen del año" data-i18n-attr="aria-label:aPulseLabel"></section>
+
+    <section class="a-browse" aria-labelledby="a-browse-title">
+      <h2 id="a-browse-title" class="a-h2" data-i18n="aBrowseTitle">Todos los retiros</h2>
 
       <div class="a-tools">
         <label class="sr-only" for="a-q" data-i18n="aSearchLabel">Buscar</label>
@@ -57,6 +88,7 @@
       </div>
       <div class="a-chips" role="group" aria-label="Filtro" data-i18n-attr="aria-label:aFilterLabel">
         <button type="button" data-filter="all" aria-pressed="true" data-i18n="aAll">Todos</button>
+        <button type="button" data-filter="mine" aria-pressed="false" data-i18n="aMineChip" hidden>En mi lista</button>
         <button type="button" data-filter="serious" aria-pressed="false" data-i18n="aSerious">Graves (Clase I)</button>
         <button type="button" data-filter="allergen" aria-pressed="false" data-i18n="aAllergen">Alérgenos</button>
         <button type="button" data-filter="micro" aria-pressed="false" data-i18n="aMicro">Contaminación</button>
@@ -70,12 +102,13 @@
     <aside class="a-biz">
       <div>
         <h2 data-i18n="aBizTitle">¿Tienes una planta o distribuidora de alimentos?</h2>
-        <p data-i18n="aBizBody">StratumScan vigila a tus suplidores en 13 fuentes oficiales.</p>
+        <p data-i18n="aBizBody">StratumScan cruza estos avisos con tus suplidores y lotes, abre la CAPA y deja la evidencia lista para tu auditoría. Vigila 13 fuentes oficiales, no solo la FDA.</p>
       </div>
       <a class="btn btn-yellow" href="index.html" data-i18n="aBizCta">Conoce StratumScan</a>
     </aside>
 
     <p class="a-note" data-i18n="aNote">Fuente: FDA Enforcement Reports (openFDA). Stratum PR no está afiliado con la FDA. Verifica cada aviso en su fuente.</p>
+    <p class="a-note" data-i18n="aMatchNote">La relación con Puerto Rico y con tu lista se basa en el texto que publica la FDA, así que puede no ser exacta. Tu lista se queda en tu navegador: no la recibimos.</p>
   </main>
 
   <footer class="site-footer">

@@ -218,7 +218,11 @@ const EN = {
   aSearchLabel: "Search", aSearchPh: "Search for a product or brand",
   aScopeLabel: "Area", aPR: "Puerto Rico", aNat: "Nationwide", aFilterLabel: "Filter",
   aAll: "All", aSerious: "Serious (Class I)", aAllergen: "Allergens", aMicro: "Contamination", aForeign: "Foreign objects",
-  aBizTitle: "Do you run a food plant or distributor?", aBizBody: "StratumScan watches your suppliers across 13 official sources.", aBizCta: "Learn about StratumScan",
+  aBizTitle: "Do you run a food plant or distributor?", aBizBody: "StratumScan matches these alerts to your suppliers and lots, opens the CAPA and keeps the evidence ready for your audit. It watches 13 official sources, not just the FDA.", aBizCta: "Learn about StratumScan",
+  aCheckTitle: "Check your list", aCheckBody: "Type the products, ingredients or brands you use. We'll tell you right away whether they show up in a recall.",
+  aTermLabel: "Product, ingredient or brand", aTermPh: "E.g. milk, peanuts, a brand", aAdd: "Add", aSuggestLabel: "Suggestions", aMineLabel: "Your list",
+  aRun: "Check my list", aMineChip: "On my list", aPulseLabel: "The year in numbers", aBrowseTitle: "All recalls",
+  aMatchNote: "The link to Puerto Rico and to your list is based on the text the FDA publishes, so it may not be exact. Your list stays in your browser: we never receive it.",
   aNote: "Source: FDA Enforcement Reports (openFDA). Stratum PR is not affiliated with the FDA. Check each notice at its source.",
 };
 

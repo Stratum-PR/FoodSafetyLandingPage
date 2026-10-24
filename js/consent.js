@@ -10,7 +10,7 @@
   const KEY = "stratum-consent";
   const POLICY_VERSION = 2; // 2: added the analytics category
   const MAX_AGE_MS = 365 * 24 * 60 * 60 * 1000;
-  const PREF_KEYS = ["fsqms-lang", "stratum-guide"]; // storage cleared when preferences are refused
+  const PREF_KEYS = ["fsqms-lang", "stratum-guide", "alertas-list", "alertas-seen"]; // storage cleared when preferences are refused
 
   const TEXT = {
     es: {
