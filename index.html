@@ -60,7 +60,6 @@
 
     <section class="a-hero" aria-labelledby="a-title">
       <h1 id="a-title" data-i18n="aTitle">Retiros de alimentos que afectan a Puerto Rico</h1>
-      <p id="a-lead" aria-live="polite"></p>
     </section>
 
     <!-- A. Check your list: the visitor's own products against the current recalls -->
@@ -89,6 +88,37 @@
 
     <section class="a-browse" aria-labelledby="a-browse-title">
       <h2 id="a-browse-title" class="a-h2" data-i18n="aBrowseTitle">Retiros del último año</h2>
+
+      <!-- What each alert means: severity class, kind of problem, reach (each card's severity pill opens its own) -->
+      <details class="a-legend">
+        <summary><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 11v5M12 8h.01"/></svg><span data-i18n="aLegSum">¿Qué significa cada alerta?</span></summary>
+        <div class="a-legend-grid">
+          <div>
+            <h3 data-i18n="aLegSevT">Gravedad, según la FDA</h3>
+            <ul>
+              <li><span class="a-sev a-sev-1" data-i18n="aLegC1">Grave · Clase I</span><p data-i18n="aLegC1B">Puede causar problemas serios de salud o la muerte.</p></li>
+              <li><span class="a-sev a-sev-2" data-i18n="aLegC2">Moderado · Clase II</span><p data-i18n="aLegC2B">Puede causar problemas de salud temporales o reversibles.</p></li>
+              <li><span class="a-sev a-sev-3" data-i18n="aLegC3">Leve · Clase III</span><p data-i18n="aLegC3B">Es poco probable que cause problemas de salud.</p></li>
+            </ul>
+          </div>
+          <div>
+            <h3 data-i18n="aLegTypeT">Tipo de problema</h3>
+            <ul>
+              <li><span class="a-ico a-ico-micro" aria-hidden="true"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="5"/><path d="M12 3v4M12 17v4M3 12h4M17 12h4M5.6 5.6l2.8 2.8M15.6 15.6l2.8 2.8M5.6 18.4l2.8-2.8M15.6 8.4l2.8-2.8"/></svg></span><p><b data-i18n="aLegMicro">Bacterias u hongos</b> <span data-i18n="aLegMicroB">Listeria, Salmonella, E. coli o moho que pueden enfermar.</span></p></li>
+              <li><span class="a-ico a-ico-allergen" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M12 3c3 3 5 6 5 9a5 5 0 0 1-10 0c0-3 2-6 5-9z"/><path d="M12 21v-6"/></svg></span><p><b data-i18n="aLegAllergen">Alérgeno no declarado</b> <span data-i18n="aLegAllergenB">Contiene leche, maní, trigo u otro alérgeno que la etiqueta no dice.</span></p></li>
+              <li><span class="a-ico a-ico-foreign" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M12 3l9 16H3z"/><path d="M12 10v4M12 17h.01"/></svg></span><p><b data-i18n="aLegForeign">Objeto extraño</b> <span data-i18n="aLegForeignB">Pedazos de vidrio, metal, plástico u otro material.</span></p></li>
+              <li><span class="a-ico a-ico-other" aria-hidden="true"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 8v5M12 16h.01"/></svg></span><p><b data-i18n="aLegOther">Otras causas</b> <span data-i18n="aLegOtherB">Etiquetado, colorantes no declarados o fallas de manufactura.</span></p></li>
+            </ul>
+          </div>
+          <div>
+            <h3 data-i18n="aLegReachT">Alcance</h3>
+            <ul>
+              <li><span class="a-where is-pr" data-i18n="aLegPR">Menciona a Puerto Rico</span><p data-i18n="aLegPRB">La FDA nombra a Puerto Rico en la distribución del producto.</p></li>
+              <li><span class="a-where" data-i18n="aLegNat">Distribución nacional</span><p data-i18n="aLegNatB">Se distribuyó en todo Estados Unidos, así que puede haber llegado a Puerto Rico.</p></li>
+            </ul>
+          </div>
+        </div>
+      </details>
       <p class="a-status" id="a-status" role="status" aria-live="polite"></p>
     </section>
 

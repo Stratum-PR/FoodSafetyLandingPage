@@ -10,14 +10,13 @@
   const SEEN_KEY = "alertas-seen";
   const T = {
     es: {
-      lead: (n) => `Gratis, de la FDA. ${n} ${n === 1 ? "retiro llegó" : "retiros llegaron"} a Puerto Rico en el último año: ${n === 1 ? "mencionó" : "mencionaron"} a PR o se ${n === 1 ? "distribuyó" : "distribuyeron"} a nivel nacional.`,
       tagPR: "Menciona a Puerto Rico", tagNat: "Distribución nacional",
       loading: "Cargando retiros de la FDA…", fail: "No pudimos cargar los retiros. Inténtalo otra vez en unos minutos.",
       none: "No hay retiros que coincidan con tu búsqueda.",
       shown: (a, b, d) => `Mostrando ${a} de ${b}${d ? ` · Datos de la FDA al ${d}` : ""}`,
       onlyMine: "Mostrando solo los retiros que coinciden con tu lista.", seeAll: "Ver todos",
       sev: { 1: "Grave · Clase I", 2: "Moderado · Clase II", 3: "Leve · Clase III", 0: "Sin clasificar" },
-      more: "Ver más", orig: "Texto original de la FDA:", products: (n) => `y ${n} ${n === 1 ? "producto más" : "productos más"}`, allProds: (n) => `Ver los ${n} productos de este retiro`,
+      more: "Ver más", orig: "Texto original de la FDA:", products: (n) => `y ${n} ${n === 1 ? "producto más" : "productos más"}`, allProds: (n) => `Ver los ${n} productos de este retiro`, sevHelp: "Qué significa", upc: "UPC", hitTag: "En tu lista",
       notice: (num) => `Buscar el aviso en la FDA (${num})`, share: "Compartir", copied: "Enlace copiado",
       shareText: (x) => `Retiro de alimentos: ${x}. Revisa si te afecta en Alertas PR por StratumScan:`,
       allergen: "Alérgeno no declarado", micro: { listeria: "Posible Listeria", salmonella: "Posible Salmonella", ecoli: "Posible E. coli", botulism: "Riesgo de botulismo", mold: "Moho", cronobacter: "Posible Cronobacter" },
@@ -51,14 +50,13 @@
       },
     },
     en: {
-      lead: (n) => `Free, from the FDA. ${n} ${n === 1 ? "recall" : "recalls"} reached Puerto Rico in the last year: named PR or distributed nationwide.`,
       tagPR: "Names Puerto Rico", tagNat: "Nationwide distribution",
       loading: "Loading FDA recalls…", fail: "We couldn't load the recalls. Try again in a few minutes.",
       none: "No recalls match your search.",
       shown: (a, b, d) => `Showing ${a} of ${b}${d ? ` · FDA data as of ${d}` : ""}`,
       onlyMine: "Showing only the recalls that match your list.", seeAll: "Show all",
       sev: { 1: "Serious · Class I", 2: "Moderate · Class II", 3: "Minor · Class III", 0: "Unclassified" },
-      more: "Show more", orig: "Original FDA text:", products: (n) => `and ${n} more ${n === 1 ? "product" : "products"}`, allProds: (n) => `See all ${n} products in this recall`,
+      more: "Show more", orig: "Original FDA text:", products: (n) => `and ${n} more ${n === 1 ? "product" : "products"}`, allProds: (n) => `See all ${n} products in this recall`, sevHelp: "What it means", upc: "UPC", hitTag: "On your list",
       notice: (num) => `Look up the notice at the FDA (${num})`, share: "Share", copied: "Link copied",
       shareText: (x) => `Food recall: ${x}. Check whether it affects you on Alertas PR by StratumScan:`,
       allergen: "Undeclared allergen", micro: { listeria: "Possible Listeria", salmonella: "Possible Salmonella", ecoli: "Possible E. coli", botulism: "Botulism risk", mold: "Mold", cronobacter: "Possible Cronobacter" },
@@ -335,13 +333,12 @@
 
   function render() {
     const l = L(), t = T[l];
-    const list = $("#a-list"), status = $("#a-status"), lead = $("#a-lead");
+    const list = $("#a-list"), status = $("#a-status");
     const d = state.data[state.scope];
     renderMine(); renderResult();
-    if (state.error) { lead.textContent = ""; status.textContent = t.fail; list.innerHTML = ""; renderPulse(); return; }
+    if (state.error) { status.textContent = t.fail; list.innerHTML = ""; renderPulse(); return; }
     if (!d) { status.textContent = t.loading; return; }
 
-    lead.textContent = t.lead(d.items.length);
     const fresh = d.items.filter(isNew).length;
     const nb = $("#a-new");
     nb.hidden = !fresh; nb.textContent = fresh ? t.newSince(fresh) : "";
@@ -357,9 +354,9 @@
       return `<article class="a-item a-cls-${x.cls}${hits.length ? " is-mine" : ""}">
         <span class="a-ico a-ico-${type}" aria-hidden="true"><svg viewBox="0 0 24 24">${ICONS[type]}</svg></span>
         <div class="a-body">
-          <div class="a-meta"><span class="a-sev a-sev-${x.cls}">${esc(t.sev[x.cls])}</span>${isNew(x) ? `<span class="a-flag">${esc(t.isNew)}</span>` : ""}<span class="a-where${x.pr ? " is-pr" : ""}">${esc(x.pr ? t.tagPR : t.tagNat)}</span><span>${esc(fmtDate(x.d, l))} · ${esc(x.firm)}</span></div>
-          <h2>${esc(title(x.product))}${x.n > 1 && !(x.prods && x.prods.length > 1) ? ` <span class="a-orig">${esc(t.products(x.n - 1))}</span>` : ""}</h2>
-          ${prodList(x)}
+          <div class="a-meta"><button type="button" class="a-sev a-sev-${x.cls} a-sev-btn" data-explain title="${esc(t.sevHelp)}">${esc(t.sev[x.cls])}<i aria-hidden="true">?</i></button>${isNew(x) ? `<span class="a-flag">${esc(t.isNew)}</span>` : ""}<span class="a-where${x.pr ? " is-pr" : ""}">${esc(x.pr ? t.tagPR : t.tagNat)}</span><span>${esc(fmtDate(x.d, l))} · ${esc(x.firm)}</span></div>
+          <h2>${esc(parseProd(x.product).name)}${x.n > 1 && !(x.prods && x.prods.length > 1) ? ` <span class="a-orig">${esc(t.products(x.n - 1))}</span>` : ""}</h2>
+          ${x.prods && x.prods.length > 1 ? prodList(x) : prodDetail(parseProd(x.product), false)}
           ${hits.length ? `<p class="a-hits">${esc(t.inList)} <b>${esc(hits.join(", "))}</b></p>` : ""}
           ${s ? `<p class="a-reason">${esc(s)}</p><p class="a-orig">${esc(t.orig)} ${esc(x.reason)}</p>` : `<p class="a-reason">${esc(x.reason)}</p>`}
           <details class="a-guide"><summary>${esc(t.guideSum)}</summary>
@@ -374,6 +371,13 @@
     list.onclick = async (e) => {
       if (e.target.closest("[data-more]")) { state.shown += PAGE; render(); return; }
       if (e.target.closest("[data-all]")) { setFilter("all"); render(); return; }
+      const ex = e.target.closest("[data-explain]");
+      if (ex) { // the severity pill opens this card's "what it means and what to do"
+        const g = ex.closest(".a-item").querySelector(".a-guide");
+        g.open = true; g.querySelector("summary").focus();
+        g.scrollIntoView({ behavior: REDUCED ? "auto" : "smooth", block: "nearest" });
+        return;
+      }
       const b = e.target.closest("[data-share]");
       if (!b) return;
       const x = shown[+b.dataset.share];
@@ -391,7 +395,33 @@
     if (!x.prods || x.prods.length < 2) return "";
     const marks = x.prods.map((p) => state.list.some((term) => termRe(term).test(norm(p))));
     return `<details class="a-prods"${marks.slice(1).some(Boolean) ? " open" : ""}><summary>${esc(T[L()].allProds(Math.max(x.n, x.prods.length)))}</summary>
-      <ul>${x.prods.map((p, i) => `<li${marks[i] ? ' class="is-hit"' : ""}>${esc(p)}</li>`).join("")}</ul></details>`;
+      <ol>${x.prods.map((p, i) => {
+        const pp = parseProd(p);
+        return `<li${marks[i] ? ' class="is-hit"' : ""}><b>${esc(pp.name)}</b>${prodDetail(pp, marks[i])}</li>`;
+      }).join("")}</ol></details>`;
+  }
+
+  /** FDA product text → { name, size, upcs, rest }: "Vanilla Econo, Galletas de Vainilla, 8 paquets per
+      Net Wt. 9.6 oz box (272 g), 6 box per case. UPC 072981005022" → name "Vanilla Econo, Galletas de
+      Vainilla", size "9.6 oz", upcs ["072981005022"], rest = the packaging text in between. */
+  function parseProd(p) {
+    const upcs = [...p.matchAll(/UPC\s*(?:code|#|:|no\.?)?\s*:?\s*((?:\d[\s-]?){8,14})/gi)].map((m) => m[1].replace(/\D/g, ""));
+    const sz = p.match(/Net\s*Wt\.?\s*:?\s*(\d[\d.,\/]*\s*(?:fl\.?\s*)?(?:oz|lbs?|g|kg|ml|l)\b)/i);
+    const noUpc = p.replace(/UPC\s*(?:code|#|:|no\.?)?\s*:?\s*(?:\d[\s-]?){8,14}\.?/gi, "").replace(/\s{2,}/g, " ").trim();
+    const parts = noUpc.split(/,\s*/);
+    let k = 1; // keep leading segments that read like a name (no quantities yet)
+    while (k < parts.length && k < 3 && !/\d|net\s*wt|per case|pack|count/i.test(parts[k])) k++;
+    let name = parts.slice(0, k).join(", ");
+    if (name.length > 90) name = name.slice(0, 90).replace(/[\s,;.:(]+\S*$/, "") + "…";
+    const rest = parts.slice(k).join(", ").replace(/[\s,.;]+$/, "");
+    return { name: name || p.slice(0, 90), size: sz ? sz[1].replace(/\s+/g, " ") : "", upcs: [...new Set(upcs)], rest };
+  }
+  function prodDetail(pp, hit) {
+    const t = T[L()];
+    const tags = (pp.size ? `<span class="a-tag">${esc(pp.size)}</span>` : "")
+      + pp.upcs.slice(0, 3).map((u) => `<span class="a-tag a-upc">${esc(t.upc)} ${esc(u)}</span>`).join("")
+      + (hit ? `<span class="a-tag a-tag-hit">${esc(t.hitTag)}</span>` : "");
+    return (tags ? `<span class="a-tags">${tags}</span>` : "") + (pp.rest ? `<span class="a-rest">${esc(pp.rest)}</span>` : "");
   }
 
   function setFilter(f) { state.filter = f; state.shown = PAGE; }
