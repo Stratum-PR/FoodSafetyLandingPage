@@ -5,13 +5,13 @@
   <!-- Pre-launch: keep out of search results. Remove this and vercel.json X-Robots-Tag at launch. -->
   <meta name="robots" content="noindex, nofollow">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Stratum · Entérate primero. Actúa a tiempo. Protege tu marca.</title>
-  <meta name="description" content="StratumScan vigila a tus suplidores e ingredientes y te avisa cuando algo te afecta. La plataforma de calidad hecha en Puerto Rico, en español.">
+  <title>StratumScan · Entérate primero. Actúa a tiempo. Protege tu marca.</title>
+  <meta name="description" content="StratumScan vigila a tus suplidores e ingredientes en fuentes oficiales y organiza tu programa de calidad en un solo expediente. Hecho en Puerto Rico, en español.">
   <meta name="theme-color" content="#1E2B7E">
 
   <meta property="og:type" content="website">
-  <meta property="og:title" content="Stratum · Entérate primero. Actúa a tiempo. Protege tu marca.">
-  <meta property="og:description" content="StratumScan vigila a tus suplidores e ingredientes y te avisa cuando algo te afecta.">
+  <meta property="og:title" content="StratumScan · Entérate primero. Actúa a tiempo. Protege tu marca.">
+  <meta property="og:description" content="Vigila afuera, organiza adentro: alertas de fuentes oficiales y tu programa de calidad en un solo expediente.">
   <meta property="og:locale" content="es_PR">
   <meta property="og:locale:alternate" content="en_US">
 
@@ -27,7 +27,7 @@
   <script src="js/main.js" defer></script>
   <script src="js/motion.js" defer></script>
 </head>
-<body data-title-es="Stratum · Entérate primero. Actúa a tiempo. Protege tu marca." data-title-en="Stratum · Know first. Act in time. Protect your brand.">
+<body data-title-es="StratumScan · Entérate primero. Actúa a tiempo. Protege tu marca." data-title-en="StratumScan · Know first. Act in time. Protect your brand.">
   <!-- Topographic texture (licensed: Vecteezy / Khulqi Design). Tile is mirrored 2×2 so edges meet seamlessly. -->
   <div class="texture" aria-hidden="true"></div>
 
@@ -41,6 +41,7 @@
       </a>
 
       <nav id="nav-menu" class="nav-menu" aria-label="Principal">
+        <a href="#plataforma" data-i18n="hNavPlatform">Plataforma</a>
         <a href="#como-funciona" data-i18n="hNavHow">Cómo funciona</a>
         <a href="#stratai">StratAI</a>
         <a href="#preguntas" data-i18n="hNavFaq">Preguntas</a>
@@ -67,8 +68,9 @@
     <!-- HERO -->
     <section id="top" class="hero container">
       <div class="hero-copy">
+        <p class="h-kicker"><b>StratumScan</b> <span data-i18n="hKicker">Vigila afuera. Organiza adentro.</span></p>
         <h1 data-i18n="hTitle">Entérate primero. Actúa a tiempo. Protege tu marca.</h1>
-        <p class="lead" data-i18n="hLead">La plataforma de calidad hecha en Puerto Rico, en español. StratumScan vigila a tus suplidores e ingredientes y te avisa cuando algo te afecta, para que nunca te enteres de un recall por las noticias.</p>
+        <p class="lead" data-i18n="hLead">La plataforma de calidad hecha en Puerto Rico, en español. StratumScan vigila a tus suplidores e ingredientes en fuentes oficiales y organiza tu programa de calidad (suplidores, lotes, CAPAs, documentos y auditorías) en un solo expediente.</p>
         <div class="hero-actions">
           <a class="btn btn-primary btn-lg" href="#demo" data-i18n="hCta">Agenda una demo</a>
           <a class="text-link" href="autoevaluacion.html" data-assessment-link><span data-i18n="hSelf">Haz la autoevaluación (3 min)</span> →</a>
@@ -93,7 +95,7 @@
         </div>
         <p class="h-docs" aria-hidden="true">
           <svg viewBox="0 0 24 24"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg>
-          <span data-i18n="hDocs">Tus documentos de auditoría: al día</span>
+          <span data-i18n="hDocs">Lotes 2026-118 y 2026-121 retenidos · CAPA abierta</span>
         </p>
       </div>
     </section>
@@ -133,35 +135,97 @@
       </aside>
     </section>
 
-    <!-- GUIDE -->
-    <section class="section container" aria-labelledby="guia-title">
-      <div class="h-split">
-        <div>
-          <div class="eyebrow" data-i18n="hGuideKicker">No estás en esto sin ayuda</div>
-          <h2 id="guia-title" class="h-h2" data-i18n="hGuideTitle">Entendemos tu planta porque escuchamos a casi 40 como la tuya</h2>
-          <p class="h-body" data-i18n="hGuideBody">Somos una compañía de tecnología de Puerto Rico para la industria de alimentos. Construimos StratumScan para que la calidad deje de depender de la memoria de una sola persona.</p>
-          <p class="h-case" data-i18n="hGuideCase">En el caso de los arándanos con E. coli, StratumScan tenía el dato 5 semanas antes del recall en Puerto Rico.</p>
+    <!-- PLATFORM: the hub diagram (inner ring = quality modules, outer ring = official sources) -->
+    <section id="plataforma" class="section container" aria-labelledby="plataforma-title">
+      <header class="section-head">
+        <div class="eyebrow" data-i18n="hPlatEyebrow">La plataforma</div>
+        <h2 id="plataforma-title" data-i18n="hPlatTitle">Todo tu programa de calidad, conectado y vigilado</h2>
+        <p class="section-lead" data-i18n="hPlatLead">Hoy la operación vive en sistemas desconectados: los lotes en Excel, el recibo en papel, los certificados por correo. StratumScan los une en un solo expediente y lo vigila contra fuentes oficiales de EE.UU. y del mundo.</p>
+      </header>
+
+      <!-- Built by main.js (initHub) so labels follow the ES/EN toggle; animates on scroll. -->
+      <div class="hub-diagram reveal" id="hub-diagram" role="img" aria-label="Hoy: herramientas separadas. Con StratumScan: suplidores, recibo, lotes, inventario, CAPAs, documentos y auditorías conectados en un solo expediente y vigilados contra fuentes oficiales." data-i18n-attr="aria-label:hubLabel"></div>
+
+      <div class="grid grid-4 h-feats">
+        <article class="card card-sm reveal">
+          <div class="icon-tile"><svg class="icon" width="22" height="22" viewBox="0 0 24 24" aria-hidden="true"><path d="M9 11a3 3 0 1 0 0-6 3 3 0 0 0 0 6z"/><path d="M3 20v-1a5 5 0 0 1 5-5h2a5 5 0 0 1 5 5v1"/><path d="M16 4.5a3 3 0 0 1 0 5.8M21 20v-1a4 4 0 0 0-3-3.9"/></svg></div>
+          <h3 data-i18n="f1T">Registro de suplidores</h3>
+          <p data-i18n="f1B">Pide y controla certificados de cada suplidor desde un solo lugar.</p>
+        </article>
+        <article class="card card-sm reveal">
+          <div class="icon-tile"><svg class="icon" width="22" height="22" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3l7 3v5c0 4.5-3 8.5-7 10c-4-1.5-7-5.5-7-10V6z"/><path d="M9 12l2 2l4-4"/></svg></div>
+          <h3 data-i18n="f2T">Diseñado para FSMA desde el principio</h3>
+          <p data-i18n="f2B">Controles preventivos, verificación de suplidores y registros de trazabilidad FSMA 204, integrados desde el diseño.</p>
+        </article>
+        <article class="card card-sm reveal">
+          <div class="icon-tile"><svg class="icon" width="22" height="22" viewBox="0 0 24 24" aria-hidden="true"><rect x="5" y="11" width="14" height="10" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/><path d="M12 15v2"/></svg></div>
+          <h3 data-i18n="f3T">Registros inmutables y auditables</h3>
+          <p data-i18n="f3B">Cada documento, firma y cambio queda con fecha, autor e historial. Nada se sobrescribe ni se borra sin dejar rastro.</p>
+        </article>
+        <article class="card card-sm reveal">
+          <div class="icon-tile"><svg class="icon" width="22" height="22" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3l8 4.5v9l-8 4.5l-8 -4.5v-9z"/><path d="M12 12l8 -4.5"/><path d="M12 12v9"/><path d="M12 12l-8 -4.5"/></svg></div>
+          <h3 data-i18n="f4T">Trazabilidad de lotes</h3>
+          <p data-i18n="f4B">Rastrea un lote un paso atrás y adelante en segundos, no días.</p>
+        </article>
+      </div>
+
+      <div class="audit reveal">
+        <div class="audit-badge" aria-hidden="true">
+          <svg viewBox="0 0 24 24"><path d="M9 5H7a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2h-2"/><rect x="9" y="3" width="6" height="4" rx="1"/><path d="M9 13l2 2l4-4"/></svg>
         </div>
-        <ul class="h-proof">
-          <li><b>13</b><span data-i18n="hProof1">fuentes oficiales</span></li>
-          <li><b>180+</b><span data-i18n="hProof2">países de origen</span></li>
-          <li><b>136,000+</b><span data-i18n="hProof3">reportes analizados</span></li>
-          <li><b>~40</b><span data-i18n="hProof4">plantas entrevistadas en PR</span></li>
+        <div class="audit-copy">
+          <h3 data-i18n="auditT">Listo para auditoría, todos los días</h3>
+          <p data-i18n="auditB">Cuando llegue el auditor de tu certificación, de Walmart o de la FDA, la evidencia ya está organizada, vigente y con su historial completo.</p>
+        </div>
+        <ul class="audit-list">
+          <li data-i18n="audit1">Cuenta regresiva y brechas para tu próxima auditoría</li>
+          <li data-i18n="audit2">Evidencia por requisito, lista para mostrar</li>
+          <li data-i18n="audit3">Historial de quién hizo qué y cuándo</li>
         </ul>
       </div>
     </section>
 
-    <!-- PLAN -->
-    <section id="como-funciona" class="section container" aria-labelledby="plan-title">
+    <!-- FROM ALERT TO EVIDENCE: the two halves working together (steps light up in sequence) -->
+    <section id="como-funciona" class="section container" aria-labelledby="av-title">
       <header class="section-head">
         <div class="eyebrow" data-i18n="hNavHow">Cómo funciona</div>
-        <h2 id="plan-title" data-i18n="hPlanTitle">Así de simple</h2>
+        <h2 id="av-title" data-i18n="hAvTitle">Del aviso a la evidencia</h2>
+        <p class="section-lead" data-i18n="hAvLead">Así trabajan juntas las dos mitades de StratumScan cuando sale un recall que te toca.</p>
       </header>
-      <ol class="h-plan">
-        <li class="card reveal"><span class="h-step">1</span><h3 data-i18n="hPlan1T">Cuéntanos qué compras</h3><p data-i18n="hPlan1B">Tus suplidores e ingredientes. Te ayudamos a cargarlos.</p></li>
-        <li class="card reveal"><span class="h-step">2</span><h3 data-i18n="hPlan2T">Nosotros vigilamos</h3><p data-i18n="hPlan2B">Revisamos por ti fuentes oficiales de EE.UU. y del mundo.</p></li>
-        <li class="card reveal"><span class="h-step">3</span><h3 data-i18n="hPlan3T">Tú actúas a tiempo</h3><p data-i18n="hPlan3B">Recibes el aviso con lo que te afecta y qué documentar para tu auditoría.</p></li>
+
+      <ol class="av reveal">
+        <li class="av-step" style="--i:0">
+          <span class="av-num">1</span>
+          <h3 data-i18n="hAv1T">Llega el aviso</h3>
+          <p data-i18n="hAv1B">Vigilamos 13 fuentes oficiales por ti, todos los días.</p>
+          <div class="av-art" aria-hidden="true"><span class="av-tag av-bad" data-i18n="hAv1Tag">FDA · Clase I</span><span class="av-line" data-i18n="hAv1Art">Arándanos congelados</span></div>
+        </li>
+        <li class="av-step" style="--i:1">
+          <span class="av-num">2</span>
+          <h3 data-i18n="hAv2T">Lo cruzamos con tu operación</h3>
+          <p data-i18n="hAv2B">Tus suplidores, ingredientes y productos ya están en StratumScan.</p>
+          <div class="av-art" aria-hidden="true"><span class="av-line" data-i18n="hAv2Art1">1 suplidor</span><span class="av-line" data-i18n="hAv2Art2">2 productos tuyos</span></div>
+        </li>
+        <li class="av-step" style="--i:2">
+          <span class="av-num">3</span>
+          <h3 data-i18n="hAv3T">Ves qué lotes están afectados</h3>
+          <p data-i18n="hAv3B">Trazabilidad un paso atrás y adelante, sin buscar en Excel.</p>
+          <div class="av-art" aria-hidden="true"><span class="av-tag" data-i18n="hAv3Art1">Lote 2026-118</span><span class="av-tag" data-i18n="hAv3Art2">Lote 2026-121</span></div>
+        </li>
+        <li class="av-step" style="--i:3">
+          <span class="av-num">4</span>
+          <h3 data-i18n="hAv4T">Abres la CAPA</h3>
+          <p data-i18n="hAv4B">Con responsable, fecha límite y el aviso adjunto.</p>
+          <div class="av-art" aria-hidden="true"><span class="av-tag av-warn">CAPA-2026-044</span><span class="av-line" data-i18n="hAv4Art">Asignada a Calidad</span></div>
+        </li>
+        <li class="av-step" style="--i:4">
+          <span class="av-num">5</span>
+          <h3 data-i18n="hAv5T">Queda la evidencia</h3>
+          <p data-i18n="hAv5B">Todo con fecha, autor e historial, listo para tu auditoría.</p>
+          <div class="av-art" aria-hidden="true"><span class="av-tag av-ok" data-i18n="hAv5Art">✓ Lista para auditoría</span></div>
+        </li>
       </ol>
+      <p class="av-note" data-i18n="hAvNote">Ejemplo ilustrativo.</p>
 
       <figure class="h-shot reveal">
         <div class="h-shot-bar" aria-hidden="true"><i></i><i></i><i></i></div>
@@ -225,9 +289,10 @@
               <path d="M29 50 C 35 60, 35 40, 40 52"/>
               <path d="M29 69 C 37 78, 42 66, 35 62"/>
               <path d="M29 88 C 43 84, 31 62, 41 56"/>
-              <path d="M61 47 C 68 44, 62 25, 71 22"/>
-              <path d="M61 50 C 65 56, 66 44, 71 50"/>
-              <path d="M61 53 C 67 58, 62 76, 71 78"/>
+              <path d="M61 46 C 68 40, 62 18, 71 14"/>
+              <path d="M61 49 C 66 46, 64 40, 71 38"/>
+              <path d="M61 52 C 66 58, 63 60, 71 62"/>
+              <path d="M61 55 C 67 62, 62 82, 71 86"/>
             </svg>
             <span class="ba-cut" style="--x:36;--y:30"></span>
             <span class="ba-cut" style="--x:35;--y:62"></span>
@@ -241,12 +306,14 @@
               <svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 21v-1a6 6 0 0 1 6-6h4a6 6 0 0 1 6 6v1"/></svg>
               <b data-i18n="hBaYou">Tú</b>
             </span>
-            <span class="ba-node ba-out" style="--x:85;--y:22" data-i18n="hOutLate">Te enteras tarde</span>
-            <span class="ba-node ba-out" style="--x:85;--y:50" data-i18n="hOutHunt">Buscas papeles</span>
-            <span class="ba-node ba-out" style="--x:85;--y:78" data-i18n="hOutStress">Auditoría con estrés</span>
+            <span class="ba-node ba-out" style="--x:85;--y:14" data-i18n="hOutLate">Te enteras tarde</span>
+            <span class="ba-node ba-out" style="--x:85;--y:38" data-i18n="hOutLots">Lotes a mano, en Excel</span>
+            <span class="ba-node ba-out" style="--x:85;--y:62" data-i18n="hOutHunt">Buscas papeles</span>
+            <span class="ba-node ba-out" style="--x:85;--y:86" data-i18n="hOutStress">Auditoría con estrés</span>
           </div>
           <ul class="ba-list">
             <li data-i18n="hB1">Te enteras del recall por un cliente o por las noticias</li>
+            <li data-i18n="hB7">Rastrear un lote toma horas o días</li>
             <li data-i18n="hB2">Buscas certificados entre carpetas y correos</li>
             <li data-i18n="hB3">Escoges suplidores nuevos a ciegas</li>
             <li data-i18n="hB4">La auditoría es una semana de estrés</li>
@@ -268,9 +335,10 @@
                 <path d="M29 50 L 39 50"/>
                 <path d="M29 69 C 35 69, 33 50, 39 50"/>
                 <path d="M29 88 C 35 88, 33 50, 39 50"/>
-                <path d="M61 50 C 66 50, 65 22, 71 22"/>
-                <path d="M61 50 L 71 50"/>
-                <path d="M61 50 C 66 50, 65 78, 71 78"/>
+                <path d="M61 50 C 66 50, 65 14, 71 14"/>
+                <path d="M61 50 C 66 50, 65 38, 71 38"/>
+                <path d="M61 50 C 66 50, 65 62, 71 62"/>
+                <path d="M61 50 C 66 50, 65 86, 71 86"/>
               </g>
               <g class="ba-dots">
                 <path d="M29 12 C 35 12, 33 50, 39 50"/>
@@ -278,9 +346,10 @@
                 <path d="M29 50 L 39 50"/>
                 <path d="M29 69 C 35 69, 33 50, 39 50"/>
                 <path d="M29 88 C 35 88, 33 50, 39 50"/>
-                <path d="M61 50 C 66 50, 65 22, 71 22"/>
-                <path d="M61 50 L 71 50"/>
-                <path d="M61 50 C 66 50, 65 78, 71 78"/>
+                <path d="M61 50 C 66 50, 65 14, 71 14"/>
+                <path d="M61 50 C 66 50, 65 38, 71 38"/>
+                <path d="M61 50 C 66 50, 65 62, 71 62"/>
+                <path d="M61 50 C 66 50, 65 86, 71 86"/>
               </g>
             </svg>
             <span class="ba-node ba-src" style="--x:16;--y:12">FDA</span>
@@ -292,12 +361,14 @@
               <svg viewBox="0 0 60 44"><rect x="4" y="8" width="26" height="26" rx="6" transform="rotate(45 17 21)" fill="#E6E09E"/><rect x="17" y="8" width="26" height="26" rx="6" transform="rotate(45 30 21)" fill="#5FA3DA" fill-opacity=".92"/><rect x="30" y="8" width="26" height="26" rx="6" transform="rotate(45 43 21)" fill="#1E2B7E" fill-opacity=".95"/></svg>
               <b>StratumScan</b>
             </span>
-            <span class="ba-node ba-out" style="--x:85;--y:22" data-i18n="hOutAlert">Aviso que te afecta</span>
-            <span class="ba-node ba-out" style="--x:85;--y:50" data-i18n="hOutFile">Expediente por suplidor</span>
-            <span class="ba-node ba-out" style="--x:85;--y:78" data-i18n="hOutAudit">Auditoría lista</span>
+            <span class="ba-node ba-out" style="--x:85;--y:14" data-i18n="hOutAlert">Aviso que te afecta</span>
+            <span class="ba-node ba-out" style="--x:85;--y:38" data-i18n="hOutLotsOk">Lotes afectados al instante</span>
+            <span class="ba-node ba-out" style="--x:85;--y:62" data-i18n="hOutCapa">CAPA documentada</span>
+            <span class="ba-node ba-out" style="--x:85;--y:86" data-i18n="hOutAudit">Auditoría lista</span>
           </div>
           <ul class="ba-list">
             <li data-i18n="hA1">Te enteras primero, con el aviso oficial en la mano</li>
+            <li data-i18n="hA7">Rastreas un lote en segundos y la CAPA queda documentada</li>
             <li data-i18n="hA2">Cada suplidor tiene su expediente en un solo lugar</li>
             <li data-i18n="hA3">Revisas su historial de recalls y rechazos antes de comprar</li>
             <li data-i18n="hA4">Tus documentos están listos todos los días</li>
@@ -305,6 +376,39 @@
             <li data-i18n="hA6">Usas esas [X] horas en mejorar tu planta</li>
           </ul>
         </article>
+      </div>
+    </section>
+
+    <!-- FSMA 204 deadline with a live countdown (main.js initCountdown) -->
+    <section class="section container" aria-labelledby="deadline-title">
+      <aside class="h-fsma reveal">
+        <div class="h-fsma-count" aria-hidden="true">
+          <b id="fsma-days">—</b>
+          <span data-i18n="hFsmaDays">días para la fecha de la FDA</span>
+        </div>
+        <div>
+          <p class="deadline-kicker" data-i18n="fsmaKicker">FSMA 204 · Regla de trazabilidad de la FDA</p>
+          <h3 id="deadline-title" data-i18n="fsmaTitle">La FDA exige cumplimiento el 20 de julio de 2028. Walmart, Sam's Club y Costco ya lo exigen hoy.</h3>
+          <p data-i18n="fsmaBody">Si quieres venderle a estas cadenas, necesitas poder rastrear tus lotes con rapidez desde ahora. Parece mucho tiempo; para implementar trazabilidad en toda una operación, no lo es.</p>
+        </div>
+      </aside>
+    </section>
+
+    <!-- GUIDE / PROOF -->
+    <section class="section container" aria-labelledby="guia-title">
+      <div class="h-split">
+        <div>
+          <div class="eyebrow" data-i18n="hGuideKicker">No estás en esto sin ayuda</div>
+          <h2 id="guia-title" class="h-h2" data-i18n="hGuideTitle">Entendemos tu planta porque escuchamos a casi 40 como la tuya</h2>
+          <p class="h-body" data-i18n="hGuideBody">Somos una compañía de tecnología de Puerto Rico para la industria de alimentos. Construimos StratumScan para que la calidad deje de depender de la memoria de una sola persona.</p>
+          <p class="h-case" data-i18n="hGuideCase">En el caso de los arándanos con E. coli, StratumScan tenía el dato 5 semanas antes del recall en Puerto Rico.</p>
+        </div>
+        <ul class="h-proof">
+          <li><b>13</b><span data-i18n="hProof1">fuentes oficiales</span></li>
+          <li><b>180+</b><span data-i18n="hProof2">países de origen</span></li>
+          <li><b>136,000+</b><span data-i18n="hProof3">reportes analizados</span></li>
+          <li><b>~40</b><span data-i18n="hProof4">plantas entrevistadas en PR</span></li>
+        </ul>
       </div>
     </section>
 
@@ -316,6 +420,19 @@
         <p class="signup-lead" data-i18n="hSuccessBody">Auditorías sin carreras. Un programa de calidad que tu empresa y tus clientes respetan. Días que terminan a su hora. Cuando tu comida es segura, tu marca también.</p>
         <a class="btn btn-yellow btn-lg" href="#demo" data-i18n="hCta">Agenda una demo</a>
       </div>
+    </section>
+
+    <!-- GETTING STARTED -->
+    <section class="section container" aria-labelledby="plan-title">
+      <header class="section-head">
+        <div class="eyebrow" data-i18n="hPlanKicker">Para empezar</div>
+        <h2 id="plan-title" data-i18n="hPlanTitle">Así de simple</h2>
+      </header>
+      <ol class="h-plan">
+        <li class="card reveal"><span class="h-step">1</span><h3 data-i18n="hPlan1T">Carga tus suplidores y lotes</h3><p data-i18n="hPlan1B">Tus suplidores, ingredientes, productos y documentos. Te ayudamos a cargarlos.</p></li>
+        <li class="card reveal"><span class="h-step">2</span><h3 data-i18n="hPlan2T">Nosotros vigilamos</h3><p data-i18n="hPlan2B">Revisamos por ti fuentes oficiales de EE.UU. y del mundo.</p></li>
+        <li class="card reveal"><span class="h-step">3</span><h3 data-i18n="hPlan3T">Actúas y queda documentado</h3><p data-i18n="hPlan3B">Recibes el aviso con lo que te afecta, abres la CAPA y la evidencia queda lista para tu auditoría.</p></li>
+      </ol>
     </section>
 
     <!-- FAQ -->
@@ -336,7 +453,7 @@
         <div>
           <div class="eyebrow" data-i18n="hDemoKicker">Demo</div>
           <h2 id="demo-title" class="h-h2" data-i18n="hCta">Agenda una demo</h2>
-          <p class="h-body" data-i18n="hDemoBody">Te mostramos cómo StratumScan vigilaría los suplidores e ingredientes de tu planta.</p>
+          <p class="h-body" data-i18n="hDemoBody">Te mostramos cómo StratumScan vigilaría los suplidores e ingredientes de tu planta y organizaría tu programa de calidad.</p>
           <div class="h-self">
             <h3 data-i18n="hSelfTitle">¿Todavía no estás listo?</h3>
             <p data-i18n="hSelfBody">La FDA exige cumplimiento el 20 de julio de 2028. Descubre en 3 minutos qué tan preparada está tu planta.</p>
@@ -361,7 +478,7 @@
       <div class="h-public">
         <div>
           <h2 id="public-title" data-i18n="hPublicTitle">¿Buscas información sobre retiros de alimentos?</h2>
-          <p data-i18n="hPublicBody">Alertas PR: consulta gratis los recalls que afectan a Puerto Rico.</p>
+          <p data-i18n="hPublicBody">Alertas PR, por StratumScan: revisa gratis si tus productos aparecen en los recalls que afectan a Puerto Rico.</p>
         </div>
         <a class="btn btn-soft" href="alertas.html" data-i18n="hPublicCta">Abrir Alertas PR</a>
       </div>

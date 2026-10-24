@@ -38,10 +38,10 @@ const EN = {
   insChip: "Industry insights", insPause: "Pause", insPlay: "Play", insTabs: "Insights",
   probEyebrow: "The problem", probTitle: "One company with disconnected systems",
   probLead: "Today a food business runs its operation on disconnected systems: lots in Excel, receiving on paper, certificates of analysis by email, temperatures on one sheet and cleaning on another. Each has its own owner and format, and there's no single record of the operation.",
-  hubLabel: "Today: separate tools. With Stratum: suppliers, receiving, lots, inventory, CAPAs, documents and audits connected in one record.",
+  hubLabel: "Today: separate tools. With StratumScan: suppliers, receiving, lots, inventory, CAPAs, documents and audits connected in one record and watched against official sources.",
   fsmaKicker: "FSMA 204 · FDA traceability rule",
   fsmaTitle: "The FDA requires compliance on July 20, 2028. Walmart, Sam's Club and Costco require it today.",
-  fsmaBody: "If you want to sell to these chains, you need to trace your lots quickly starting now. Two years sounds like plenty of time; to roll out traceability across a whole operation, it isn't.",
+  fsmaBody: "If you want to sell to these chains, you need to trace your lots quickly starting now. It sounds like plenty of time; to roll out traceability across a whole operation, it isn't.",
   prob1T: "Manual supply chain management", prob1B: "Orders, certificates and supplier follow-ups live in emails, calls and Excel sheets, with no one place connecting it all.",
   prob2T: "Lost time and money", prob2B: "Hours reviewing reports, duplicated work across systems and little visibility into what's happening in the operation.",
   prob3T: "Slow recalls", prob3B: "During a recall, a lot's information is spread across several systems and pulling it together takes hours or days, when you need it in minutes.",
@@ -139,12 +139,13 @@ const EN = {
   // Home (index.html)
   hNavHow: "How it works", hNavFaq: "FAQ", hNavAlerts: "Alertas PR", hCta: "Book a demo",
   hTitle: "Know first. Act in time. Protect your brand.",
-  hLead: "The quality platform made in Puerto Rico, in Spanish. StratumScan watches your suppliers and ingredients and alerts you when something affects you, so you never hear about a recall on the news.",
+  hLead: "The quality platform made in Puerto Rico, in Spanish. StratumScan watches your suppliers and ingredients across official sources and organizes your quality program (suppliers, lots, CAPAs, documents and audits) in one record.",
+  hKicker: "Watch outside. Organize inside.",
   hSelf: "Take the self-check (3 min)",
   hAlertLabel: "Sample StratumScan alert", hAlertKicker: "New alert that affects you", hAlertSample: "Sample",
   hAlertTitle: "Frozen organic blueberries: possible E. coli", hAlertMeta: "FDA · Class I · origin Chile",
   hAlertYou: "You buy it from <b>one of your suppliers</b> and <b>2 of your products</b> use it.",
-  hDocs: "Your audit documents: up to date",
+  hDocs: "Lots 2026-118 and 2026-121 on hold · CAPA opened",
   hCredsLabel: "Credentials", hCred2: "Made in Puerto Rico", hCred3: "In Spanish and English", hCred4: "13 official sources",
   hProbKicker: "Sound familiar?",
   hProbTitle: "It's 7 p.m. A customer calls: there's a recall on an ingredient you use.",
@@ -161,15 +162,27 @@ const EN = {
   hGuideBody: "We're a Puerto Rico technology company for the food industry. We built StratumScan so quality stops depending on one person's memory.",
   hGuideCase: "In the blueberry E. coli case, StratumScan had the data 5 weeks before the recall in Puerto Rico.",
   hProof1: "official sources", hProof2: "countries of origin", hProof3: "reports analyzed", hProof4: "plants interviewed in PR",
-  hPlanTitle: "It's that simple",
-  hPlan1T: "Tell us what you buy", hPlan1B: "Your suppliers and ingredients. We help you load them.",
+  hPlanTitle: "It's that simple", hPlanKicker: "Getting started",
+  hPlan1T: "Load your suppliers and lots", hPlan1B: "Your suppliers, ingredients, products and documents. We help you load them.",
   hPlan2T: "We keep watch", hPlan2B: "We check official sources from the US and around the world for you.",
-  hPlan3T: "You act in time", hPlan3B: "You get the alert with what affects you and what to document for your audit.",
+  hPlan3T: "You act, and it's documented", hPlan3B: "You get the alert with what affects you, open the CAPA, and the evidence is ready for your audit.",
   hShotAlt: "StratumScan dashboard with FDA import refusals and recalls in Puerto Rico",
   hShotCap: "StratumScan today, with real regulator data.",
   hBaTitle: "Your day, before and after",
   hBaSub: "Get back [X] hours a week on paperwork and audits",
   hBefore: "Without StratumScan", hAfter: "With StratumScan",
+  hNavPlatform: "Platform", hPlatEyebrow: "The platform", hPlatTitle: "Your whole quality program, connected and watched",
+  hPlatLead: "Today your operation lives in disconnected systems: lots in Excel, receiving on paper, certificates by email. StratumScan brings them into one record and watches it against official sources from the US and around the world.",
+  hAvTitle: "From alert to evidence", hAvLead: "This is how the two halves of StratumScan work together when a recall hits you.",
+  hAv1T: "The alert arrives", hAv1B: "We watch 13 official sources for you, every day.", hAv1Tag: "FDA · Class I", hAv1Art: "Frozen blueberries",
+  hAv2T: "We match it to your operation", hAv2B: "Your suppliers, ingredients and products are already in StratumScan.", hAv2Art1: "1 supplier", hAv2Art2: "2 of your products",
+  hAv3T: "You see which lots are affected", hAv3B: "Traceability one step back and forward, no Excel hunting.", hAv3Art1: "Lot 2026-118", hAv3Art2: "Lot 2026-121",
+  hAv4T: "You open the CAPA", hAv4B: "With an owner, a due date and the alert attached.", hAv4Art: "Assigned to Quality",
+  hAv5T: "The evidence stays", hAv5B: "Everything dated, signed and with its history, ready for your audit.", hAv5Art: "✓ Audit-ready",
+  hAvNote: "Illustrative example.",
+  hFsmaDays: "days to the FDA deadline",
+  hOutLots: "Lots by hand, in Excel", hOutLotsOk: "Affected lots instantly", hOutCapa: "CAPA documented",
+  hB7: "Tracing a lot takes hours or days", hA7: "You trace a lot in seconds and the CAPA is documented",
   hBaEyebrow: "Before and after", hBaReact: "You react", hBaAhead: "You get ahead", hBaYou: "You",
   hSrcNews: "The news", hSrcClient: "A customer", hSrcMail: "Emails", hSrcBinder: "Binders",
   hSrcEU: "European Union", hSrcCA: "Canada", hSrcMore: "+9 sources",
@@ -189,14 +202,14 @@ const EN = {
   hQ4: "Where do the alerts come from?", hQ4a: "From 13 official sources, such as the FDA, the USDA and agencies in Europe, the UK, Canada and Japan.",
   hQ5: "Is my data safe?", hQ5a: "[Answer to be confirmed]",
   hDemoKicker: "Demo",
-  hDemoBody: "We'll show you how StratumScan would watch your plant's suppliers and ingredients.",
+  hDemoBody: "We'll show you how StratumScan would watch your plant's suppliers and ingredients and organize your quality program.",
   hSelfTitle: "Not ready yet?",
   hSelfBody: "The FDA requires compliance on July 20, 2028. Find out in 3 minutes how ready your plant is.",
   hSelfCta: "Take the free self-check",
   hDemoPrivacy: "We'll only use this to schedule your demo. See the <a href=\"privacidad.html\">Privacy Policy</a>.",
   hDemoBtn: "Book your demo",
   hPublicTitle: "Looking for information on food recalls?",
-  hPublicBody: "Alertas PR: check the recalls that affect Puerto Rico, for free.",
+  hPublicBody: "Alertas PR, by StratumScan: check for free whether your products show up in the recalls that affect Puerto Rico.",
   hPublicCta: "Open Alertas PR",
   hFootDisc: "Stratum PR is not affiliated with Walmart, Sam's Club, Costco or the agencies cited.",
 
@@ -266,6 +279,7 @@ document.addEventListener("DOMContentLoaded", () => {
   initInsights();
   initHub();
   initMonth();
+  initCountdown();
   initReveal();
   initScoreRing();
   initLang();
@@ -632,11 +646,18 @@ const HUB_NODES = [
   { icon: "shield", es: "Auditorías", en: "Audits",    oldEs: "Carpeta de auditoría", oldEn: "Audit binder" },
 ];
 const HUB_TONES = ["#1E2B7E", "#266AB2", "#5FA3DA", "#D9CF6E"]; // navy, blue, sky, sand
+// Outer ring: official sources StratumScan watches (13 in total), one per gap between modules.
+const HUB_SOURCES = [
+  { es: "FDA", en: "FDA" }, { es: "USDA", en: "USDA" }, { es: "UE", en: "EU" }, { es: "Canadá", en: "Canada" },
+  { es: "Reino Unido", en: "UK" }, { es: "Japón", en: "Japan" }, { es: "+7 fuentes", en: "+7 sources" },
+];
+const HUB_MARK = '<svg viewBox="0 0 60 44"><rect x="4" y="8" width="26" height="26" rx="6" transform="rotate(45 17 21)" fill="#E6E09E"/><rect x="17" y="8" width="26" height="26" rx="6" transform="rotate(45 30 21)" fill="#5FA3DA" fill-opacity=".92"/><rect x="30" y="8" width="26" height="26" rx="6" transform="rotate(45 43 21)" fill="#fff"/></svg>';
 
 function initHub() {
   const box = document.getElementById("hub-diagram");
   if (!box) return;
-  const R = 40; // ring radius, % of the square stage
+  const R = 33; // module ring radius, % of the square stage
+  const RS = 46; // source ring radius
   const n = HUB_NODES.length;
   const pos = HUB_NODES.map((_, i) => {
     const a = (-90 + (360 / n) * i) * Math.PI / 180;
@@ -645,11 +666,15 @@ function initHub() {
   // "Before" state: each tool has a cable stub that stops short of the center, ending in a red ✕.
   const CUT = 0.42; // how far along node→center the broken stub reaches
   const cut = pos.map((p) => ({ x: p.x + (50 - p.x) * CUT, y: p.y + (50 - p.y) * CUT }));
+  const src = HUB_SOURCES.map((_, i) => {
+    const a = (-90 + (360 / n) * (i + 0.5)) * Math.PI / 180;
+    return { x: 50 + Math.cos(a) * RS, y: 50 + Math.sin(a) * RS, ex: 50 + Math.cos(a) * 14, ey: 50 + Math.sin(a) * 14 };
+  });
 
   const render = (l) => {
     const T = l === "en"
-      ? { before: "Today: disconnected systems that don't talk to each other", after: "With Stratum: everything connected in one record" }
-      : { before: "Hoy: sistemas desconectados que no se hablan entre sí", after: "Con Stratum: todo conectado en un solo expediente" };
+      ? { before: "Today: disconnected systems that don't talk to each other", after: "With StratumScan: everything connected in one record, watched against official sources" }
+      : { before: "Hoy: sistemas desconectados que no se hablan entre sí", after: "Con StratumScan: todo conectado en un solo expediente y vigilado contra fuentes oficiales" };
     box.innerHTML = `
       <div class="hub-stage">
         <svg class="hub-lines" viewBox="0 0 100 100" aria-hidden="true">
@@ -661,9 +686,11 @@ function initHub() {
             </g>
             <line class="spoke" style="--i:${i}" pathLength="1" x1="50" y1="50" x2="${p.x.toFixed(2)}" y2="${p.y.toFixed(2)}"/>
             <line class="flow" style="--i:${i}" x1="${p.x.toFixed(2)}" y1="${p.y.toFixed(2)}" x2="50" y2="50"/>`).join("")}
+          ${src.map((p, i) => `<line class="feed" style="--i:${i}" x1="${p.x.toFixed(2)}" y1="${p.y.toFixed(2)}" x2="${p.ex.toFixed(2)}" y2="${p.ey.toFixed(2)}"/>`).join("")}
           <circle class="gear" cx="50" cy="50" r="14.5"/>
         </svg>
-        <div class="hub-core" aria-hidden="true"><img src="assets/stratum-logo-2.png" alt="" width="3834" height="720"></div>
+        <div class="hub-core" aria-hidden="true">${HUB_MARK}<b>StratumScan</b></div>
+        ${src.map((p, i) => `<span class="hub-src" aria-hidden="true" style="left:${p.x.toFixed(2)}%;top:${p.y.toFixed(2)}%;--i:${i}">${esc(HUB_SOURCES[i][l])}</span>`).join("")}
         ${HUB_NODES.map((nd, i) => {
           // Scattered before-state: offsets follow each node's own direction (in/out along its
           // spoke + a small sideways nudge) so tiles look messy without overlapping.
@@ -699,6 +726,28 @@ function initHub() {
   new IntersectionObserver((entries) => {
     entries.forEach((e) => { if (e.isIntersecting) { if (!timer) play(); } else { stop(); box.classList.remove("hub-fade"); } });
   }, { threshold: 0.35 }).observe(box);
+}
+
+// ---- FSMA 204 countdown (days to the FDA compliance date) ------------------
+function initCountdown() {
+  const el = document.getElementById("fsma-days");
+  if (!el) return;
+  const days = Math.max(0, Math.ceil((new Date("2028-07-20T00:00:00-04:00") - Date.now()) / 864e5));
+  const fmt = () => days.toLocaleString(lang === "en" ? "en-US" : "es-PR");
+  I18N_EVENTS.push(() => { if (el.dataset.done) el.textContent = fmt(); });
+  const run = () => {
+    if (REDUCED) { el.textContent = fmt(); el.dataset.done = "1"; return; }
+    const t0 = performance.now(), ms = 1400;
+    const step = (now) => {
+      const p = Math.min(1, (now - t0) / ms), e = 1 - Math.pow(1 - p, 3);
+      el.textContent = Math.round(days * e).toLocaleString(lang === "en" ? "en-US" : "es-PR");
+      if (p < 1) requestAnimationFrame(step); else el.dataset.done = "1";
+    };
+    requestAnimationFrame(step);
+  };
+  if (!("IntersectionObserver" in window)) return run();
+  const io = new IntersectionObserver((es) => { if (es.some((e) => e.isIntersecting)) { io.disconnect(); run(); } }, { threshold: 0.5 });
+  io.observe(el);
 }
 
 // ---- Current month in the StratAI sample answer ---------------------------
