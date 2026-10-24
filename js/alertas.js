@@ -393,8 +393,9 @@
       and the list opens by itself when a match is hidden past the first product. */
   function prodList(x) {
     if (!x.prods || x.prods.length < 2) return "";
-    const es = L() === "es" ? x.prods_es || [] : [];
-    const marks = x.prods.map((p, i) => state.list.some((term) => termRe(term).test(norm(`${p} ${es[i] || ""}`))));
+    const tr = x.prods_es || [];            // Spanish names: always searched, shown only in Spanish
+    const es = L() === "es" ? tr : [];
+    const marks = x.prods.map((p, i) => state.list.some((term) => termRe(term).test(norm(`${p} ${tr[i] || ""}`))));
     return `<details class="a-prods"${marks.slice(1).some(Boolean) ? " open" : ""}><summary>${esc(T[L()].allProds(Math.max(x.n, x.prods.length)))}</summary>
       <ol>${x.prods.map((p, i) => {
         const pp = parseProd(p);
