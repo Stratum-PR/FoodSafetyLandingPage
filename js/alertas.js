@@ -11,13 +11,11 @@
   const T = {
     es: {
       lead: (n) => `Gratis, de la FDA. ${n} ${n === 1 ? "retiro llegó" : "retiros llegaron"} a Puerto Rico en el último año: ${n === 1 ? "mencionó" : "mencionaron"} a PR o se ${n === 1 ? "distribuyó" : "distribuyeron"} a nivel nacional.`,
-      leadPR: (n) => `Gratis, de la FDA. ${n} ${n === 1 ? "retiro mencionó" : "retiros mencionaron"} a Puerto Rico por nombre en el último año.`,
       tagPR: "Menciona a Puerto Rico", tagNat: "Distribución nacional",
       loading: "Cargando retiros de la FDA…", fail: "No pudimos cargar los retiros. Inténtalo otra vez en unos minutos.",
       none: "No hay retiros que coincidan con tu búsqueda.",
       shown: (a, b, d) => `Mostrando ${a} de ${b}${d ? ` · Datos de la FDA al ${d}` : ""}`,
-      browse: { 3: "Retiros de los últimos 3 meses", 12: "Retiros del último año" },
-      noneRecent: "No hubo retiros en los últimos 3 meses con estos filtros.", seeYear: "Ver el último año",
+      onlyMine: "Mostrando solo los retiros que coinciden con tu lista.", seeAll: "Ver todos",
       sev: { 1: "Grave · Clase I", 2: "Moderado · Clase II", 3: "Leve · Clase III", 0: "Sin clasificar" },
       more: "Ver más", orig: "Texto original de la FDA:", products: (n) => `y ${n} ${n === 1 ? "producto más" : "productos más"}`, allProds: (n) => `Ver los ${n} productos de este retiro`,
       notice: (num) => `Buscar el aviso en la FDA (${num})`, share: "Compartir", copied: "Enlace copiado",
@@ -31,7 +29,7 @@
       remove: (x) => `Quitar ${x}`, emptyList: "Añade al menos un producto para revisar.",
       scanning: "Revisando tu lista…",
       clearT: "¡Todo bien!", clearB: (n, area) => `Ninguno de tus ${n} ${n === 1 ? "producto aparece" : "productos aparece"} en los retiros ${area} de los últimos 12 meses.`,
-      areaAll: "que llegan a Puerto Rico (incluye los de distribución nacional)", areaPR: "que mencionan a Puerto Rico",
+      areaAll: "que llegan a Puerto Rico (incluye los de distribución nacional)",
       hitT: (h, n) => `${h} de tus ${n} ${n === 1 ? "producto aparece" : "productos aparecen"} en retiros`,
       hitB: (e) => `Encontramos ${e} ${e === 1 ? "retiro relacionado" : "retiros relacionados"}. Revisa cada aviso: la coincidencia es por palabras y puede no ser tu mismo producto.`,
       seeMine: "Ver solo mis coincidencias", keep: "Guardamos tu lista en este navegador para tu próxima visita.",
@@ -54,13 +52,11 @@
     },
     en: {
       lead: (n) => `Free, from the FDA. ${n} ${n === 1 ? "recall" : "recalls"} reached Puerto Rico in the last year: named PR or distributed nationwide.`,
-      leadPR: (n) => `Free, from the FDA. ${n} ${n === 1 ? "recall" : "recalls"} named Puerto Rico in the last year.`,
       tagPR: "Names Puerto Rico", tagNat: "Nationwide distribution",
       loading: "Loading FDA recalls…", fail: "We couldn't load the recalls. Try again in a few minutes.",
       none: "No recalls match your search.",
       shown: (a, b, d) => `Showing ${a} of ${b}${d ? ` · FDA data as of ${d}` : ""}`,
-      browse: { 3: "Recalls from the last 3 months", 12: "Recalls from the last year" },
-      noneRecent: "No recalls in the last 3 months with these filters.", seeYear: "See the last year",
+      onlyMine: "Showing only the recalls that match your list.", seeAll: "Show all",
       sev: { 1: "Serious · Class I", 2: "Moderate · Class II", 3: "Minor · Class III", 0: "Unclassified" },
       more: "Show more", orig: "Original FDA text:", products: (n) => `and ${n} more ${n === 1 ? "product" : "products"}`, allProds: (n) => `See all ${n} products in this recall`,
       notice: (num) => `Look up the notice at the FDA (${num})`, share: "Share", copied: "Link copied",
@@ -73,7 +69,7 @@
       remove: (x) => `Remove ${x}`, emptyList: "Add at least one product to check.",
       scanning: "Checking your list…",
       clearT: "All clear!", clearB: (n, area) => `None of your ${n} ${n === 1 ? "product shows" : "products show"} up in the last 12 months of ${area} recalls.`,
-      areaAll: "Puerto Rico (nationwide ones included)", areaPR: "Puerto Rico-named",
+      areaAll: "Puerto Rico (nationwide ones included)",
       hitT: (h, n) => `${h} of your ${n} ${n === 1 ? "product shows" : "products show"} up in recalls`,
       hitB: (e) => `We found ${e} related ${e === 1 ? "recall" : "recalls"}. Check each notice: matching is by words and may not be your exact product.`,
       seeMine: "Show only my matches", keep: "We saved your list in this browser for your next visit.",
@@ -122,7 +118,7 @@
   const norm = (s) => s.normalize("NFD").replace(/[̀-ͯ]/g, "").toLowerCase().trim();
   const canKeep = () => !!window.StratumConsent?.allows("preferences");
 
-  const state = { scope: "all", period: 3, filter: "all", q: "", shown: PAGE, data: {}, error: false, list: [], checked: false, seenAtLoad: {}, counted: {} };
+  const state = { scope: "all", filter: "all", shown: PAGE, data: {}, error: false, list: [], checked: false, seenAtLoad: {}, counted: {} };
 
   // ---- storage (only with "preferences" consent) ---------------------------
   function readJSON(k, fallback) {
@@ -213,9 +209,7 @@
     const lower = state.list.map(norm);
     $("#a-suggest").innerHTML = t.suggest.filter((s) => !lower.includes(norm(s))).slice(0, 8)
       .map((s) => `<button type="button" data-suggest="${esc(s)}">+ ${esc(s)}</button>`).join("");
-    const chip = document.querySelector('[data-filter="mine"]');
-    chip.hidden = !state.list.length;
-    if (chip.hidden && state.filter === "mine") setFilter("all");
+    if (!state.list.length) state.filter = "all";
   }
 
   function renderResult() {
@@ -227,7 +221,7 @@
     if (!hitTerms.length) {
       box.className = "a-result is-clear";
       box.innerHTML = `<span class="a-badge" aria-hidden="true"><svg viewBox="0 0 52 52"><circle cx="26" cy="26" r="23"/><path d="M15 27l7 7 15-16"/></svg></span>
-        <div><p class="a-result-t">${esc(t.clearT)}</p><p>${esc(t.clearB(state.list.length, state.scope === "pr" ? t.areaPR : t.areaAll))}</p>${keep}</div>`;
+        <div><p class="a-result-t">${esc(t.clearT)}</p><p>${esc(t.clearB(state.list.length, t.areaAll))}</p>${keep}</div>`;
     } else {
       box.className = "a-result is-hit";
       box.innerHTML = `<span class="a-badge" aria-hidden="true"><svg viewBox="0 0 52 52"><circle cx="26" cy="26" r="23"/><path d="M26 14v15M26 37h.01"/></svg></span>
@@ -347,32 +341,23 @@
     if (state.error) { lead.textContent = ""; status.textContent = t.fail; list.innerHTML = ""; renderPulse(); return; }
     if (!d) { status.textContent = t.loading; return; }
 
-    lead.textContent = (state.scope === "pr" ? t.leadPR : t.lead)(d.items.length);
+    lead.textContent = t.lead(d.items.length);
     const fresh = d.items.filter(isNew).length;
     const nb = $("#a-new");
     nb.hidden = !fresh; nb.textContent = fresh ? t.newSince(fresh) : "";
 
-    const q = norm(state.q);
-    $("#a-browse-title").textContent = t.browse[state.period];
-    // the list opens on the last 3 months; the pulse and "Revisa tu lista" always cover the year
-    const since = new Date(); since.setMonth(since.getMonth() - state.period);
-    const cutoff = `${since.getFullYear()}${String(since.getMonth() + 1).padStart(2, "0")}${String(since.getDate()).padStart(2, "0")}`;
-    const items = d.items.filter((x) => {
-      if (x.d < cutoff) return false;
-      if (state.filter === "serious" && x.cls !== 1) return false;
-      if (["allergen", "micro", "foreign"].includes(state.filter) && !kinds(x)[state.filter]) return false;
-      if (state.filter === "mine" && !hitsFor(x).length) return false;
-      return !q || haystack(x).includes(q);
-    });
+    // the whole year: recalls that name Puerto Rico plus nationwide ones ("Ver solo mis coincidencias" narrows it)
+    const mine = state.filter === "mine";
+    const items = mine ? d.items.filter((x) => hitsFor(x).length) : d.items;
     const shown = items.slice(0, state.shown);
-    status.textContent = items.length ? t.shown(shown.length, items.length, fmtDate(d.updated, l)) : state.period === 3 ? t.noneRecent : t.none;
+    status.textContent = items.length ? t.shown(shown.length, items.length, fmtDate(d.updated, l)) : t.none;
 
-    list.innerHTML = shown.map((x, i) => {
+    list.innerHTML = (mine ? `<p class="a-only-mine">${esc(t.onlyMine)} <button type="button" data-all>${esc(t.seeAll)}</button></p>` : "") + shown.map((x, i) => {
       const s = summary(x, t), type = mainType(x), hits = hitsFor(x), g = t.g[type];
       return `<article class="a-item a-cls-${x.cls}${hits.length ? " is-mine" : ""}">
         <span class="a-ico a-ico-${type}" aria-hidden="true"><svg viewBox="0 0 24 24">${ICONS[type]}</svg></span>
         <div class="a-body">
-          <div class="a-meta"><span class="a-sev a-sev-${x.cls}">${esc(t.sev[x.cls])}</span>${isNew(x) ? `<span class="a-flag">${esc(t.isNew)}</span>` : ""}<span class="a-where${x.pr || state.scope === "pr" ? " is-pr" : ""}">${esc(x.pr || state.scope === "pr" ? t.tagPR : t.tagNat)}</span><span>${esc(fmtDate(x.d, l))} · ${esc(x.firm)}</span></div>
+          <div class="a-meta"><span class="a-sev a-sev-${x.cls}">${esc(t.sev[x.cls])}</span>${isNew(x) ? `<span class="a-flag">${esc(t.isNew)}</span>` : ""}<span class="a-where${x.pr ? " is-pr" : ""}">${esc(x.pr ? t.tagPR : t.tagNat)}</span><span>${esc(fmtDate(x.d, l))} · ${esc(x.firm)}</span></div>
           <h2>${esc(title(x.product))}${x.n > 1 && !(x.prods && x.prods.length > 1) ? ` <span class="a-orig">${esc(t.products(x.n - 1))}</span>` : ""}</h2>
           ${prodList(x)}
           ${hits.length ? `<p class="a-hits">${esc(t.inList)} <b>${esc(hits.join(", "))}</b></p>` : ""}
@@ -384,12 +369,11 @@
           <div class="a-links"><a href="${FDA_SEARCH}" target="_blank" rel="noopener">${esc(t.notice(x.num))}</a><button type="button" data-share="${i}">${esc(t.share)}</button></div>
         </div>
       </article>`;
-    }).join("") + (items.length > shown.length ? `<button type="button" class="btn btn-soft a-more" data-more>${esc(t.more)}</button>` : "")
-      + (!items.length && state.period === 3 ? `<button type="button" class="btn btn-soft a-more" data-year>${esc(t.seeYear)}</button>` : "");
+    }).join("") + (items.length > shown.length ? `<button type="button" class="btn btn-soft a-more" data-more>${esc(t.more)}</button>` : "");
 
     list.onclick = async (e) => {
       if (e.target.closest("[data-more]")) { state.shown += PAGE; render(); return; }
-      if (e.target.closest("[data-year]")) { setPeriod(12); render(); return; }
+      if (e.target.closest("[data-all]")) { setFilter("all"); render(); return; }
       const b = e.target.closest("[data-share]");
       if (!b) return;
       const x = shown[+b.dataset.share];
@@ -410,19 +394,10 @@
       <ul>${x.prods.map((p, i) => `<li${marks[i] ? ' class="is-hit"' : ""}>${esc(p)}</li>`).join("")}</ul></details>`;
   }
 
-  function setPeriod(p) {
-    state.period = p; state.shown = PAGE;
-    document.querySelectorAll("[data-period]").forEach((c) => c.setAttribute("aria-pressed", String(+c.dataset.period === p)));
-  }
-
-  function setFilter(f) {
-    state.filter = f; state.shown = PAGE;
-    document.querySelectorAll("[data-filter]").forEach((c) => c.setAttribute("aria-pressed", String(c.dataset.filter === f)));
-  }
+  function setFilter(f) { state.filter = f; state.shown = PAGE; }
 
   async function show(scope) {
     state.scope = scope; state.shown = PAGE; state.error = false;
-    document.querySelectorAll("[data-scope]").forEach((b) => b.setAttribute("aria-pressed", String(b.dataset.scope === scope)));
     render();
     try { await load(scope); } catch (err) { console.error("[alertas]", err); state.error = true; }
     if (state.scope !== scope) return;
@@ -434,14 +409,6 @@
     const saved = canKeep() ? readJSON(LIST_KEY, []) : [];
     state.list = Array.isArray(saved) ? saved.filter((x) => typeof x === "string").slice(0, 20) : [];
     state.seenAtLoad = canKeep() ? readJSON(SEEN_KEY, {}) : {};
-
-    document.querySelectorAll("[data-scope]").forEach((b) => b.addEventListener("click", async () => {
-      await show(b.dataset.scope);
-      if (state.list.length && state.checked) runCheck();
-    }));
-    document.querySelectorAll("[data-filter]").forEach((b) => b.addEventListener("click", () => { setFilter(b.dataset.filter); if (b.dataset.filter === "mine") setPeriod(12); render(); }));
-    document.querySelectorAll("[data-period]").forEach((b) => b.addEventListener("click", () => { setPeriod(+b.dataset.period); render(); }));
-    $("#a-q").addEventListener("input", (e) => { state.q = e.target.value; state.shown = PAGE; render(); });
 
     $("#a-add").addEventListener("submit", (e) => {
       e.preventDefault();
@@ -462,7 +429,7 @@
       }
       if (e.target.closest("#a-run")) { runCheck(); return; }
       if (e.target.closest("[data-see-mine]")) {
-        setFilter("mine"); setPeriod(12); render(); // matches come from the whole year
+        setFilter("mine"); render();
         $("#a-browse-title").scrollIntoView({ behavior: REDUCED ? "auto" : "smooth", block: "start" });
       }
     });

@@ -269,19 +269,8 @@
 .a-hero p { margin-top: 12px; font-size: 18px; color: var(--muted); }
 .a-h2 { font-size: 24px; font-weight: 800; color: var(--navy); }
 .a-browse { padding-top: 40px; }
-.a-tools { margin-top: 16px; display: flex; flex-wrap: wrap; gap: 10px; }
-.a-search { flex: 1 1 300px; font: inherit; font-size: 16px; padding: 13px 16px; border: 1.5px solid var(--line); border-radius: 11px; background: var(--surface); color: var(--ink); min-height: 48px; }
-.a-search:focus { outline: none; border-color: var(--sky); }
-.a-seg { display: flex; border: 1.5px solid var(--line); border-radius: 11px; overflow: hidden; background: var(--surface); }
-.a-seg button, .a-chips button { font: inherit; cursor: pointer; min-height: 44px; }
-.a-seg button { border: 0; background: none; padding: 0 18px; font-size: 15px; font-weight: 600; color: var(--ink); }
-.a-seg button[aria-pressed="true"] { background: var(--navy); color: #fff; }
-.a-chips { margin-top: 12px; display: flex; flex-wrap: wrap; gap: 8px; }
-.a-chips button { padding: 0 16px; border-radius: 999px; border: 1.5px solid var(--line); background: var(--surface); color: var(--ink); font-size: 14px; font-weight: 600; }
-.a-chips button[aria-pressed="true"] { background: var(--ink); border-color: var(--ink); color: #fff; }
-.a-chips button[data-filter="mine"] { border-color: #E5DF9F; background: var(--yellow-soft); color: var(--olive); }
-.a-chips button[data-filter="mine"][aria-pressed="true"] { background: var(--yellow); border-color: var(--yellow); color: var(--navy); }
-.a-chips [hidden] { display: none; }
+.a-only-mine { display: flex; flex-wrap: wrap; align-items: center; gap: 6px 10px; padding: 12px 14px; border-radius: 12px; background: var(--yellow-soft); color: var(--olive); font-size: 14.5px; font-weight: 600; }
+.a-only-mine button { font: inherit; font-weight: 800; color: var(--navy); background: none; border: 0; padding: 0; text-decoration: underline; cursor: pointer; }
 .a-status { margin-top: 16px; font-size: 14px; color: var(--muted); min-height: 1.4em; }
 
 /* Coming-soon note (top) and early-access panel (bottom) */
@@ -532,6 +521,4 @@
   .a-item { padding: 14px; gap: 10px; }
   .a-ico { width: 34px; height: 34px; }
   .a-guide-cols { grid-template-columns: 1fr; }
-  .a-seg { width: 100%; }
-  .a-seg button { flex: 1; }
 }
