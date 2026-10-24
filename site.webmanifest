@@ -1,0 +1,14 @@
+{
+  "name": "Alertas PR · StratumScan",
+  "short_name": "Alertas PR",
+  "description": "Retiros de alimentos de la FDA y el USDA que llegan a Puerto Rico.",
+  "lang": "es",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#F3F5FA",
+  "theme_color": "#1E2B7E",
+  "icons": [
+    { "src": "/assets/icon-192.png", "sizes": "192x192", "type": "image/png" },
+    { "src": "/assets/icon-512.png", "sizes": "512x512", "type": "image/png" }
+  ]
+}
