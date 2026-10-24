@@ -286,12 +286,34 @@
 
 /* Coming-soon note (top) and early-access panel (bottom) */
 .a-soon {
-  display: flex; flex-wrap: wrap; align-items: center; gap: 8px 12px; margin-top: 24px; padding: 12px 16px;
-  background: var(--surface); border: 1px solid var(--line); border-radius: 14px; font-size: 14.5px; color: var(--ink-2);
+  position: relative; overflow: hidden; display: flex; align-items: center; gap: 18px; margin-top: 24px;
+  padding: 18px 22px; border-radius: 20px; background: var(--gradient); color: #fff;
+  box-shadow: 0 20px 44px -22px rgba(30, 43, 126, .7); transition: transform .2s ease, box-shadow .2s ease;
 }
-.a-soon:hover { color: var(--ink); border-color: #C9CEE6; }
-.a-soon > span:nth-child(2) { flex: 1 1 320px; }
-.a-soon b { color: var(--blue); white-space: nowrap; }
+.a-soon > * { position: relative; }
+.a-soon:hover { color: #fff; transform: translateY(-2px); box-shadow: 0 26px 50px -22px rgba(30, 43, 126, .8); }
+.a-soon:focus-visible { outline-color: var(--yellow); }
+/* a soft light sweeps across every few seconds */
+.a-soon::after {
+  content: ""; position: absolute; top: 0; bottom: 0; left: -40%; width: 35%; pointer-events: none;
+  background: linear-gradient(100deg, transparent, rgba(255, 255, 255, .16), transparent);
+  animation: soon-sweep 4.5s ease-in-out 1s infinite;
+}
+@keyframes soon-sweep { 0% { left: -40%; } 45%, 100% { left: 120%; } }
+.a-soon-deco { position: absolute; right: -50px; top: -60px; width: 170px; height: 170px; border-radius: 40px; transform: rotate(45deg); background: rgba(230, 224, 158, .14); }
+.a-soon-mark {
+  flex: none; width: 56px; height: 56px; border-radius: 16px; background: #fff; display: grid; place-items: center;
+  box-shadow: 0 0 0 6px rgba(255, 255, 255, .12);
+}
+.a-soon-mark svg { width: 38px; height: auto; }
+.a-soon-copy { flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 3px; }
+.a-soon-live { display: inline-flex; align-items: center; gap: 8px; font-size: 12px; font-weight: 800; letter-spacing: .06em; text-transform: uppercase; color: var(--yellow); }
+.a-soon-live i { position: relative; width: 8px; height: 8px; border-radius: 50%; background: var(--yellow); }
+.a-soon-live i::after { content: ""; position: absolute; inset: 0; border-radius: 50%; background: var(--yellow); animation: soon-ping 1.8s ease-out infinite; }
+@keyframes soon-ping { to { transform: scale(3); opacity: 0; } }
+.a-soon-title { font-size: clamp(18px, 2.2vw, 22px); font-weight: 800; letter-spacing: -.01em; line-height: 1.2; }
+.a-soon-text { font-size: 14.5px; color: rgba(255, 255, 255, .85); }
+.a-soon-btn { flex: none; }
 .a-soon-tag { font-size: 12px; font-weight: 800; padding: 4px 10px; border-radius: 999px; background: var(--yellow); color: var(--navy); }
 .a-hero { padding-top: 32px; }
 .a-pronto { margin: 8px 0 32px; }
@@ -481,6 +503,11 @@
   .ba-core-scan b { display: none; }
   .ba-core-scan svg { width: 66%; }
   .ba-q { width: 18px; height: 18px; font-size: 11px; }
+  .a-soon { flex-wrap: wrap; padding: 18px; gap: 14px; }
+  .a-soon-mark { width: 48px; height: 48px; border-radius: 14px; }
+  .a-soon-mark svg { width: 32px; }
+  .a-soon-copy { flex: 1 1 200px; }
+  .a-soon-btn { width: 100%; }
   .a-brand { gap: 6px; }
   .a-brand b { font-size: 19px; }
   .a-brand > span:not(.a-scan) { display: none; }
