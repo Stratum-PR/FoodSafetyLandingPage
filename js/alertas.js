@@ -10,8 +10,9 @@
   const SEEN_KEY = "alertas-seen";
   const T = {
     es: {
-      lead: (n) => `Gratis, de la FDA. ${n} ${n === 1 ? "retiro mencionó" : "retiros mencionaron"} a Puerto Rico en el último año.`,
-      leadNat: (n) => `Gratis, de la FDA. ${n} ${n === 1 ? "retiro" : "retiros"} con distribución nacional en el último año.`,
+      lead: (n) => `Gratis, de la FDA. ${n} ${n === 1 ? "retiro llegó" : "retiros llegaron"} a Puerto Rico en el último año: ${n === 1 ? "mencionó" : "mencionaron"} a PR o se ${n === 1 ? "distribuyó" : "distribuyeron"} a nivel nacional.`,
+      leadPR: (n) => `Gratis, de la FDA. ${n} ${n === 1 ? "retiro mencionó" : "retiros mencionaron"} a Puerto Rico por nombre en el último año.`,
+      tagPR: "Menciona a Puerto Rico", tagNat: "Distribución nacional",
       loading: "Cargando retiros de la FDA…", fail: "No pudimos cargar los retiros. Inténtalo otra vez en unos minutos.",
       none: "No hay retiros que coincidan con tu búsqueda.",
       shown: (a, b, d) => `Mostrando ${a} de ${b}${d ? ` · Datos de la FDA al ${d}` : ""}`,
@@ -30,7 +31,7 @@
       remove: (x) => `Quitar ${x}`, emptyList: "Añade al menos un producto para revisar.",
       scanning: "Revisando tu lista…",
       clearT: "¡Todo bien!", clearB: (n, area) => `Ninguno de tus ${n} ${n === 1 ? "producto aparece" : "productos aparece"} en los retiros ${area} de los últimos 12 meses.`,
-      areaPR: "que afectan a Puerto Rico", areaNat: "nacionales",
+      areaAll: "que llegan a Puerto Rico (incluye los de distribución nacional)", areaPR: "que mencionan a Puerto Rico",
       hitT: (h, n) => `${h} de tus ${n} ${n === 1 ? "producto aparece" : "productos aparecen"} en retiros`,
       hitB: (e) => `Encontramos ${e} ${e === 1 ? "retiro relacionado" : "retiros relacionados"}. Revisa cada aviso: la coincidencia es por palabras y puede no ser tu mismo producto.`,
       seeMine: "Ver solo mis coincidencias", keep: "Guardamos tu lista en este navegador para tu próxima visita.",
@@ -52,8 +53,9 @@
       },
     },
     en: {
-      lead: (n) => `Free, from the FDA. ${n} ${n === 1 ? "recall" : "recalls"} named Puerto Rico in the last year.`,
-      leadNat: (n) => `Free, from the FDA. ${n} ${n === 1 ? "recall" : "recalls"} with nationwide distribution in the last year.`,
+      lead: (n) => `Free, from the FDA. ${n} ${n === 1 ? "recall" : "recalls"} reached Puerto Rico in the last year: named PR or distributed nationwide.`,
+      leadPR: (n) => `Free, from the FDA. ${n} ${n === 1 ? "recall" : "recalls"} named Puerto Rico in the last year.`,
+      tagPR: "Names Puerto Rico", tagNat: "Nationwide distribution",
       loading: "Loading FDA recalls…", fail: "We couldn't load the recalls. Try again in a few minutes.",
       none: "No recalls match your search.",
       shown: (a, b, d) => `Showing ${a} of ${b}${d ? ` · FDA data as of ${d}` : ""}`,
@@ -70,8 +72,8 @@
       suggest: ["Milk", "Cheese", "Peanuts", "Eggs", "Chicken", "Shrimp", "Blueberries", "Flour", "Chocolate", "Spices"],
       remove: (x) => `Remove ${x}`, emptyList: "Add at least one product to check.",
       scanning: "Checking your list…",
-      clearT: "All clear!", clearB: (n, area) => `None of your ${n} ${n === 1 ? "product shows" : "products show"} up in ${area} recalls from the last 12 months.`,
-      areaPR: "Puerto Rico", areaNat: "nationwide",
+      clearT: "All clear!", clearB: (n, area) => `None of your ${n} ${n === 1 ? "product shows" : "products show"} up in the last 12 months of ${area} recalls.`,
+      areaAll: "Puerto Rico (nationwide ones included)", areaPR: "Puerto Rico-named",
       hitT: (h, n) => `${h} of your ${n} ${n === 1 ? "product shows" : "products show"} up in recalls`,
       hitB: (e) => `We found ${e} related ${e === 1 ? "recall" : "recalls"}. Check each notice: matching is by words and may not be your exact product.`,
       seeMine: "Show only my matches", keep: "We saved your list in this browser for your next visit.",
@@ -120,7 +122,7 @@
   const norm = (s) => s.normalize("NFD").replace(/[̀-ͯ]/g, "").toLowerCase().trim();
   const canKeep = () => !!window.StratumConsent?.allows("preferences");
 
-  const state = { scope: "pr", period: 3, filter: "all", q: "", shown: PAGE, data: {}, error: false, list: [], checked: false, seenAtLoad: {}, counted: {} };
+  const state = { scope: "all", period: 3, filter: "all", q: "", shown: PAGE, data: {}, error: false, list: [], checked: false, seenAtLoad: {}, counted: {} };
 
   // ---- storage (only with "preferences" consent) ---------------------------
   function readJSON(k, fallback) {
@@ -180,7 +182,8 @@
     if (reCache.has(term)) return reCache.get(term);
     const n = norm(term);
     const stem = [n, n.replace(/es$/, ""), n.replace(/s$/, "")].map((k) => SYN[k]).find(Boolean);
-    const literal = n.replace(/[.*+?^${}()|[\]\\]/g, "\\$&").replace(/\s+/g, "\\s+");
+    const literal = n.replace(/ies$/, "y").replace(/[.*+?^${}()|[\]\\]/g, "\\$&").replace(/\s+/g, "\\s+")
+      .replace(/([^aeiou])y$/, "$1(?:y|ies)"); // blueberry ↔ blueberries
     // short words ("res", "pan") must match whole words, or they'd hit "residue", "panel"…
     const re = new RegExp(`\\b(?:${stem ? stem + "|" : ""}${literal}${n.length < 4 ? "\\b" : ""})`, "i");
     reCache.set(term, re);
@@ -223,7 +226,7 @@
     if (!hitTerms.length) {
       box.className = "a-result is-clear";
       box.innerHTML = `<span class="a-badge" aria-hidden="true"><svg viewBox="0 0 52 52"><circle cx="26" cy="26" r="23"/><path d="M15 27l7 7 15-16"/></svg></span>
-        <div><p class="a-result-t">${esc(t.clearT)}</p><p>${esc(t.clearB(state.list.length, state.scope === "pr" ? t.areaPR : t.areaNat))}</p>${keep}</div>`;
+        <div><p class="a-result-t">${esc(t.clearT)}</p><p>${esc(t.clearB(state.list.length, state.scope === "pr" ? t.areaPR : t.areaAll))}</p>${keep}</div>`;
     } else {
       box.className = "a-result is-hit";
       box.innerHTML = `<span class="a-badge" aria-hidden="true"><svg viewBox="0 0 52 52"><circle cx="26" cy="26" r="23"/><path d="M26 14v15M26 37h.01"/></svg></span>
@@ -313,13 +316,25 @@
     return d.toLocaleDateString(l === "en" ? "en-US" : "es-PR", { day: "numeric", month: "short", year: "numeric" });
   };
 
-  async function load(scope) {
-    if (state.data[scope]) return state.data[scope];
+  async function fetchScope(scope) {
     const r = await fetch(`/api/recalls?scope=${scope}`, { headers: { Accept: "application/json" } });
     if (!r.ok) throw new Error("HTTP " + r.status);
     const d = await r.json();
     if (!d.ok) throw new Error(d.error || "error");
-    return (state.data[scope] = d);
+    return d;
+  }
+  /** "pr" = recalls whose distribution names Puerto Rico. "all" = those plus nationwide recalls,
+      which reach Puerto Rico too; each item keeps pr: true when it names PR. */
+  async function load(scope) {
+    if (state.data[scope]) return state.data[scope];
+    if (scope === "pr") return (state.data.pr = await fetchScope("pr"));
+    const [pr, nat] = await Promise.all([load("pr"), fetchScope("nat")]);
+    const key = (x) => x.ev || `${x.num}`;
+    const named = new Set(pr.items.map(key));
+    const items = pr.items.map((x) => ({ ...x, pr: true }))
+      .concat(nat.items.filter((x) => !named.has(key(x))))
+      .sort((a, b) => (a.d < b.d ? 1 : a.d > b.d ? -1 : 0));
+    return (state.data.all = { ok: true, updated: pr.updated || nat.updated, items });
   }
 
   function render() {
@@ -330,7 +345,7 @@
     if (state.error) { lead.textContent = ""; status.textContent = t.fail; list.innerHTML = ""; renderPulse(); return; }
     if (!d) { status.textContent = t.loading; return; }
 
-    lead.textContent = (state.scope === "pr" ? t.lead : t.leadNat)(d.items.length);
+    lead.textContent = (state.scope === "pr" ? t.leadPR : t.lead)(d.items.length);
     const fresh = d.items.filter(isNew).length;
     const nb = $("#a-new");
     nb.hidden = !fresh; nb.textContent = fresh ? t.newSince(fresh) : "";
@@ -355,7 +370,7 @@
       return `<article class="a-item a-cls-${x.cls}${hits.length ? " is-mine" : ""}">
         <span class="a-ico a-ico-${type}" aria-hidden="true"><svg viewBox="0 0 24 24">${ICONS[type]}</svg></span>
         <div class="a-body">
-          <div class="a-meta"><span class="a-sev a-sev-${x.cls}">${esc(t.sev[x.cls])}</span>${isNew(x) ? `<span class="a-flag">${esc(t.isNew)}</span>` : ""}<span>${esc(fmtDate(x.d, l))} · ${esc(x.firm)}</span></div>
+          <div class="a-meta"><span class="a-sev a-sev-${x.cls}">${esc(t.sev[x.cls])}</span>${isNew(x) ? `<span class="a-flag">${esc(t.isNew)}</span>` : ""}<span class="a-where${x.pr || state.scope === "pr" ? " is-pr" : ""}">${esc(x.pr || state.scope === "pr" ? t.tagPR : t.tagNat)}</span><span>${esc(fmtDate(x.d, l))} · ${esc(x.firm)}</span></div>
           <h2>${esc(title(x.product))}${x.n > 1 ? ` <span class="a-orig">${esc(t.products(x.n - 1))}</span>` : ""}</h2>
           ${hits.length ? `<p class="a-hits">${esc(t.inList)} <b>${esc(hits.join(", "))}</b></p>` : ""}
           ${s ? `<p class="a-reason">${esc(s)}</p><p class="a-orig">${esc(t.orig)} ${esc(x.reason)}</p>` : `<p class="a-reason">${esc(x.reason)}</p>`}
@@ -442,6 +457,6 @@
 
     // main.js switches <html lang>; redraw everything in the new language
     new MutationObserver(() => { render(); renderPulse(); }).observe(document.documentElement, { attributes: true, attributeFilter: ["lang"] });
-    show("pr").then(() => { if (state.list.length && state.data.pr) runCheck(); });
+    show("all").then(() => { if (state.list.length && state.data.all) runCheck(); });
   });
 })();

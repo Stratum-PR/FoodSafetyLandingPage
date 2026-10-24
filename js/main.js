@@ -224,7 +224,7 @@ const EN = {
   aSoonTag: "Soon", aSoonLive: "Coming soon", aSoonTitle: "StratumScan is on its way", aSoonBar: "The quality platform that connects these alerts to your suppliers and lots.",
   aSoonLink: "Join the list", aSoonFoot: "StratumScan (coming soon)", aProntoTitle: "StratumScan is coming soon",
   aProntoLead: "Alertas PR is just the start. StratumScan will watch 13 official sources, match each alert to your suppliers and lots, and keep the evidence ready for your audit. Join the list and we'll let you know when it opens.",
-  aRun: "Check my list", aMineChip: "On my list", aPulseLabel: "The year in numbers", aPeriodLabel: "Period", aP3: "3 months", aP12: "12 months",
+  aRun: "Check my list", aMineChip: "On my list", aPulseLabel: "The year in numbers", aAllPR: "Reach PR", aOnlyPR: "Name PR", aPeriodLabel: "Period", aP3: "3 months", aP12: "12 months",
   aMatchNote: "The link to Puerto Rico and to your list is based on the text the FDA publishes, so it may not be exact. Your list stays in your browser: we never receive it.",
   aNote: "Source: FDA Enforcement Reports (openFDA). Stratum PR is not affiliated with the FDA. Check each notice at its source.",
 };

@@ -443,6 +443,8 @@
 .a-sev-1 { background: #FBE9E7; color: #8C1D16; }
 .a-sev-2 { background: var(--warn-bg); color: #7A4800; }
 .a-sev-3 { background: var(--ok-bg); color: #145E3B; }
+.a-where { font-weight: 700; padding: 3px 10px; border-radius: 999px; background: var(--tint); color: var(--ink-2); }
+.a-where.is-pr { background: var(--yellow-soft); color: var(--olive); }
 .a-flag { font-weight: 800; padding: 3px 10px; border-radius: 999px; background: var(--yellow); color: var(--navy); }
 .a-item h2 { font-size: 17px; font-weight: 700; line-height: 1.35; }
 .a-hits { font-size: 14px; color: var(--olive); background: var(--yellow-soft); padding: 6px 10px; border-radius: 8px; align-self: flex-start; }

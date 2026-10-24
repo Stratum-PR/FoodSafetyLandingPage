@@ -22,7 +22,8 @@ the form/email flow and environment variables.
   sells both halves to quality managers, in the light topographic branding of the archived landing
   (StoryBrand layout, CTA "Agenda una demo" → `/api/demo`, no prices). `alertas.html` is the free public
   portal "Alertas PR · por StratumScan": `js/alertas.js` reads `/api/recalls?scope=pr|nat` (openFDA food
-  enforcement, last 12 months, one row per event, cached 6 h) and adds "Revisa tu lista" (kept in the
+  enforcement, last 12 months, one row per event, cached 6 h); the default view and the list check merge
+  `pr` with `nat`, because nationwide recalls reach Puerto Rico too and adds "Revisa tu lista" (kept in the
   browser only, with preferences consent). The previous Walmart self-check home is on branch
   `archivo/landing-fsqms-2026-10`.
 - Branch `version-pronto` is the "coming soon" variant: Alertas PR is the home (`index.html`), with a

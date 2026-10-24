@@ -14,12 +14,19 @@ async function fetchScope(scope) {
   const from = new Date(now); from.setFullYear(from.getFullYear() - 1);
   const where = scope === "nat" ? 'distribution_pattern:"nationwide"' : '(distribution_pattern:"puerto rico" distribution_pattern:PR)';
   const search = `${where} AND recall_initiation_date:[${ymd(from)} TO ${ymd(now)}]`;
-  const url = `${API}?search=${encodeURIComponent(search)}&sort=recall_initiation_date:desc&limit=1000`;
-  const r = await fetch(url, { headers: { Accept: "application/json" } });
-  if (r.status === 404) return { updated: null, results: [] }; // openFDA answers 404 when nothing matches
-  if (!r.ok) throw new Error(`openFDA ${r.status}`);
-  const d = await r.json();
-  return { updated: d.meta?.last_updated || null, results: d.results || [] };
+  // openFDA returns at most 1000 rows per call; page with skip (nationwide can exceed one page).
+  let updated = null, results = [];
+  for (let skip = 0; skip < 5000; skip += 1000) {
+    const url = `${API}?search=${encodeURIComponent(search)}&sort=recall_initiation_date:desc&limit=1000&skip=${skip}`;
+    const r = await fetch(url, { headers: { Accept: "application/json" } });
+    if (r.status === 404) break; // openFDA answers 404 when nothing (more) matches
+    if (!r.ok) throw new Error(`openFDA ${r.status}`);
+    const d = await r.json();
+    updated = d.meta?.last_updated || updated;
+    results = results.concat(d.results || []);
+    if (results.length >= (d.meta?.results?.total || 0) || !(d.results || []).length) break;
+  }
+  return { updated, results };
 }
 
 function toEvents(results, scope) {
@@ -33,7 +40,7 @@ function toEvents(results, scope) {
       firm: String(x.recalling_firm || "").replace(/\s+/g, " ").trim(), state: x.state || "", status: x.status || "",
       product: String(x.product_description || "").replace(/\s+/g, " ").trim().slice(0, 240),
       reason: String(x.reason_for_recall || "").replace(/\s+/g, " ").trim().slice(0, 300),
-      num: x.recall_number, n: 1,
+      num: x.recall_number, ev: x.event_id, n: 1,
     });
   }
   return [...byEvent.values()].sort((a, b) => (a.d < b.d ? 1 : -1));
