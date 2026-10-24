@@ -137,9 +137,9 @@ const EN = {
   reqPrivacy: "We'll only use this to contact you about access. See the <a href=\"privacidad.html\">Privacy Policy</a>.",
 
   // Home (index.html)
-  hNavAlerts: "Alertas PR", hCta: "Book a demo",
+  hNavHow: "How it works", hNavAlerts: "Alertas PR", hCta: "Book a demo",
   hTitle: "Know first. Act in time. Protect your brand.",
-  hLead: "StratumScan watches your suppliers and ingredients across official sources and organizes your quality program in one place. Made in Puerto Rico, in Spanish.",
+  hLead: "The quality platform made in Puerto Rico, in Spanish. StratumScan watches your suppliers and ingredients across official sources and organizes your quality program (suppliers, lots, CAPAs, documents and audits) in one record.",
   hKicker: "Watch outside. Organize inside.",
   hAlertLabel: "Sample StratumScan alert", hAlertKicker: "New alert that affects you", hAlertSample: "Sample",
   hAlertTitle: "Frozen organic blueberries: possible E. coli", hAlertMeta: "FDA · Class I · origin Chile",
@@ -148,18 +148,22 @@ const EN = {
   hCredsLabel: "Credentials", hCred2: "Made in Puerto Rico", hCred3: "In Spanish and English", hCred4: "13 official sources",
   hProbKicker: "Sound familiar?",
   hProbTitle: "It's 7 p.m. A customer calls: there's a recall on an ingredient you use.",
-  hProbBody: "Which lots have it? Where's that supplier's certificate? The search starts across binders, emails and Excel sheets.",
+  hProbBody: "Which lots have it? Who were they sold to? Where's that supplier's certificate? The search starts across binders, emails and Excel sheets, while the phone keeps ringing.",
   hPain1T: "You find out late", hPain1B: "From a customer, a competitor or the news, when product is already on the shelf.",
   hPain2T: "Everything depends on you", hPain2B: "The information lives in your head and on paper. If you're out for a day, nobody knows where it is.",
+  hPain3T: "Families deserve better", hPain3B: "Puerto Rico imports most of what it eats. Your plant deserves tools that match that responsibility.",
   hShotAlt: "StratumScan dashboard with FDA import refusals and recalls in Puerto Rico",
   hShotCap: "StratumScan today, with real regulator data.",
-  hBefore: "Without StratumScan", hAfter: "With StratumScan",
-  hOutLots: "Lots by hand, in Excel", hOutLotsOk: "Affected lots instantly", hOutCapa: "CAPA documented",
-  hBaYou: "You",
-  hSrcNews: "The news", hSrcClient: "A customer", hSrcMail: "Emails", hSrcBinder: "Binders",
-  hSrcEU: "European Union", hSrcCA: "Canada", hSrcMore: "+9 sources",
-  hOutLate: "You find out late", hOutHunt: "You hunt for paperwork", hOutStress: "Stressful audits",
-  hOutAlert: "Alert that affects you", hOutAudit: "Audit-ready",
+  hNavPlatform: "Platform", hPlatEyebrow: "The platform", hPlatTitle: "Your whole quality program, connected and watched",
+  hPlatLead: "Today your operation lives in disconnected systems: lots in Excel, receiving on paper, certificates by email. StratumScan brings them into one record and watches it against official sources from the US and around the world.",
+  hAvTitle: "From alert to evidence", hAvLead: "This is how the two halves of StratumScan work together when a recall hits you.",
+  hAv1T: "The alert arrives", hAv1B: "We watch 13 official sources for you, every day.", hAv1Tag: "FDA · Class I", hAv1Art: "Frozen blueberries",
+  hAv2T: "We match it to your operation", hAv2B: "Your suppliers, ingredients and products are already in StratumScan.", hAv2Art1: "1 supplier", hAv2Art2: "2 of your products",
+  hAv3T: "You see which lots are affected", hAv3B: "Traceability one step back and forward, no Excel hunting.", hAv3Art1: "Lot 2026-118", hAv3Art2: "Lot 2026-121",
+  hAv4T: "You open the CAPA", hAv4B: "With an owner, a due date and the alert attached.", hAv4Art: "Assigned to Quality",
+  hAv5T: "The evidence stays", hAv5B: "Everything dated, signed and with its history, ready for your audit.", hAv5Art: "✓ Audit-ready",
+  hAvNote: "Illustrative example.",
+  hFsmaDays: "days to the FDA deadline",
   hDemoKicker: "Demo",
   hDemoBody: "We'll show you how StratumScan would watch your plant's suppliers and ingredients and organize your quality program.",
   hDemoPrivacy: "We'll only use this to schedule your demo. See the <a href=\"privacidad.html\">Privacy Policy</a>.",
@@ -168,18 +172,6 @@ const EN = {
   hPublicBody: "Alertas PR, by StratumScan: check for free whether your products show up in the recalls that affect Puerto Rico.",
   hPublicCta: "Open Alertas PR",
   hFootDisc: "Stratum PR is not affiliated with Walmart, Sam's Club, Costco or the agencies cited.",
-  hSolEyebrow: "The solution", hSolTitle: "From reacting to getting ahead",
-  hSolLead: "StratumScan connects official sources to your operation: it tells you what affects you, which lots to check, and keeps the evidence ready for your audit.",
-  hBxCompare: "Compare", hBxLabel: "Without StratumScan you hear it on the news, trace lots by hand and hunt for paperwork. With StratumScan official sources reach one system that alerts you, finds the affected lots, documents the CAPA and keeps the audit ready.",
-  hBxCapBefore: "You react: you find out late and do everything by hand.", hBxCapAfter: "You get ahead: the alert arrives with the lots, the CAPA and the evidence.",
-  hPain4T: "Everything is scattered", hPain4B: "Lots in Excel, receiving on paper, certificates by email. Tracing a lot takes hours or days.",
-  hFeatEyebrow: "Features", hFeatTitle: "Your whole quality program, in one place",
-  hF1T: "Alerts from 13 official sources", hF1B: "The FDA, the USDA and agencies in Europe, Canada, the UK and Japan. We only alert you to what affects you.",
-  hF3B: "Trace a lot one step back and forward in seconds, ready for FSMA 204.",
-  hF4T: "CAPAs and audits", hF4B: "Open the CAPA from the alert and walk into your audit with the evidence organized.",
-  hF5B: "Every document, signature and change is kept with its date, author and history.",
-  hF6B: "Ask your quality system in English or Spanish and get answers that link to your records.",
-  hFsmaLine: "days until the FDA requires FSMA 204 compliance (July 20, 2028). Walmart, Sam's Club and Costco already require it.",
 
   // Alertas PR (alertas.html)
   aBack: "Stratum home", aBy: "by", aTitle: "Food recalls that affect Puerto Rico",
@@ -252,7 +244,6 @@ document.addEventListener("DOMContentLoaded", () => {
   initHub();
   initMonth();
   initCountdown();
-  initBa();
   initReveal();
   initScoreRing();
   initLang();
@@ -699,35 +690,6 @@ function initHub() {
   new IntersectionObserver((entries) => {
     entries.forEach((e) => { if (e.isIntersecting) { if (!timer) play(); } else { stop(); box.classList.remove("hub-fade"); } });
   }, { threshold: 0.35 }).observe(box);
-}
-
-// ---- Solution diagram: "without" → "with" StratumScan ------------------------
-// While on screen it alternates on its own (short hold on "without", longer on "with");
-// a click on either button takes over and stops the loop. No autoplay for reduced motion.
-function initBa() {
-  const box = document.getElementById("bx");
-  if (!box) return;
-  const btns = box.querySelectorAll("[data-bx]");
-  const set = (after) => {
-    box.classList.toggle("is-after", after);
-    btns.forEach((b) => b.setAttribute("aria-pressed", String((b.dataset.bx === "after") === after)));
-  };
-  let timer = null, manual = false;
-  const stop = () => { clearTimeout(timer); timer = null; };
-  btns.forEach((b) => b.addEventListener("click", () => { manual = true; stop(); set(b.dataset.bx === "after"); }));
-  if (REDUCED || !("IntersectionObserver" in window)) return;
-  const tick = () => {
-    const after = !box.classList.contains("is-after");
-    set(after);
-    timer = setTimeout(tick, after ? 6500 : 3500);
-  };
-  new IntersectionObserver((entries) => {
-    entries.forEach((e) => {
-      if (manual) return;
-      if (e.isIntersecting) { if (!timer) { set(false); timer = setTimeout(tick, 2200); } }
-      else stop();
-    });
-  }, { threshold: 0.4 }).observe(box);
 }
 
 // ---- FSMA 204 countdown (days to the FDA compliance date) ------------------
