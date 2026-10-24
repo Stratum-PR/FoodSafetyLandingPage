@@ -17,7 +17,8 @@ const here = path.dirname(fileURLToPath(import.meta.url));
 const OUT = path.join(here, "../../data/names-es.json");
 const FSIS = path.join(here, "../../data/fsis-recent.json");
 const MODEL = "claude-opus-5-5";
-const BATCH = 40;
+const BATCH = 25;      // names per request: keeps each answer well under max_tokens; a failure loses only these
+const PARALLEL = 4;    // requests in flight at once
 
 const SYSTEM = `You translate U.S. FDA and USDA food recall product descriptions and notice titles into short Spanish product names for shoppers in Puerto Rico.
 For each item, write the name a shopper would recognize on the shelf: the kind of product, then the brand and the flavor or variety when the text gives them (for example "Galletas de vainilla Great Value" or "Lechuga romana picada Taylor Farms").
@@ -90,27 +91,41 @@ async function main() {
   }
   try { // the FDA's same-day company announcements (titles)
     for (const a of await recalls.fetchAnnouncements((m) => console.log(m))) names.add(a.product);
-  } catch (err) { console.warn(`announcements skipped: ${err.message}`); }
+  } catch (err) {
+    console.warn(`announcements skipped: ${err.message}`);
+    // help find the right feed: list the recall feeds linked from the FDA's RSS page
+    const page = await fetch("https://www.fda.gov/about-fda/contact-fda/stay-informed/rss-feeds").then((r) => r.text()).catch(() => "");
+    const feeds = [...new Set([...page.matchAll(/href="([^"]*rss[^"]*)"/gi)].map((m) => m[1]).filter((u) => /recall|safety|food/i.test(u)))];
+    console.warn(`FDA RSS page: ${page ? feeds.length + " recall/food feeds" : "unreachable"}${feeds.length ? "\n  " + feeds.join("\n  ") : ""}`);
+  }
   let old = {};
   try { old = JSON.parse(fs.readFileSync(OUT, "utf8")).names || {}; } catch (err) { /* first run */ }
   const todo = [...names].filter((n) => !old[n]);
   console.log(`${names.size} FDA/USDA names in the last 12 months; ${names.size - todo.length} already translated; ${todo.length} to translate`);
 
   const fresh = {};
-  let failed = 0;
-  for (let k = 0; k < todo.length; k += BATCH) {
-    const batch = todo.slice(k, k + BATCH);
-    try {
-      Object.assign(fresh, await translate(batch));
-    } catch (err) {
-      failed += batch.length;
-      if (err instanceof Anthropic.AuthenticationError) throw err; // a bad key fails every batch: stop now
-      if (err instanceof Anthropic.APIError) console.warn(`  API error ${err.status}: ${err.message}`);
-      else if (err instanceof SyntaxError) console.warn(`  unreadable answer: ${err.message}`);
-      else throw err;
+  let failed = 0, done = 0, fatal = null;
+  const queue = [];
+  for (let k = 0; k < todo.length; k += BATCH) queue.push(todo.slice(k, k + BATCH));
+  // PARALLEL workers take batches from the queue until it is empty (or a fatal error stops them all)
+  const worker = async () => {
+    while (queue.length && !fatal) {
+      const batch = queue.shift();
+      try {
+        Object.assign(fresh, await translate(batch));
+      } catch (err) {
+        failed += batch.length;
+        if (err instanceof Anthropic.AuthenticationError) { fatal = err; return; } // a bad key fails every batch: stop now
+        if (err instanceof Anthropic.APIError) console.warn(`  API error ${err.status}: ${err.message}`);
+        else if (err instanceof SyntaxError) console.warn(`  unreadable answer: ${err.message}`);
+        else { fatal = err; return; }
+      }
+      done += batch.length;
+      console.log(`  ${done}/${todo.length}`);
     }
-    console.log(`  ${Math.min(k + BATCH, todo.length)}/${todo.length}`);
-  }
+  };
+  await Promise.all(Array.from({ length: PARALLEL }, worker));
+  if (fatal) throw fatal;
 
   const merged = {};
   for (const n of [...names].sort()) if (old[n] || fresh[n]) merged[n] = old[n] || fresh[n];
