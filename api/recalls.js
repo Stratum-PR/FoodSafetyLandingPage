@@ -138,31 +138,88 @@ let annCache = null;
 const unescapeXml = (s) => s.replace(/&(quot|amp|apos|#39|lt|gt|nbsp);/g, (m, k) => ENT[k]);
 // RSS text: CDATA or escaped HTML (sometimes escaped twice) → plain text
 const xmlText = (s) => fsisText(unescapeXml(String(s || "").replace(/^\s*<!\[CDATA\[([\s\S]*?)\]\]>\s*$/, "$1")));
+// FDA web pages that list recall announcements, read when no RSS feed answers. The first is food only
+// ("Recalls (Foods & Dietary Supplements)"); the second lists every product, so NON_FOOD filters it.
+const ANN_PAGES = [
+  "https://www.fda.gov/food/recalls-outbreaks-emergencies/recalls-foods-dietary-supplements",
+  "https://www.fda.gov/safety/recalls-market-withdrawals-safety-alerts",
+];
+const MONTHS = { january: 1, february: 2, march: 3, april: 4, may: 5, june: 6, july: 7, august: 8, september: 9, october: 10, november: 11, december: 12 };
+/** The date written closest to an announcement link: <time datetime>, MM/DD/YYYY or "Month D, YYYY". */
+function nearDate(html) {
+  const found = [];
+  for (const m of html.matchAll(/datetime="(\d{4})-(\d{2})-(\d{2})/g)) found.push([m.index, m[1] + m[2] + m[3]]);
+  for (const m of html.matchAll(/\b(\d{1,2})\/(\d{1,2})\/(\d{4})\b/g)) found.push([m.index, m[3] + m[1].padStart(2, "0") + m[2].padStart(2, "0")]);
+  for (const m of html.matchAll(/\b(January|February|March|April|May|June|July|August|September|October|November|December)\s+(\d{1,2}),\s+(\d{4})\b/gi))
+    found.push([m.index, m[3] + String(MONTHS[m[1].toLowerCase()]).padStart(2, "0") + m[2].padStart(2, "0")]);
+  return found;
+}
+/** Announcement links on an FDA HTML page, each with the nearest date in its row (or around it). */
+function pageItems(html, base) {
+  const out = new Map();
+  const re = /<a\b[^>]*href="((?:https:\/\/www\.fda\.gov)?\/safety\/recalls-market-withdrawals-safety-alerts\/[a-z0-9-]+)"[^>]*>([\s\S]*?)<\/a>/gi;
+  for (const m of html.matchAll(re)) {
+    const url = m[1].startsWith("http") ? m[1] : base + m[1];
+    const title = xmlText(m[2]).slice(0, 240);
+    if (!title || title.length < 12 || out.has(url)) continue;
+    // the row this link sits in (a table row or list item), else a window around it
+    const start = Math.max(html.lastIndexOf("<tr", m.index), html.lastIndexOf("<li", m.index), html.lastIndexOf("<article", m.index), m.index - 600);
+    const endTr = html.indexOf("</tr>", m.index), endLi = html.indexOf("</li>", m.index);
+    const end = Math.min(...[endTr, endLi, m.index + 600].filter((x) => x > m.index));
+    const row = html.slice(start, end);
+    const dates = nearDate(row);
+    const near = dates.sort((x, y) => Math.abs(start + x[0] - m.index) - Math.abs(start + y[0] - m.index))[0];
+    out.set(url, { src: "ann", d: near ? near[1] : "", product: title, desc: xmlText(row).replace(title, "").slice(0, 400), url, ev: `ann-${url}` });
+  }
+  return [...out.values()];
+}
+
 async function fetchAnnouncements(log) {
   if (annCache && Date.now() - annCache.at < 3600 * 1000) return annCache.items;
-  let xml = "", feed = "";
-  for (const url of ANN_RSS) {
-    const r = await fetch(url, { headers: { Accept: "application/rss+xml, application/xml" }, signal: AbortSignal.timeout(15000) }).catch((e) => ({ ok: false, status: e.message }));
-    if (log) log(`RSS ${r.status} ${url}`);
-    if (r.ok) { xml = await r.text(); feed = url; break; }
-  }
-  if (!xml) throw new Error("no FDA RSS feed answered");
-  const allProducts = feed !== ANN_RSS[0];
   const from = ymd(new Date(Date.now() - 60 * 864e5));
-  const tag = (block, name) => (block.match(new RegExp(`<${name}[^>]*>([\\s\\S]*?)</${name}>`)) || [])[1] || "";
-  const items = [];
-  for (const [, block] of xml.matchAll(/<item>([\s\S]*?)<\/item>/g)) {
-    const when = new Date(xmlText(tag(block, "pubDate")));
-    const link = xmlText(tag(block, "link"));
-    if (isNaN(when) || !/^https:\/\/www\.fda\.gov\//.test(link)) continue;
-    const d = ymd(when);
-    if (d < from) continue;
-    const title = xmlText(tag(block, "title")).slice(0, 240);
-    if (allProducts && NON_FOOD.test(`${title} ${xmlText(tag(block, "description"))}`)) continue;
-    items.push({ src: "ann", d, product: title, desc: xmlText(tag(block, "description")).slice(0, 400), url: link, ev: `ann-${link}` });
+  const get = (url, accept) => fetch(url, { headers: { Accept: accept }, signal: AbortSignal.timeout(15000) })
+    .catch((e) => ({ ok: false, status: e.message }));
+  let items = [];
+  // 1. RSS feeds
+  for (const url of ANN_RSS) {
+    const r = await get(url, "application/rss+xml, application/xml");
+    if (log) log(`RSS ${r.status} ${url}`);
+    if (!r.ok) continue;
+    const xml = await r.text(), allProducts = url !== ANN_RSS[0];
+    const tag = (block, name) => (block.match(new RegExp(`<${name}[^>]*>([\\s\\S]*?)</${name}>`)) || [])[1] || "";
+    for (const [, block] of xml.matchAll(/<item>([\s\S]*?)<\/item>/g)) {
+      const when = new Date(xmlText(tag(block, "pubDate")));
+      const link = xmlText(tag(block, "link"));
+      if (isNaN(when) || !/^https:\/\/www\.fda\.gov\//.test(link)) continue;
+      const title = xmlText(tag(block, "title")).slice(0, 240), desc = xmlText(tag(block, "description")).slice(0, 400);
+      if (allProducts && NON_FOOD.test(`${title} ${desc}`)) continue;
+      items.push({ src: "ann", d: ymd(when), product: title, desc, url: link, ev: `ann-${link}` });
+    }
+    break;
   }
-  if (log) log(`RSS items kept (last 60 days${allProducts ? ", food only" : ""}): ${items.length}`);
-  annCache = { at: Date.now(), items: items.sort((a, b) => (a.d < b.d ? 1 : -1)) };
+  // 2. FDA web pages
+  if (!items.length) {
+    for (const url of ANN_PAGES) {
+      const r = await get(url, "text/html");
+      if (log) log(`page ${r.status} ${url}`);
+      if (!r.ok) continue;
+      const html = await r.text();
+      let found = pageItems(html, "https://www.fda.gov");
+      if (url !== ANN_PAGES[0]) found = found.filter((x) => !NON_FOOD.test(`${x.product} ${x.desc}`));
+      if (log) {
+        log(`  announcement links: ${found.length}, with a date: ${found.filter((x) => x.d).length}`);
+        for (const x of found.slice(0, 5)) log(`  ${x.d || "(no date)"} ${x.product.slice(0, 90)}`);
+        const i = html.search(/\/safety\/recalls-market-withdrawals-safety-alerts\/[a-z0-9-]+"/i);
+        if (!found.length) log(`  page sample: ${html.length} chars; first recall link at ${i}`);
+      }
+      if (found.length) { items = found; break; }
+    }
+  }
+  if (!items.length) throw new Error("no FDA announcements source answered");
+  // keep the last 60 days; links without a date stay, after the dated ones (the page lists newest first)
+  items = items.filter((x) => !x.d || x.d >= from);
+  if (log) log(`announcements kept (last 60 days): ${items.length}`);
+  annCache = { at: Date.now(), items: items.sort((a, b) => (a.d < b.d ? 1 : a.d > b.d ? -1 : 0)).slice(0, 40) };
   return annCache.items;
 }
 
