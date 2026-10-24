@@ -142,12 +142,20 @@
             <ul>
               <li><span class="a-special is-baby" data-i18n="aLegBaby">Bebés</span><p data-i18n="aLegBabyB">Fórmula infantil, alimentos para bebés o niños pequeños.</p></li>
               <li><span class="a-special is-allergy" data-i18n="aLegAllergy">Alergia grave</span><p data-i18n="aLegAllergyB">Alérgeno no declarado en un retiro Clase I: peligroso para quien tiene esa alergia.</p></li>
-              <li><span class="a-status is-on" data-i18n="aLegActive">Retiro activo</span><p data-i18n="aLegActiveB">La empresa todavía está recogiendo el producto. "Terminado" quiere decir que ya cerró el retiro.</p></li>
+              <li><span class="a-state is-on" data-i18n="aLegActive">Retiro activo</span><p data-i18n="aLegActiveB">La empresa todavía está recogiendo el producto. "Terminado" quiere decir que ya cerró el retiro.</p></li>
               <li><span class="a-ann-tag" data-i18n="aLegAnn">Anuncio de la empresa</span><p data-i18n="aLegAnnB">Comunicado del mismo día en la FDA, antes de que la FDA lo clasifique.</p></li>
             </ul>
           </div>
         </div>
       </details>
+      <div class="a-chips" role="group" aria-label="Filtrar por tipo" data-i18n-attr="aria-label:aKindLabel">
+        <button type="button" data-kind="all" aria-pressed="true" data-i18n="aAll">Todos</button>
+        <button type="button" data-kind="serious" aria-pressed="false" data-i18n="aSerious">Graves (Clase I)</button>
+        <button type="button" data-kind="micro" aria-pressed="false" data-i18n="aMicro">Bacterias u hongos</button>
+        <button type="button" data-kind="allergen" aria-pressed="false" data-i18n="aAllergen">Alérgenos</button>
+        <button type="button" data-kind="foreign" aria-pressed="false" data-i18n="aForeign">Objetos extraños</button>
+        <button type="button" data-kind="baby" aria-pressed="false" data-i18n="aBaby">Bebés</button>
+      </div>
       <p class="a-status" id="a-status" role="status" aria-live="polite"></p>
     </section>
 

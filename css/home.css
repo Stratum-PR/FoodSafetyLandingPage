@@ -269,6 +269,10 @@
 .a-hero p { margin-top: 12px; font-size: 18px; color: var(--muted); }
 .a-h2 { font-size: 24px; font-weight: 800; color: var(--navy); }
 .a-browse { padding-top: 40px; }
+.a-chips { margin-top: 14px; display: flex; flex-wrap: wrap; gap: 8px; }
+.a-chips button { font: inherit; cursor: pointer; min-height: 40px; padding: 0 16px; border-radius: 999px; border: 1.5px solid var(--line); background: var(--surface); color: var(--ink); font-size: 14px; font-weight: 600; }
+.a-chips button:hover { border-color: #C9CEE6; }
+.a-chips button[aria-pressed="true"] { background: var(--ink); border-color: var(--ink); color: #fff; }
 .a-legend { margin-top: 14px; background: var(--surface); border: 1px solid var(--line); border-radius: 16px; }
 .a-legend summary { display: flex; align-items: center; gap: 8px; padding: 14px 18px; cursor: pointer; font-size: 15px; font-weight: 700; color: var(--navy); }
 .a-legend summary svg { width: 20px; height: 20px; fill: none; stroke: var(--blue); stroke-width: 2; stroke-linecap: round; flex: none; }
@@ -449,8 +453,8 @@
 .a-special { font-size: 12px; font-weight: 800; padding: 3px 9px; border-radius: 999px; }
 .a-special.is-baby { background: #E5F0FB; color: #1B4F86; }
 .a-special.is-allergy { background: #8C1D16; color: #fff; }
-.a-status { font-size: 12px; font-weight: 700; padding: 2px 9px; border-radius: 999px; border: 1px solid var(--line); color: var(--muted); }
-.a-status.is-on { border-color: var(--navy); color: var(--navy); }
+.a-state { font-size: 12px; font-weight: 700; padding: 2px 9px; border-radius: 999px; border: 1px solid var(--line); color: var(--muted); }
+.a-state.is-on { border-color: var(--navy); color: var(--navy); }
 .a-ann-tag { font-size: 12px; font-weight: 800; padding: 3px 9px; border-radius: 999px; background: var(--yellow); color: var(--navy); }
 .a-codes { font-size: 12.5px; line-height: 1.45; color: var(--ink-2); background: var(--bg); border-radius: 8px; padding: 6px 9px; overflow-wrap: anywhere; }
 .a-codes b { font-weight: 800; color: var(--navy); }

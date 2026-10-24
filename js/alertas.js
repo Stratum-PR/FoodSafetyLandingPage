@@ -122,7 +122,7 @@
   const norm = (s) => s.normalize("NFD").replace(/[̀-ͯ]/g, "").toLowerCase().trim();
   const canKeep = () => !!window.StratumConsent?.allows("preferences");
 
-  const state = { scope: "all", filter: "all", ann: [], shown: PAGE, data: {}, error: false, list: [], checked: false, seenAtLoad: {}, counted: {} };
+  const state = { scope: "all", filter: "all", kind: "all", ann: [], shown: PAGE, data: {}, error: false, list: [], checked: false, seenAtLoad: {}, counted: {} };
 
   // ---- storage (only with "preferences" consent) ---------------------------
   function readJSON(k, fallback) {
@@ -352,7 +352,7 @@
 
     // the whole year: recalls that name Puerto Rico plus nationwide ones ("Ver solo mis coincidencias" narrows it)
     const mine = state.filter === "mine";
-    const items = mine ? d.items.filter((x) => hitsFor(x).length) : d.items;
+    const items = d.items.filter((x) => (!mine || hitsFor(x).length) && ofKind(x, state.kind));
     const shown = items.slice(0, state.shown);
     status.textContent = items.length ? t.shown(shown.length, items.length, fmtDate(d.updated, l)) : t.none;
 
@@ -361,7 +361,7 @@
       return `<article class="a-item a-cls-${x.cls}${hits.length ? " is-mine" : ""}">
         <span class="a-ico a-ico-${type}" aria-hidden="true"><svg viewBox="0 0 24 24">${ICONS[type]}</svg></span>
         <div class="a-body">
-          <div class="a-meta"><button type="button" class="a-sev a-sev-${x.cls} a-sev-btn" data-explain title="${esc(t.sevHelp)}">${esc(x.pha ? t.pha : t.sev[x.cls])}<i aria-hidden="true">?</i></button><span class="a-src">${x.src === "usda" ? "USDA" : "FDA"}</span>${specialTags(x)}${x.status && t.status[x.status] ? `<span class="a-status${x.status === "Ongoing" ? " is-on" : ""}">${esc(t.status[x.status])}</span>` : ""}${isNew(x) ? `<span class="a-flag">${esc(t.isNew)}</span>` : ""}<span class="a-where${x.pr ? " is-pr" : ""}">${esc(x.pr ? t.tagPR : t.tagNat)}</span><span>${esc(fmtDate(x.d, l))} · ${esc(x.firm)}</span></div>
+          <div class="a-meta"><button type="button" class="a-sev a-sev-${x.cls} a-sev-btn" data-explain title="${esc(t.sevHelp)}">${esc(x.pha ? t.pha : t.sev[x.cls])}<i aria-hidden="true">?</i></button><span class="a-src">${x.src === "usda" ? "USDA" : "FDA"}</span>${specialTags(x)}${x.status && t.status[x.status] ? `<span class="a-state${x.status === "Ongoing" ? " is-on" : ""}">${esc(t.status[x.status])}</span>` : ""}${isNew(x) ? `<span class="a-flag">${esc(t.isNew)}</span>` : ""}<span class="a-where${x.pr ? " is-pr" : ""}">${esc(x.pr ? t.tagPR : t.tagNat)}</span><span>${esc(fmtDate(x.d, l))} · ${esc(x.firm)}</span></div>
           <h2>${esc(L() === "es" && x.es ? x.es : x.src === "usda" ? x.product : parseProd(x.product).name)}${x.n > 1 && !(x.prods && x.prods.length > 1) ? ` <span class="a-orig">${esc(t.products(x.n - 1))}</span>` : ""}</h2>
           ${x.prods && x.prods.length > 1 ? prodList(x) : prodDetail(x.src === "usda" ? { size: "", upcs: [], rest: (x.prods || [])[0] || "" } : parseProd(x.product), false, (x.codes || [])[0])}
           ${hits.length ? `<p class="a-hits">${esc(t.inList)} <b>${esc(hits.join(", "))}</b></p>` : ""}
@@ -436,6 +436,14 @@
 
   function setFilter(f) { state.filter = f; state.shown = PAGE; }
 
+  /** The quick filters above the list: serious (Class I), kind of problem, or babies. */
+  function ofKind(x, kind) {
+    if (kind === "all") return true;
+    if (kind === "serious") return x.cls === 1;
+    if (kind === "baby") return BABY.test(`${x.product} ${x.reason || ""} ${(x.prods || []).join(" ")}`);
+    return kinds(x)[kind];
+  }
+
   // Everything the list check looks at: the year of recalls plus the recent company announcements.
   const pool = (d) => (d ? d.items : []).concat(state.ann);
 
@@ -481,6 +489,11 @@
   }
 
   document.addEventListener("DOMContentLoaded", () => {
+    document.querySelectorAll("[data-kind]").forEach((b) => b.addEventListener("click", () => {
+      state.kind = b.dataset.kind; state.shown = PAGE;
+      document.querySelectorAll("[data-kind]").forEach((c) => c.setAttribute("aria-pressed", String(c === b)));
+      render();
+    }));
     const saved = canKeep() ? readJSON(LIST_KEY, []) : [];
     state.list = Array.isArray(saved) ? saved.filter((x) => typeof x === "string").slice(0, 20) : [];
     state.seenAtLoad = canKeep() ? readJSON(SEEN_KEY, {}) : {};
