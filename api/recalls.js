@@ -215,7 +215,12 @@ async function fetchAnnouncements(log) {
       if (found.length) { items = found; break; }
     }
   }
-  if (!items.length) throw new Error("no FDA announcements source answered");
+  if (!items.length) {
+    // fda.gov refuses server requests (404 even for pages that exist in a browser): remember the
+    // empty answer for an hour instead of asking again on every visit
+    annCache = { at: Date.now(), items: [] };
+    throw new Error("no FDA announcements source answered");
+  }
   // keep the last 60 days; links without a date stay, after the dated ones (the page lists newest first)
   items = items.filter((x) => !x.d || x.d >= from);
   if (log) log(`announcements kept (last 60 days): ${items.length}`);
@@ -237,7 +242,7 @@ module.exports = async (req, res) => {
   if (req.method !== "GET") return res.status(405).json({ ok: false, error: "method" });
   if (req.query?.scope === "ann") {
     try {
-      const items = (await fetchAnnouncements()).map((x) => ({ ...x, es: ES[x.product] || "" }));
+      const items = (await fetchAnnouncements().catch(() => [])).map((x) => ({ ...x, es: ES[x.product] || "" }));
       res.setHeader("Cache-Control", "public, s-maxage=3600, stale-while-revalidate=21600");
       return res.status(200).json({ ok: true, scope: "ann", items });
     } catch (err) {
