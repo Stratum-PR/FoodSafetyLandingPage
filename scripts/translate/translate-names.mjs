@@ -26,7 +26,7 @@ Rules:
 - Leave out UPC codes, lot codes, weights, package counts and case counts.
 - Use the Spanish used in Puerto Rico (maní, habichuelas, guineo, mantecado, salchichas).
 - If the text is already in Spanish, clean it up the same way.
-- For a USDA notice title ("X Recalls Y Due to Z"), name the product and the company, for example "Salchichas de pollo de Example Farms".
+- For a USDA notice or company announcement title ("X Recalls Y Due to Z" / "Because of Z"), name the product, the company and the problem, for example "Salchichas de pollo de Example Farms: posible Listeria".
 - At most 80 characters. If the text names several products, name the main one and add "y otros".
 Return one entry per input item, with the same i.`;
 
@@ -88,6 +88,9 @@ async function main() {
   for (const scope of ["pr", "nat"]) {
     for (const ev of recalls.fsisEvents(saved, scope)) for (const p of [ev.product, ...ev.prods]) names.add(p);
   }
+  try { // the FDA's same-day company announcements (titles)
+    for (const a of await recalls.fetchAnnouncements()) names.add(a.product);
+  } catch (err) { console.warn(`announcements skipped: ${err.message}`); }
   let old = {};
   try { old = JSON.parse(fs.readFileSync(OUT, "utf8")).names || {}; } catch (err) { /* first run */ }
   const todo = [...names].filter((n) => !old[n]);

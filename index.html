@@ -86,6 +86,13 @@
     <!-- B. Pulse: headline numbers + month bars + causes, for the selected area -->
     <section class="a-pulse" id="a-pulse" aria-label="Resumen del año" data-i18n-attr="aria-label:aPulseLabel"></section>
 
+    <!-- Recent company announcements (FDA RSS): same day as the recall, before the FDA classifies it -->
+    <section class="a-ann" id="a-ann" aria-labelledby="a-ann-title" hidden>
+      <h2 id="a-ann-title" class="a-h2">Anuncios recientes de las empresas</h2>
+      <p class="a-ann-note" data-i18n="aAnnNote">Las empresas los publican en la FDA el mismo día del retiro, casi siempre con fotos de la etiqueta. Son nacionales, así que pueden no haber llegado a Puerto Rico. Cuando la FDA los clasifica, pasan a la lista de abajo si llegaron a Puerto Rico o se distribuyeron en todo el país.</p>
+      <div class="a-ann-list" id="a-ann-list"></div>
+    </section>
+
     <section class="a-browse" aria-labelledby="a-browse-title">
       <h2 id="a-browse-title" class="a-h2" data-i18n="aBrowseTitle">Retiros del último año</h2>
 
@@ -117,6 +124,13 @@
               <li><span class="a-where" data-i18n="aLegNat">Distribución nacional</span><p data-i18n="aLegNatB">Se distribuyó en todo Estados Unidos, así que puede haber llegado a Puerto Rico.</p></li>
               <li><span class="a-src">FDA</span><p data-i18n="aLegFdaB">La mayoría de los alimentos: frutas, vegetales, lácteos, mariscos, galletas, bebidas.</p></li>
               <li><span class="a-src">USDA</span><p data-i18n="aLegUsdaB">Carnes, aves y productos de huevo (USDA FSIS).</p></li>
+            </ul>
+            <h3 data-i18n="aLegMoreT">Otras etiquetas</h3>
+            <ul>
+              <li><span class="a-special is-baby" data-i18n="aLegBaby">Bebés</span><p data-i18n="aLegBabyB">Fórmula infantil, alimentos para bebés o niños pequeños.</p></li>
+              <li><span class="a-special is-allergy" data-i18n="aLegAllergy">Alergia grave</span><p data-i18n="aLegAllergyB">Alérgeno no declarado en un retiro Clase I: peligroso para quien tiene esa alergia.</p></li>
+              <li><span class="a-status is-on" data-i18n="aLegActive">Retiro activo</span><p data-i18n="aLegActiveB">La empresa todavía está recogiendo el producto. "Terminado" quiere decir que ya cerró el retiro.</p></li>
+              <li><span class="a-ann-tag" data-i18n="aLegAnn">Anuncio de la empresa</span><p data-i18n="aLegAnnB">Comunicado del mismo día en la FDA, antes de que la FDA lo clasifique.</p></li>
             </ul>
           </div>
         </div>

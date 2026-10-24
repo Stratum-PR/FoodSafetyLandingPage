@@ -17,6 +17,9 @@
       onlyMine: "Mostrando solo los retiros que coinciden con tu lista.", seeAll: "Ver todos",
       sev: { 1: "Grave · Clase I", 2: "Moderado · Clase II", 3: "Leve · Clase III", 0: "Sin clasificar" }, pha: "Alerta de salud pública",
       more: "Ver más", orig: "Texto original de la FDA:", origUsda: "Texto original del USDA:", products: (n) => `y ${n} ${n === 1 ? "producto más" : "productos más"}`, allProds: (n) => `Ver los ${n} productos de este retiro`, sevHelp: "Qué significa", upc: "UPC", hitTag: "En tu lista",
+      codes: "Lotes y fechas:", status: { Ongoing: "Retiro activo", Completed: "Terminado", Terminated: "Terminado" },
+      baby: "Bebés", allergy: "Alergia grave",
+      annTitle: "Anuncios recientes de las empresas", annTag: "Anuncio de la empresa", annRead: "Leer el anuncio en la FDA (con fotos) ↗", annMine: "Anuncios que coinciden con tu lista",
       notice: (num) => `Buscar el aviso en la FDA (${num})`, usdaNotice: "Ver el aviso del USDA", share: "Compartir", copied: "Enlace copiado",
       shareText: (x) => `Retiro de alimentos: ${x}. Revisa si te afecta en Alertas PR por StratumScan:`,
       allergen: "Alérgeno no declarado", micro: { listeria: "Posible Listeria", salmonella: "Posible Salmonella", ecoli: "Posible E. coli", botulism: "Riesgo de botulismo", mold: "Moho", cronobacter: "Posible Cronobacter" },
@@ -57,6 +60,9 @@
       onlyMine: "Showing only the recalls that match your list.", seeAll: "Show all",
       sev: { 1: "Serious · Class I", 2: "Moderate · Class II", 3: "Minor · Class III", 0: "Unclassified" }, pha: "Public health alert",
       more: "Show more", orig: "Original FDA text:", origUsda: "Original USDA text:", products: (n) => `and ${n} more ${n === 1 ? "product" : "products"}`, allProds: (n) => `See all ${n} products in this recall`, sevHelp: "What it means", upc: "UPC", hitTag: "On your list",
+      codes: "Lots and dates:", status: { Ongoing: "Active recall", Completed: "Closed", Terminated: "Closed" },
+      baby: "Babies", allergy: "Severe allergy",
+      annTitle: "Recent company announcements", annTag: "Company announcement", annRead: "Read the announcement at the FDA (with photos) ↗", annMine: "Announcements that match your list",
       notice: (num) => `Look up the notice at the FDA (${num})`, usdaNotice: "See the USDA notice", share: "Share", copied: "Link copied",
       shareText: (x) => `Food recall: ${x}. Check whether it affects you on Alertas PR by StratumScan:`,
       allergen: "Undeclared allergen", micro: { listeria: "Possible Listeria", salmonella: "Possible Salmonella", ecoli: "Possible E. coli", botulism: "Botulism risk", mold: "Mold", cronobacter: "Possible Cronobacter" },
@@ -116,7 +122,7 @@
   const norm = (s) => s.normalize("NFD").replace(/[̀-ͯ]/g, "").toLowerCase().trim();
   const canKeep = () => !!window.StratumConsent?.allows("preferences");
 
-  const state = { scope: "all", filter: "all", shown: PAGE, data: {}, error: false, list: [], checked: false, seenAtLoad: {}, counted: {} };
+  const state = { scope: "all", filter: "all", ann: [], shown: PAGE, data: {}, error: false, list: [], checked: false, seenAtLoad: {}, counted: {} };
 
   // ---- storage (only with "preferences" consent) ---------------------------
   function readJSON(k, fallback) {
@@ -184,7 +190,7 @@
     reCache.set(term, re);
     return re;
   }
-  const haystack = (x) => norm(`${x.product} ${x.es || ""} ${x.firm} ${x.reason} ${x.txt || ""} ${(x.prods || []).join(" ")} ${(x.prods_es || []).join(" ")}`);
+  const haystack = (x) => norm(`${x.product} ${x.es || ""} ${x.desc || ""} ${x.firm || ""} ${x.reason || ""} ${x.txt || ""} ${(x.prods || []).join(" ")} ${(x.prods_es || []).join(" ")}`);
   const hitsFor = (x) => state.list.filter((term) => termRe(term).test(haystack(x)));
 
   function addTerm(raw) {
@@ -200,7 +206,7 @@
     const t = T[L()], d = state.data[state.scope];
     const mine = $("#a-mine");
     mine.innerHTML = state.list.map((term, i) => {
-      const n = state.checked && d ? d.items.filter((x) => termRe(term).test(haystack(x))).length : null;
+      const n = state.checked && d ? pool(d).filter((x) => termRe(term).test(haystack(x))).length : null;
       const cls = n === null ? "" : n ? " is-hit" : " is-clear";
       return `<li class="a-chip${cls}" style="--i:${i}"><span>${esc(term)}</span>${n ? `<b>${n}</b>` : n === 0 ? '<i aria-hidden="true"></i>' : ""}<button type="button" data-remove="${i}" aria-label="${esc(t.remove(term))}">×</button></li>`;
     }).join("");
@@ -213,8 +219,8 @@
   function renderResult() {
     const l = L(), t = T[l], d = state.data[state.scope], box = $("#a-result");
     if (!state.checked || !d) { box.innerHTML = ""; box.className = "a-result"; return; }
-    const hitTerms = state.list.filter((term) => d.items.some((x) => termRe(term).test(haystack(x))));
-    const events = d.items.filter((x) => hitsFor(x).length).length;
+    const hitTerms = state.list.filter((term) => pool(d).some((x) => termRe(term).test(haystack(x))));
+    const events = pool(d).filter((x) => hitsFor(x).length).length;
     const keep = `<p class="a-keep">${esc(canKeep() ? t.keep : t.keepOff)}</p>`;
     if (!hitTerms.length) {
       box.className = "a-result is-clear";
@@ -332,6 +338,7 @@
   }
 
   function render() {
+    renderAnn();
     const l = L(), t = T[l];
     const list = $("#a-list"), status = $("#a-status");
     const d = state.data[state.scope];
@@ -354,9 +361,9 @@
       return `<article class="a-item a-cls-${x.cls}${hits.length ? " is-mine" : ""}">
         <span class="a-ico a-ico-${type}" aria-hidden="true"><svg viewBox="0 0 24 24">${ICONS[type]}</svg></span>
         <div class="a-body">
-          <div class="a-meta"><button type="button" class="a-sev a-sev-${x.cls} a-sev-btn" data-explain title="${esc(t.sevHelp)}">${esc(x.pha ? t.pha : t.sev[x.cls])}<i aria-hidden="true">?</i></button><span class="a-src">${x.src === "usda" ? "USDA" : "FDA"}</span>${isNew(x) ? `<span class="a-flag">${esc(t.isNew)}</span>` : ""}<span class="a-where${x.pr ? " is-pr" : ""}">${esc(x.pr ? t.tagPR : t.tagNat)}</span><span>${esc(fmtDate(x.d, l))} · ${esc(x.firm)}</span></div>
+          <div class="a-meta"><button type="button" class="a-sev a-sev-${x.cls} a-sev-btn" data-explain title="${esc(t.sevHelp)}">${esc(x.pha ? t.pha : t.sev[x.cls])}<i aria-hidden="true">?</i></button><span class="a-src">${x.src === "usda" ? "USDA" : "FDA"}</span>${specialTags(x)}${x.status && t.status[x.status] ? `<span class="a-status${x.status === "Ongoing" ? " is-on" : ""}">${esc(t.status[x.status])}</span>` : ""}${isNew(x) ? `<span class="a-flag">${esc(t.isNew)}</span>` : ""}<span class="a-where${x.pr ? " is-pr" : ""}">${esc(x.pr ? t.tagPR : t.tagNat)}</span><span>${esc(fmtDate(x.d, l))} · ${esc(x.firm)}</span></div>
           <h2>${esc(L() === "es" && x.es ? x.es : x.src === "usda" ? x.product : parseProd(x.product).name)}${x.n > 1 && !(x.prods && x.prods.length > 1) ? ` <span class="a-orig">${esc(t.products(x.n - 1))}</span>` : ""}</h2>
-          ${x.prods && x.prods.length > 1 ? prodList(x) : prodDetail(parseProd(x.product), false)}
+          ${x.prods && x.prods.length > 1 ? prodList(x) : prodDetail(x.src === "usda" ? { size: "", upcs: [], rest: (x.prods || [])[0] || "" } : parseProd(x.product), false, (x.codes || [])[0])}
           ${hits.length ? `<p class="a-hits">${esc(t.inList)} <b>${esc(hits.join(", "))}</b></p>` : ""}
           ${s ? `<p class="a-reason">${esc(s)}</p><p class="a-orig">${esc(x.src === "usda" ? t.origUsda : t.orig)} ${esc(x.reason)}</p>` : `<p class="a-reason">${esc(x.reason)}</p>`}
           <details class="a-guide"><summary>${esc(t.guideSum)}</summary>
@@ -399,7 +406,7 @@
     return `<details class="a-prods"${marks.slice(1).some(Boolean) ? " open" : ""}><summary>${esc(T[L()].allProds(Math.max(x.n, x.prods.length)))}</summary>
       <ol>${x.prods.map((p, i) => {
         const pp = parseProd(p);
-        return `<li${marks[i] ? ' class="is-hit"' : ""}><b>${esc(es[i] || pp.name)}</b>${prodDetail(pp, marks[i])}</li>`;
+        return `<li${marks[i] ? ' class="is-hit"' : ""}><b>${esc(es[i] || pp.name)}</b>${prodDetail(pp, marks[i], (x.codes || [])[i])}</li>`;
       }).join("")}</ol></details>`;
   }
 
@@ -418,19 +425,55 @@
     const rest = parts.slice(k).join(", ").replace(/[\s,.;]+$/, "");
     return { name: name || p.slice(0, 90), size: sz ? sz[1].replace(/\s+/g, " ") : "", upcs: [...new Set(upcs)], rest };
   }
-  function prodDetail(pp, hit) {
+  function prodDetail(pp, hit, code) {
     const t = T[L()];
+    const lots = code ? `<span class="a-codes"><b>${esc(t.codes)}</b> ${esc(code)}</span>` : "";
     const tags = (pp.size ? `<span class="a-tag">${esc(pp.size)}</span>` : "")
       + pp.upcs.slice(0, 3).map((u) => `<span class="a-tag a-upc">${esc(t.upc)} ${esc(u)}</span>`).join("")
       + (hit ? `<span class="a-tag a-tag-hit">${esc(t.hitTag)}</span>` : "");
-    return (tags ? `<span class="a-tags">${tags}</span>` : "") + (pp.rest ? `<span class="a-rest">${esc(pp.rest)}</span>` : "");
+    return (tags ? `<span class="a-tags">${tags}</span>` : "") + (pp.rest ? `<span class="a-rest">${esc(pp.rest)}</span>` : "") + lots;
   }
 
   function setFilter(f) { state.filter = f; state.shown = PAGE; }
 
+  // Everything the list check looks at: the year of recalls plus the recent company announcements.
+  const pool = (d) => (d ? d.items : []).concat(state.ann);
+
+  /** Babies (infant formula, baby food) and severe allergies (Class I undeclared allergen) get their own tags. */
+  const BABY = /\binfants?\b|infant formula|baby food|toddler|f[oó]rmula infantil|beb[eé]s?\b|cronobacter/i;
+  const ALLERGY = /undeclared\s+(?:milk|egg|peanut|tree nut|walnut|almond|cashew|pecan|hazelnut|pistachio|wheat|soy|sesame|fish|shellfish|shrimp|crab|lobster)|allergen/i;
+  function specialTags(x) {
+    const t = T[L()], text = `${x.product} ${x.desc || ""} ${x.reason || ""} ${(x.prods || []).join(" ")}`;
+    const baby = BABY.test(text);
+    const allergy = x.src === "ann" ? ALLERGY.test(text) : x.cls === 1 && kinds(x).allergen;
+    return (baby ? `<span class="a-special is-baby">${esc(t.baby)}</span>` : "") + (allergy ? `<span class="a-special is-allergy">${esc(t.allergy)}</span>` : "");
+  }
+
+  /** Recent company announcements (same day as the recall; nationwide; may not have reached PR). */
+  function renderAnn() {
+    const box = $("#a-ann"), t = T[L()];
+    if (!state.ann.length) { box.hidden = true; return; }
+    const mine = state.filter === "mine";
+    const items = mine ? state.ann.filter((x) => hitsFor(x).length) : state.ann.slice(0, 6);
+    box.hidden = mine && !items.length;
+    $("#a-ann-title").textContent = mine ? t.annMine : T[L()].annTitle;
+    $("#a-ann-list").innerHTML = items.map((x) => {
+      const hits = hitsFor(x);
+      return `<article class="a-ann-card${hits.length ? " is-mine" : ""}">
+        <div class="a-meta"><span class="a-src">FDA</span><span class="a-ann-tag">${esc(t.annTag)}</span>${specialTags(x)}<span>${esc(fmtDate(x.d, L()))}</span></div>
+        <h3>${esc(L() === "es" && x.es ? x.es : x.product)}</h3>
+        ${L() === "en" && x.desc ? `<p class="a-rest">${esc(x.desc.length > 200 ? x.desc.slice(0, 200).replace(/\s+\S*$/, "") + "…" : x.desc)}</p>` : ""}
+        ${hits.length ? `<p class="a-hits">${esc(t.inList)} <b>${esc(hits.join(", "))}</b></p>` : ""}
+        <a href="${esc(x.url)}" target="_blank" rel="noopener">${esc(t.annRead)}</a>
+      </article>`;
+    }).join("");
+  }
+
   async function show(scope) {
     state.scope = scope; state.shown = PAGE; state.error = false;
     render();
+    // announcements load on their own; the page works without them
+    fetchScope("ann").then((a) => { state.ann = a.items || []; render(); }).catch((err) => console.warn("[alertas] announcements", err));
     try { await load(scope); } catch (err) { console.error("[alertas]", err); state.error = true; }
     if (state.scope !== scope) return;
     render(); renderPulse();

@@ -446,6 +446,21 @@
 .a-sev-1 { background: #FBE9E7; color: #8C1D16; }
 .a-sev-2 { background: var(--warn-bg); color: #7A4800; }
 .a-sev-3 { background: var(--ok-bg); color: #145E3B; }
+.a-special { font-size: 12px; font-weight: 800; padding: 3px 9px; border-radius: 999px; }
+.a-special.is-baby { background: #E5F0FB; color: #1B4F86; }
+.a-special.is-allergy { background: #8C1D16; color: #fff; }
+.a-status { font-size: 12px; font-weight: 700; padding: 2px 9px; border-radius: 999px; border: 1px solid var(--line); color: var(--muted); }
+.a-status.is-on { border-color: var(--navy); color: var(--navy); }
+.a-ann-tag { font-size: 12px; font-weight: 800; padding: 3px 9px; border-radius: 999px; background: var(--yellow); color: var(--navy); }
+.a-codes { font-size: 12.5px; line-height: 1.45; color: var(--ink-2); background: var(--bg); border-radius: 8px; padding: 6px 9px; overflow-wrap: anywhere; }
+.a-codes b { font-weight: 800; color: var(--navy); }
+.a-ann { padding-top: 36px; }
+.a-ann-note { margin-top: 6px; font-size: 14.5px; line-height: 1.5; color: var(--muted); max-width: 52em; }
+.a-ann-list { margin-top: 14px; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; }
+.a-ann-card { display: flex; flex-direction: column; gap: 8px; background: var(--surface); border: 1px solid var(--line); border-top: 3px solid var(--yellow); border-radius: 14px; padding: 14px 16px; }
+.a-ann-card.is-mine { box-shadow: 0 0 0 2px var(--yellow); }
+.a-ann-card h3 { font-size: 15.5px; font-weight: 700; line-height: 1.35; }
+.a-ann-card > a { margin-top: auto; font-size: 14px; font-weight: 700; }
 .a-src { font-size: 11.5px; font-weight: 800; letter-spacing: .04em; padding: 3px 8px; border-radius: 6px; background: var(--navy); color: #fff; }
 .a-where { font-weight: 700; padding: 3px 10px; border-radius: 999px; background: var(--tint); color: var(--ink-2); }
 .a-where.is-pr { background: var(--yellow-soft); color: var(--olive); }
@@ -503,6 +518,7 @@
 }
 @media (max-width: 980px) {
   .a-pulse { grid-template-columns: minmax(0, 1fr); }
+  .a-ann-list { grid-template-columns: minmax(0, 1fr); }
   .a-legend-grid { grid-template-columns: minmax(0, 1fr); gap: 4px; }
   .h-plan, .h-stakes ul { grid-template-columns: 1fr; }
   .h-stakes, .h-split, .h-demo { grid-template-columns: 1fr; }

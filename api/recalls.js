@@ -2,6 +2,9 @@
    Sources (public domain, no key needed):
    - openFDA food enforcement reports. One entry per recall event (the FDA lists each product of an
      event separately).
+   - ?scope=ann: the FDA's food safety recall announcements (RSS of fda.gov/safety/recalls-market-
+     withdrawals-safety-alerts): the companies' press releases, same day, before the enforcement
+     report; nationwide, so they may not have reached Puerto Rico. Last 60 days, cached 1 h.
    - USDA FSIS recalls and public health alerts (meat, poultry, egg products). FSIS's bot protection
      may refuse server requests (we never imitate a browser to get around it); then the copy saved by
      hand in data/fsis-recent.json is used (dev/fsis-snapshot.py), and usda says which one: "live",
@@ -12,6 +15,7 @@
    Vercel's edge for 6 h. fetchScope/toEvents/fsisEvents are also used by scripts/translate/translate-names.mjs. */
 const API = "https://api.fda.gov/food/enforcement.json";
 const FSIS_API = "https://www.fsis.usda.gov/fsis/api/recall/v/1";
+const ANN_RSS = "https://www.fda.gov/about-fda/contact-fda/stay-informed/rss-feeds/food-safety-recalls/rss.xml";
 let ES = {};
 try { ES = require("../data/names-es.json").names || {}; } catch (err) { /* no translations yet */ }
 let FSIS_SAVED = { saved: null, records: [] };
@@ -51,11 +55,13 @@ function toEvents(results, scope) {
     if (scope === "pr" && !PR_RE.test(x.distribution_pattern || "")) continue; // "PR" can match other abbreviations
     const e = byEvent.get(x.event_id);
     // prods: every product of the event (shown on the card and searched, so a brand such as
-    // "Great Value" on the 7th product is found); txt: the distribution, searched only
+    // "Great Value" on the 7th product is found); codes: its lot numbers and dates (code_info),
+    // same order; txt: the distribution, searched only
     const p = clean(x.product_description).slice(0, 240);
+    const c = clean(x.code_info).slice(0, 300);
     if (e) {
       e.n += 1;
-      if (e.prods.length < PRODS_MAX && !e.prods.includes(p)) e.prods.push(p);
+      if (e.prods.length < PRODS_MAX && !e.prods.includes(p)) { e.prods.push(p); e.codes.push(c); }
       continue;
     }
     byEvent.set(x.event_id, {
@@ -64,7 +70,7 @@ function toEvents(results, scope) {
       product: String(x.product_description || "").replace(/\s+/g, " ").trim().slice(0, 240),
       reason: String(x.reason_for_recall || "").replace(/\s+/g, " ").trim().slice(0, 300),
       num: x.recall_number, ev: x.event_id, n: 1,
-      prods: [p], txt: clean(x.distribution_pattern).slice(0, 400),
+      prods: [p], codes: [c], txt: clean(x.distribution_pattern).slice(0, 400),
     });
   }
   return [...byEvent.values()].sort((a, b) => (a.d < b.d ? 1 : -1));
@@ -110,6 +116,7 @@ function fsisEvents(recs, scope) {
     out.push({
       src: "usda", d, cls: FSIS_CLS[clean(r.field_recall_classification)] || 0,
       pha: clean(r.field_recall_type) === "Public Health Alert",
+      status: { "Active Recall": "Ongoing", "Closed Recall": "Completed" }[clean(r.field_recall_type)] || "",
       firm: clean([].concat(r.field_establishment || []).join(", ")), product: title.slice(0, 240), es: esTitle.get(no.toLowerCase()) || "",
       reason: (r.field_recall_reason || []).map(clean).filter(Boolean).join(", "),
       num: no, ev: `fsis-${no}`, n: Math.max(1, items.length), prods: items.slice(0, 40),
@@ -118,6 +125,32 @@ function fsisEvents(recs, scope) {
     });
   }
   return out;
+}
+
+/* ---- FDA recall announcements (RSS) ---- */
+let annCache = null;
+const unescapeXml = (s) => s.replace(/&(quot|amp|apos|#39|lt|gt|nbsp);/g, (m, k) => ENT[k]);
+// RSS text: CDATA or escaped HTML (sometimes escaped twice) → plain text
+const xmlText = (s) => fsisText(unescapeXml(String(s || "").replace(/^\s*<!\[CDATA\[([\s\S]*?)\]\]>\s*$/, "$1")));
+async function fetchAnnouncements() {
+  if (annCache && Date.now() - annCache.at < 3600 * 1000) return annCache.items;
+  const r = await fetch(ANN_RSS, { headers: { Accept: "application/rss+xml, application/xml" }, signal: AbortSignal.timeout(15000) });
+  if (!r.ok) throw new Error(`FDA RSS ${r.status}`);
+  const xml = await r.text();
+  const from = ymd(new Date(Date.now() - 60 * 864e5));
+  const tag = (block, name) => (block.match(new RegExp(`<${name}[^>]*>([\\s\\S]*?)</${name}>`)) || [])[1] || "";
+  const items = [];
+  for (const [, block] of xml.matchAll(/<item>([\s\S]*?)<\/item>/g)) {
+    const when = new Date(xmlText(tag(block, "pubDate")));
+    const link = xmlText(tag(block, "link"));
+    if (isNaN(when) || !/^https:\/\/www\.fda\.gov\//.test(link)) continue;
+    const d = ymd(when);
+    if (d < from) continue;
+    const title = xmlText(tag(block, "title")).slice(0, 240);
+    items.push({ src: "ann", d, product: title, desc: xmlText(tag(block, "description")).slice(0, 400), url: link, ev: `ann-${link}` });
+  }
+  annCache = { at: Date.now(), items: items.sort((a, b) => (a.d < b.d ? 1 : -1)) };
+  return annCache.items;
 }
 
 /** Spanish names (data/names-es.json): es = the event's main product or title, prods_es = per product. */
@@ -132,6 +165,16 @@ function addSpanish(items) {
 
 module.exports = async (req, res) => {
   if (req.method !== "GET") return res.status(405).json({ ok: false, error: "method" });
+  if (req.query?.scope === "ann") {
+    try {
+      const items = (await fetchAnnouncements()).map((x) => ({ ...x, es: ES[x.product] || "" }));
+      res.setHeader("Cache-Control", "public, s-maxage=3600, stale-while-revalidate=21600");
+      return res.status(200).json({ ok: true, scope: "ann", items });
+    } catch (err) {
+      console.error("[recalls] announcements", err);
+      return res.status(502).json({ ok: false, error: "source" });
+    }
+  }
   const scope = req.query?.scope === "nat" ? "nat" : "pr";
   try {
     let hit = cache.get(scope);
@@ -158,3 +201,4 @@ module.exports = async (req, res) => {
 module.exports.fetchScope = fetchScope;
 module.exports.toEvents = toEvents;
 module.exports.fsisEvents = fsisEvents;
+module.exports.fetchAnnouncements = fetchAnnouncements;

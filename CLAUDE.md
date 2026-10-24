@@ -31,8 +31,10 @@ the form/email flow and environment variables.
   by hand in `data/fsis-recent.json` (`usda: "saved"`). Never imitate a browser to get around it. To refresh
   the copy: open https://www.fsis.usda.gov/fsis/api/recall/v/1 in a browser, save it (JSON or Safari
   `.webarchive`), run `python3 dev/fsis-snapshot.py <file>` and commit `data/fsis-recent.json`.
-- Spanish names for FDA products and USDA titles live in `data/names-es.json`, written by
-  `.github/workflows/translate-names.yml` (Mondays, on a new FSIS copy, and on demand) with
+- Alertas PR also shows the FDA's same-day company announcements (`/api/recalls?scope=ann`, FDA food safety
+  recalls RSS, last 60 days), lot codes and dates (`code_info`), recall status, and "Bebés" / "Alergia grave" tags.
+- Spanish names for FDA products, USDA titles and announcement titles live in `data/names-es.json`, written by
+  `.github/workflows/translate-names.yml` (daily, on a new FSIS copy, and on demand) with
   `scripts/translate/translate-names.mjs` (Claude API, needs the GitHub repository secret `ANTHROPIC_API_KEY`).
   It only translates new names and commits to `main`, which redeploys the site. FSIS stopped publishing
   Spanish notices in 2025. `.vercelignore` keeps `scripts/` and `.github/` off the site.

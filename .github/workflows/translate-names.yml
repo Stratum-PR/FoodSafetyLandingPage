@@ -1,5 +1,5 @@
 # Keeps data/names-es.json (Spanish names for FDA and USDA recall products on Alertas PR) up to date.
-# Runs every Monday, when a new USDA copy (data/fsis-recent.json) is pushed, and on demand
+# Runs every day, when a new USDA copy (data/fsis-recent.json) is pushed, and on demand
 # (Actions → "Translate product names" → Run workflow).
 # Needs the repository secret ANTHROPIC_API_KEY. A changed file is committed to main, which
 # deploys the site with the new names.
@@ -7,7 +7,7 @@ name: Translate product names
 
 on:
   schedule:
-    - cron: "41 10 * * 1" # Mondays, 6:41 a.m. in Puerto Rico
+    - cron: "41 10 * * *" # daily, 6:41 a.m. in Puerto Rico (new company announcements)
   workflow_dispatch:
   push:
     branches: [main]
