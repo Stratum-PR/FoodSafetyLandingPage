@@ -10,6 +10,7 @@ const CONFIG = {
   signupEndpoint: "/api/signup",   // { name, email, business, phone, consent, source, lang }
   contactEndpoint: "/api/contact",  // { name, email, business, message, lang }
   guideEndpoint: "/api/guide",    // { name, business, email, phone, updates, source, lang } (unlocks the guide)
+  demoEndpoint: "/api/demo",      // { name, business, email, phone, lang }
 };
 
 const LANG_KEY = "fsqms-lang"; // shared with the self-check; saved only with "preferences" consent
@@ -134,6 +135,72 @@ const EN = {
   reqTier: "Plan", reqBilling: "Billing", reqUnsure: "Not sure", reqSup: "Active suppliers", reqPick: "Select",
   reqMsg: "What would you like to solve first? (optional)", reqSend: "Send request",
   reqPrivacy: "We'll only use this to contact you about access. See the <a href=\"privacidad.html\">Privacy Policy</a>.",
+
+  // Home (index.html)
+  hNavHow: "How it works", hNavFaq: "FAQ", hNavAlerts: "Alertas PR", hCta: "Book a demo",
+  hTitle: "Know first. Act in time. Protect your brand.",
+  hLead: "The quality platform made in Puerto Rico, in Spanish. StratumScan watches your suppliers and ingredients and alerts you when something affects you, so you never hear about a recall on the news.",
+  hSelf: "Take the self-check (3 min)",
+  hAlertLabel: "Sample StratumScan alert", hAlertKicker: "New alert that affects you", hAlertSample: "Sample",
+  hAlertTitle: "Frozen organic blueberries: possible E. coli", hAlertMeta: "FDA · Class I · origin Chile",
+  hAlertYou: "You buy it from <b>one of your suppliers</b> and <b>2 of your products</b> use it.",
+  hDocs: "Your audit documents: up to date",
+  hCredsLabel: "Credentials", hCred1: "NSF I-Corps program", hCred2: "Made in Puerto Rico", hCred3: "In Spanish and English", hCred4: "13 official sources",
+  hProbKicker: "Sound familiar?",
+  hProbTitle: "It's 7 p.m. A customer calls: there's a recall on an ingredient you use.",
+  hProbBody: "Which lots have it? Who were they sold to? Where's that supplier's certificate? The search starts across binders, emails and Excel sheets, while the phone keeps ringing.",
+  hPain1T: "You find out late", hPain1B: "From a customer, a competitor or the news, when product is already on the shelf.",
+  hPain2T: "Everything depends on you", hPain2B: "The information lives in your head and on paper. If you're out for a day, nobody knows where it is.",
+  hPain3T: "Families deserve better", hPain3B: "Puerto Rico imports most of what it eats. Your plant deserves tools that match that responsibility.",
+  hStakesTitle: "A badly handled recall costs more than money",
+  hStake1: "<b>The health of the families</b> who trust your products",
+  hStake2: "<b>Your certification</b> and your SQF and FDA audits",
+  hStake3: "<b>The trust</b> of your company and of customers like Walmart, Sam's Club and Costco",
+  hGuideKicker: "You're not in this alone",
+  hGuideTitle: "We understand your plant because we listened to almost 40 like it",
+  hGuideBody: "We're a Puerto Rico technology company for the food industry. We built StratumScan so quality stops depending on one person's memory.",
+  hGuideCase: "In the blueberry E. coli case, StratumScan had the data 5 weeks before the recall in Puerto Rico.",
+  hProof1: "official sources", hProof2: "countries of origin", hProof3: "reports analyzed", hProof4: "plants interviewed in PR",
+  hPlanTitle: "It's that simple",
+  hPlan1T: "Tell us what you buy", hPlan1B: "Your suppliers and ingredients. We help you load them.",
+  hPlan2T: "We keep watch", hPlan2B: "We check official sources from the US and around the world for you.",
+  hPlan3T: "You act in time", hPlan3B: "You get the alert with what affects you and what to document for your audit.",
+  hShotAlt: "StratumScan dashboard with FDA import refusals and recalls in Puerto Rico",
+  hShotCap: "StratumScan today, with real regulator data.",
+  hBaTitle: "Your day, before and after",
+  hBaSub: "Get back [X] hours a week on paperwork and audits",
+  hBefore: "Without StratumScan", hAfter: "With StratumScan",
+  hB1: "You hear about the recall from a customer or the news", hB2: "You search for certificates across binders and emails",
+  hB3: "You pick new suppliers blind", hB4: "Audits mean a week of stress", hB5: "Everything depends on one person's memory",
+  hB6: "You lose [X] hours a week looking for paperwork",
+  hA1: "You know first, with the official notice in hand", hA2: "Every supplier has its file in one place",
+  hA3: "You check their recall and refusal history before buying", hA4: "Your documents are ready every day",
+  hA5: "The system remembers for your team", hA6: "You spend those [X] hours improving your plant",
+  hSuccessTitle: "Imagine ending the day knowing that, if something happens with a supplier, you'll be the first to know.",
+  hSuccessBody: "Audits without the rush. A quality program your company and your customers respect. Days that end on time. When your food is safe, your brand is too.",
+  hQ1: "Do I have to change the system I use today?", hQ1a: "[Answer to be confirmed]",
+  hQ2: "Does it work for SQF and FDA regulations?", hQ2a: "Yes. Your documents stay organized for SQF certification and federal regulations.",
+  hQ3: "How long does it take to get started?", hQ3a: "[X days] from the demo to your first alerts.",
+  hQ4: "Where do the alerts come from?", hQ4a: "From 13 official sources, such as the FDA, the USDA and agencies in Europe, the UK, Canada and Japan.",
+  hQ5: "Is my data safe?", hQ5a: "[Answer to be confirmed]",
+  hDemoBody: "We'll show you how StratumScan would watch your plant's suppliers and ingredients.",
+  hSelfTitle: "Not ready yet?",
+  hSelfBody: "The FDA requires compliance on July 20, 2028. Find out in 3 minutes how ready your plant is.",
+  hSelfCta: "Take the free self-check",
+  hDemoPrivacy: "We'll only use this to schedule your demo. See the <a href=\"privacidad.html\">Privacy Policy</a>.",
+  hDemoBtn: "Book your demo",
+  hPublicTitle: "Looking for information on food recalls?",
+  hPublicBody: "Alertas PR: check the recalls that affect Puerto Rico, for free.",
+  hPublicCta: "Open Alertas PR",
+  hFootDisc: "Stratum PR is not affiliated with Walmart, Sam's Club, Costco or the agencies cited.",
+
+  // Alertas PR (alertas.html)
+  aBack: "Stratum home", aBy: "by", aTitle: "Food recalls that affect Puerto Rico",
+  aSearchLabel: "Search", aSearchPh: "Search for a product or brand",
+  aScopeLabel: "Area", aPR: "Puerto Rico", aNat: "Nationwide", aFilterLabel: "Filter",
+  aAll: "All", aSerious: "Serious (Class I)", aAllergen: "Allergens", aMicro: "Contamination", aForeign: "Foreign objects",
+  aBizTitle: "Do you run a food plant or distributor?", aBizBody: "StratumScan watches your suppliers across 13 official sources.", aBizCta: "Learn about StratumScan",
+  aNote: "Source: FDA Enforcement Reports (openFDA). Stratum PR is not affiliated with the FDA. Check each notice at its source.",
 };
 
 const MSG = {
@@ -150,6 +217,7 @@ const MSG = {
     contactFail: "No pudimos enviar tu mensaje. Inténtalo otra vez.",
     reqOk: "¡Recibido! Te contactaremos en 1 a 2 días laborables.",
     reqFail: "No pudimos enviar tu solicitud. Inténtalo otra vez o escríbenos por Contacto.",
+    demoOk: "¡Recibido! Te contactaremos en 1 a 2 días laborables para coordinar tu demo.",
     title: "Stratum · ¿Qué te falta para vender en Walmart?",
     links: (n) => `${n} enlaces`,
     locked: "Completa el formulario para desbloquear los enlaces",
@@ -167,6 +235,7 @@ const MSG = {
     contactFail: "We couldn't send your message. Please try again.",
     reqOk: "Received! We'll contact you within 1–2 business days.",
     reqFail: "We couldn't send your request. Try again or reach us through Contact.",
+    demoOk: "Received! We'll contact you within 1–2 business days to schedule your demo.",
     title: "Stratum · What are you missing to sell to Walmart?",
     links: (n) => `${n} links`,
     locked: "Fill in the form to unlock the links",
@@ -186,6 +255,7 @@ document.addEventListener("DOMContentLoaded", () => {
   initAssessmentLinks();
   initSignup();
   initContact();
+  initDemo();
   initGuide();
   initInsights();
   initHub();
@@ -381,6 +451,27 @@ function initContact() {
       form, button, show, endpoint: CONFIG.contactEndpoint,
       body: { name: f.name.value.trim(), email: f.email.value.trim(), business: f.business.value.trim(), message: f.message.value.trim(), lang },
       ok: "contactOk", fail: "contactFail", notReady: "contactNotReady",
+    });
+  });
+}
+
+// ---- Demo request (home) ---------------------------------------------------
+function initDemo() {
+  const form = document.getElementById("demo-form");
+  if (!form) return;
+  const show = statusSetter(document.getElementById("demo-status"), "contact-status");
+  const button = form.querySelector('button[type="submit"]');
+
+  form.addEventListener("input", (e) => { e.target.removeAttribute("aria-invalid"); });
+  form.addEventListener("submit", (e) => {
+    e.preventDefault();
+    const bad = validate(form);
+    if (bad) { show(msg(bad.type === "email" && bad.value ? "emailBad" : "missing"), "error"); bad.focus(); return; }
+    const f = form.elements;
+    submitForm({
+      form, button, show, endpoint: CONFIG.demoEndpoint,
+      body: { name: f.name.value.trim(), business: f.business.value.trim(), email: f.email.value.trim(), phone: f.phone.value.trim(), lang },
+      ok: "demoOk", fail: "reqFail", notReady: "contactNotReady",
     });
   });
 }

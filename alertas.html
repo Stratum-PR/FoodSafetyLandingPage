@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <!-- Pre-launch: keep out of search results. Remove this and vercel.json X-Robots-Tag at launch. -->
+  <meta name="robots" content="noindex, nofollow">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Alertas PR · Retiros de alimentos que afectan a Puerto Rico</title>
+  <meta name="description" content="Consulta gratis los retiros de alimentos de la FDA que mencionan a Puerto Rico. Por Stratum.">
+  <meta name="theme-color" content="#1E2B7E">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Alertas PR · Retiros de alimentos que afectan a Puerto Rico">
+  <meta property="og:description" content="Consulta gratis los retiros de alimentos de la FDA que mencionan a Puerto Rico.">
+  <meta property="og:locale" content="es_PR">
+  <meta property="og:locale:alternate" content="en_US">
+
+  <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+  <link rel="preload" href="assets/fonts/archivo-latin.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="css/fonts.css">
+  <link rel="stylesheet" href="css/styles.css">
+  <link rel="stylesheet" href="css/home.css">
+  <link rel="stylesheet" href="css/consent.css">
+  <script src="js/consent.js"></script>
+  <script src="js/analytics.js"></script>
+  <script src="js/main.js" defer></script>
+  <script src="js/alertas.js" defer></script>
+</head>
+<body data-title-es="Alertas PR · Retiros de alimentos que afectan a Puerto Rico" data-title-en="Alertas PR · Food recalls that affect Puerto Rico">
+  <a class="skip-link" href="#main" data-i18n="skip">Saltar al contenido</a>
+
+  <header class="site-header">
+    <div class="container nav a-wrap">
+      <a class="a-brand" href="alertas.html" aria-label="Alertas PR por Stratum">
+        <b>Alertas PR</b><span data-i18n="aBy">por</span><img src="assets/stratum-logo-4.png" alt="Stratum" width="3834" height="720">
+      </a>
+      <div class="nav-tools">
+        <div class="lang-toggle" role="group" aria-label="Idioma / Language">
+          <button type="button" data-lang="es" aria-pressed="true">ES</button>
+          <button type="button" data-lang="en" aria-pressed="false">EN</button>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main id="main" class="container a-wrap">
+    <section class="a-hero" aria-labelledby="a-title">
+      <h1 id="a-title" data-i18n="aTitle">Retiros de alimentos que afectan a Puerto Rico</h1>
+      <p id="a-lead" aria-live="polite"></p>
+
+      <div class="a-tools">
+        <label class="sr-only" for="a-q" data-i18n="aSearchLabel">Buscar</label>
+        <input id="a-q" class="a-search" type="search" placeholder="Busca un producto o marca" data-i18n-attr="placeholder:aSearchPh">
+        <div class="a-seg" role="group" aria-label="Área" data-i18n-attr="aria-label:aScopeLabel">
+          <button type="button" data-scope="pr" aria-pressed="true" data-i18n="aPR">Puerto Rico</button>
+          <button type="button" data-scope="nat" aria-pressed="false" data-i18n="aNat">Nacional</button>
+        </div>
+      </div>
+      <div class="a-chips" role="group" aria-label="Filtro" data-i18n-attr="aria-label:aFilterLabel">
+        <button type="button" data-filter="all" aria-pressed="true" data-i18n="aAll">Todos</button>
+        <button type="button" data-filter="serious" aria-pressed="false" data-i18n="aSerious">Graves (Clase I)</button>
+        <button type="button" data-filter="allergen" aria-pressed="false" data-i18n="aAllergen">Alérgenos</button>
+        <button type="button" data-filter="micro" aria-pressed="false" data-i18n="aMicro">Contaminación</button>
+        <button type="button" data-filter="foreign" aria-pressed="false" data-i18n="aForeign">Objetos extraños</button>
+      </div>
+      <p class="a-status" id="a-status" role="status" aria-live="polite"></p>
+    </section>
+
+    <section class="a-list" id="a-list" aria-label="Retiros" data-i18n-attr="aria-label:aTitle"></section>
+
+    <aside class="a-biz">
+      <div>
+        <h2 data-i18n="aBizTitle">¿Tienes una planta o distribuidora de alimentos?</h2>
+        <p data-i18n="aBizBody">StratumScan vigila a tus suplidores en 13 fuentes oficiales.</p>
+      </div>
+      <a class="btn btn-yellow" href="index.html" data-i18n="aBizCta">Conoce StratumScan</a>
+    </aside>
+
+    <p class="a-note" data-i18n="aNote">Fuente: FDA Enforcement Reports (openFDA). Stratum PR no está afiliado con la FDA. Verifica cada aviso en su fuente.</p>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container footer-inner">
+      <div class="footer-about">
+        <a class="footer-brand" href="index.html"><img src="assets/stratum-logo-2.png" alt="Stratum" width="3834" height="720"></a>
+      </div>
+      <div class="footer-links">
+        <nav aria-label="Stratum PR">
+          <div class="footer-heading">Stratum PR</div>
+          <a href="index.html" data-i18n="aBack">Inicio de Stratum</a>
+          <a href="#contacto" data-open-contact data-i18n="footContact">Contacto</a>
+        </nav>
+        <nav aria-label="Legal">
+          <div class="footer-heading">Legal</div>
+          <a href="privacidad.html" data-i18n="footPrivacy">Privacidad</a>
+          <a href="terminos.html" data-i18n="footTerms">Términos de uso</a>
+          <a href="#" data-consent-open data-i18n="footCookiePrefs">Preferencias de cookies</a>
+        </nav>
+      </div>
+    </div>
+    <div class="container footer-base">
+      <p class="copyright">© <span id="year">2026</span> Stratum PR</p>
+    </div>
+  </footer>
+
+  <dialog id="contacto" class="contact" aria-labelledby="contact-title">
+    <form id="contact-form" novalidate>
+      <div class="contact-head">
+        <h2 id="contact-title" data-i18n="contactTitle">Contáctanos</h2>
+        <button type="button" class="contact-close" data-close-contact aria-label="Cerrar" data-i18n-attr="aria-label:close">×</button>
+      </div>
+      <p class="contact-lead" data-i18n="contactLead">Cuéntanos sobre tu negocio y te respondemos en 1 a 2 días laborables.</p>
+      <label class="field"><span data-i18n="cName">Nombre</span><input name="name" autocomplete="name" required></label>
+      <label class="field"><span data-i18n="cEmail">Correo electrónico</span><input name="email" type="email" autocomplete="email" required></label>
+      <label class="field"><span data-i18n="cBizReq">Negocio</span><input name="business" autocomplete="organization" required></label>
+      <label class="field"><span data-i18n="cMsg">Mensaje</span><textarea name="message" rows="4" required></textarea></label>
+      <input type="text" name="_gotcha" tabindex="-1" autocomplete="off" class="hp" aria-hidden="true">
+      <p class="contact-privacy" data-i18n="contactPrivacy">Usaremos estos datos solo para responderte. Ver la <a href="privacidad.html">Política de privacidad</a>.</p>
+      <p class="contact-status" id="contact-status" role="status" aria-live="polite"></p>
+      <button class="btn btn-primary btn-lg contact-submit" type="submit" data-i18n="cSend">Enviar mensaje</button>
+    </form>
+  </dialog>
+</body>
+</html>
