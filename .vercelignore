@@ -2,3 +2,7 @@
 CLAUDE.md
 README.md
 dev/
+
+# Translation tooling (runs in GitHub Actions, not on the site)
+scripts/
+.github/

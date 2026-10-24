@@ -446,6 +446,7 @@
 .a-sev-1 { background: #FBE9E7; color: #8C1D16; }
 .a-sev-2 { background: var(--warn-bg); color: #7A4800; }
 .a-sev-3 { background: var(--ok-bg); color: #145E3B; }
+.a-src { font-size: 11.5px; font-weight: 800; letter-spacing: .04em; padding: 3px 8px; border-radius: 6px; background: var(--navy); color: #fff; }
 .a-where { font-weight: 700; padding: 3px 10px; border-radius: 999px; background: var(--tint); color: var(--ink-2); }
 .a-where.is-pr { background: var(--yellow-soft); color: var(--olive); }
 .a-flag { font-weight: 800; padding: 3px 10px; border-radius: 999px; background: var(--yellow); color: var(--navy); }

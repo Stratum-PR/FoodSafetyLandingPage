@@ -15,9 +15,9 @@
       none: "No hay retiros que coincidan con tu búsqueda.",
       shown: (a, b, d) => `Mostrando ${a} de ${b}${d ? ` · Datos de la FDA al ${d}` : ""}`,
       onlyMine: "Mostrando solo los retiros que coinciden con tu lista.", seeAll: "Ver todos",
-      sev: { 1: "Grave · Clase I", 2: "Moderado · Clase II", 3: "Leve · Clase III", 0: "Sin clasificar" },
-      more: "Ver más", orig: "Texto original de la FDA:", products: (n) => `y ${n} ${n === 1 ? "producto más" : "productos más"}`, allProds: (n) => `Ver los ${n} productos de este retiro`, sevHelp: "Qué significa", upc: "UPC", hitTag: "En tu lista",
-      notice: (num) => `Buscar el aviso en la FDA (${num})`, share: "Compartir", copied: "Enlace copiado",
+      sev: { 1: "Grave · Clase I", 2: "Moderado · Clase II", 3: "Leve · Clase III", 0: "Sin clasificar" }, pha: "Alerta de salud pública",
+      more: "Ver más", orig: "Texto original de la FDA:", origUsda: "Texto original del USDA:", products: (n) => `y ${n} ${n === 1 ? "producto más" : "productos más"}`, allProds: (n) => `Ver los ${n} productos de este retiro`, sevHelp: "Qué significa", upc: "UPC", hitTag: "En tu lista",
+      notice: (num) => `Buscar el aviso en la FDA (${num})`, usdaNotice: "Ver el aviso del USDA", share: "Compartir", copied: "Enlace copiado",
       shareText: (x) => `Retiro de alimentos: ${x}. Revisa si te afecta en Alertas PR por StratumScan:`,
       allergen: "Alérgeno no declarado", micro: { listeria: "Posible Listeria", salmonella: "Posible Salmonella", ecoli: "Posible E. coli", botulism: "Riesgo de botulismo", mold: "Moho", cronobacter: "Posible Cronobacter" },
       foreign: "Objeto extraño", glass: "vidrio", plastic: "plástico", metal: "metal", stones: "piedras",
@@ -55,9 +55,9 @@
       none: "No recalls match your search.",
       shown: (a, b, d) => `Showing ${a} of ${b}${d ? ` · FDA data as of ${d}` : ""}`,
       onlyMine: "Showing only the recalls that match your list.", seeAll: "Show all",
-      sev: { 1: "Serious · Class I", 2: "Moderate · Class II", 3: "Minor · Class III", 0: "Unclassified" },
-      more: "Show more", orig: "Original FDA text:", products: (n) => `and ${n} more ${n === 1 ? "product" : "products"}`, allProds: (n) => `See all ${n} products in this recall`, sevHelp: "What it means", upc: "UPC", hitTag: "On your list",
-      notice: (num) => `Look up the notice at the FDA (${num})`, share: "Share", copied: "Link copied",
+      sev: { 1: "Serious · Class I", 2: "Moderate · Class II", 3: "Minor · Class III", 0: "Unclassified" }, pha: "Public health alert",
+      more: "Show more", orig: "Original FDA text:", origUsda: "Original USDA text:", products: (n) => `and ${n} more ${n === 1 ? "product" : "products"}`, allProds: (n) => `See all ${n} products in this recall`, sevHelp: "What it means", upc: "UPC", hitTag: "On your list",
+      notice: (num) => `Look up the notice at the FDA (${num})`, usdaNotice: "See the USDA notice", share: "Share", copied: "Link copied",
       shareText: (x) => `Food recall: ${x}. Check whether it affects you on Alertas PR by StratumScan:`,
       allergen: "Undeclared allergen", micro: { listeria: "Possible Listeria", salmonella: "Possible Salmonella", ecoli: "Possible E. coli", botulism: "Botulism risk", mold: "Mold", cronobacter: "Possible Cronobacter" },
       foreign: "Foreign object", glass: "glass", plastic: "plastic", metal: "metal", stones: "stones",
@@ -136,7 +136,7 @@
 
   // ---- classification ------------------------------------------------------
   function kinds(x) {
-    const r = x.reason;
+    const r = x.src === "usda" ? `${x.reason} ${x.product}` : x.reason; // FSIS names the hazard in the title
     return {
       allergen: /undeclared|allergen|not declare/i.test(r) && !/sildenafil|tadalafil|drug|color|red\s?\d|yellow\s?\d|sulfite/i.test(r),
       micro: MICRO.some(([, re]) => re.test(r)) || /pathogen|bacteri/i.test(r),
@@ -151,7 +151,7 @@
 
   /** Short summary of the FDA reason in the page language, or "" when no rule fits. */
   function summary(x, t) {
-    const r = x.reason;
+    const r = x.src === "usda" ? `${x.reason} ${x.product}` : x.reason; // FSIS names the hazard in the title
     const bugs = MICRO.filter(([, re]) => re.test(r)).map(([k]) => t.micro[k]);
     if (bugs.length) return bugs.join(" · ");
     if (/sildenafil|tadalafil|undeclared drug/i.test(r)) return t.drug;
@@ -184,7 +184,7 @@
     reCache.set(term, re);
     return re;
   }
-  const haystack = (x) => norm(`${x.product} ${x.firm} ${x.reason} ${x.txt || ""} ${(x.prods || []).join(" ")}`);
+  const haystack = (x) => norm(`${x.product} ${x.es || ""} ${x.firm} ${x.reason} ${x.txt || ""} ${(x.prods || []).join(" ")} ${(x.prods_es || []).join(" ")}`);
   const hitsFor = (x) => state.list.filter((term) => termRe(term).test(haystack(x)));
 
   function addTerm(raw) {
@@ -354,16 +354,16 @@
       return `<article class="a-item a-cls-${x.cls}${hits.length ? " is-mine" : ""}">
         <span class="a-ico a-ico-${type}" aria-hidden="true"><svg viewBox="0 0 24 24">${ICONS[type]}</svg></span>
         <div class="a-body">
-          <div class="a-meta"><button type="button" class="a-sev a-sev-${x.cls} a-sev-btn" data-explain title="${esc(t.sevHelp)}">${esc(t.sev[x.cls])}<i aria-hidden="true">?</i></button>${isNew(x) ? `<span class="a-flag">${esc(t.isNew)}</span>` : ""}<span class="a-where${x.pr ? " is-pr" : ""}">${esc(x.pr ? t.tagPR : t.tagNat)}</span><span>${esc(fmtDate(x.d, l))} · ${esc(x.firm)}</span></div>
-          <h2>${esc(parseProd(x.product).name)}${x.n > 1 && !(x.prods && x.prods.length > 1) ? ` <span class="a-orig">${esc(t.products(x.n - 1))}</span>` : ""}</h2>
+          <div class="a-meta"><button type="button" class="a-sev a-sev-${x.cls} a-sev-btn" data-explain title="${esc(t.sevHelp)}">${esc(x.pha ? t.pha : t.sev[x.cls])}<i aria-hidden="true">?</i></button><span class="a-src">${x.src === "usda" ? "USDA" : "FDA"}</span>${isNew(x) ? `<span class="a-flag">${esc(t.isNew)}</span>` : ""}<span class="a-where${x.pr ? " is-pr" : ""}">${esc(x.pr ? t.tagPR : t.tagNat)}</span><span>${esc(fmtDate(x.d, l))} · ${esc(x.firm)}</span></div>
+          <h2>${esc(L() === "es" && x.es ? x.es : x.src === "usda" ? x.product : parseProd(x.product).name)}${x.n > 1 && !(x.prods && x.prods.length > 1) ? ` <span class="a-orig">${esc(t.products(x.n - 1))}</span>` : ""}</h2>
           ${x.prods && x.prods.length > 1 ? prodList(x) : prodDetail(parseProd(x.product), false)}
           ${hits.length ? `<p class="a-hits">${esc(t.inList)} <b>${esc(hits.join(", "))}</b></p>` : ""}
-          ${s ? `<p class="a-reason">${esc(s)}</p><p class="a-orig">${esc(t.orig)} ${esc(x.reason)}</p>` : `<p class="a-reason">${esc(x.reason)}</p>`}
+          ${s ? `<p class="a-reason">${esc(s)}</p><p class="a-orig">${esc(x.src === "usda" ? t.origUsda : t.orig)} ${esc(x.reason)}</p>` : `<p class="a-reason">${esc(x.reason)}</p>`}
           <details class="a-guide"><summary>${esc(t.guideSum)}</summary>
             <p>${esc(g[0])} ${esc(t.cls[x.cls])}</p>
             <div class="a-guide-cols"><div><b>${esc(t.gYou)}</b><p>${esc(g[1])}</p></div><div><b>${esc(t.gBiz)}</b><p>${esc(g[2])}</p></div></div>
           </details>
-          <div class="a-links"><a href="${FDA_SEARCH}" target="_blank" rel="noopener">${esc(t.notice(x.num))}</a><button type="button" data-share="${i}">${esc(t.share)}</button></div>
+          <div class="a-links"><a href="${esc(x.url || FDA_SEARCH)}" target="_blank" rel="noopener">${esc(x.url ? t.usdaNotice : t.notice(x.num))}</a><button type="button" data-share="${i}">${esc(t.share)}</button></div>
         </div>
       </article>`;
     }).join("") + (items.length > shown.length ? `<button type="button" class="btn btn-soft a-more" data-more>${esc(t.more)}</button>` : "");
@@ -393,11 +393,12 @@
       and the list opens by itself when a match is hidden past the first product. */
   function prodList(x) {
     if (!x.prods || x.prods.length < 2) return "";
-    const marks = x.prods.map((p) => state.list.some((term) => termRe(term).test(norm(p))));
+    const es = L() === "es" ? x.prods_es || [] : [];
+    const marks = x.prods.map((p, i) => state.list.some((term) => termRe(term).test(norm(`${p} ${es[i] || ""}`))));
     return `<details class="a-prods"${marks.slice(1).some(Boolean) ? " open" : ""}><summary>${esc(T[L()].allProds(Math.max(x.n, x.prods.length)))}</summary>
       <ol>${x.prods.map((p, i) => {
         const pp = parseProd(p);
-        return `<li${marks[i] ? ' class="is-hit"' : ""}><b>${esc(pp.name)}</b>${prodDetail(pp, marks[i])}</li>`;
+        return `<li${marks[i] ? ' class="is-hit"' : ""}><b>${esc(es[i] || pp.name)}</b>${prodDetail(pp, marks[i])}</li>`;
       }).join("")}</ol></details>`;
   }
 

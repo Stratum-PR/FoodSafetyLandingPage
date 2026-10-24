@@ -228,11 +228,12 @@ const EN = {
   aLegAllergen: "Undeclared allergen", aLegAllergenB: "Contains milk, peanuts, wheat or another allergen the label doesn't list.",
   aLegForeign: "Foreign object", aLegForeignB: "Pieces of glass, metal, plastic or other material.",
   aLegOther: "Other causes", aLegOtherB: "Labeling, undeclared colors or manufacturing failures.",
-  aLegReachT: "Reach", aLegPR: "Names Puerto Rico", aLegPRB: "The FDA names Puerto Rico in the product's distribution.",
+  aLegReachT: "Reach and source", aLegPR: "Names Puerto Rico", aLegPRB: "The FDA names Puerto Rico in the product's distribution.",
+  aLegFdaB: "Most foods: fruit, vegetables, dairy, seafood, crackers, drinks.", aLegUsdaB: "Meat, poultry and egg products (USDA FSIS).",
   aLegNat: "Nationwide distribution", aLegNatB: "It was distributed across the United States, so it may have reached Puerto Rico.",
   aRun: "Check my list", aPulseLabel: "The year in numbers", 
   aMatchNote: "The link to Puerto Rico and to your list is based on the text the FDA publishes, so it may not be exact. Your list stays in your browser: we never receive it.",
-  aNote: "Source: FDA Enforcement Reports (openFDA). Stratum PR is not affiliated with the FDA. Check each notice at its source.",
+  aNote: "Sources: FDA Enforcement Reports (openFDA) and USDA FSIS (meat, poultry and egg products). Spanish names of FDA products are machine translations. Stratum PR is not affiliated with the FDA or the USDA. Check each notice at its source.",
 };
 
 const MSG = {
