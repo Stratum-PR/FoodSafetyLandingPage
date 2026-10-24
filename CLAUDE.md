@@ -25,6 +25,9 @@ the form/email flow and environment variables.
   enforcement, last 12 months, one row per event, cached 6 h) and adds "Revisa tu lista" (kept in the
   browser only, with preferences consent). The previous Walmart self-check home is on branch
   `archivo/landing-fsqms-2026-10`.
+- Branch `version-pronto` is the "coming soon" variant: Alertas PR is the home (`index.html`), with a
+  "StratumScan estará disponible pronto" note and the early-access form (`/api/signup`); `alertas.html`
+  only redirects to `/`. The full StratumScan home lives on `home-branding`.
 - `js/selfcheck-data.js` and `js/guide.js` are UMD files shared by the browser and the API.
   The server builds the passport email from item keys only, never from client-sent text.
 

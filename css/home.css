@@ -284,6 +284,22 @@
 .a-chips [hidden] { display: none; }
 .a-status { margin-top: 16px; font-size: 14px; color: var(--muted); min-height: 1.4em; }
 
+/* Coming-soon note (top) and early-access panel (bottom) */
+.a-soon {
+  display: flex; flex-wrap: wrap; align-items: center; gap: 8px 12px; margin-top: 24px; padding: 12px 16px;
+  background: var(--surface); border: 1px solid var(--line); border-radius: 14px; font-size: 14.5px; color: var(--ink-2);
+}
+.a-soon:hover { color: var(--ink); border-color: #C9CEE6; }
+.a-soon > span:nth-child(2) { flex: 1 1 320px; }
+.a-soon b { color: var(--blue); white-space: nowrap; }
+.a-soon-tag { font-size: 12px; font-weight: 800; padding: 4px 10px; border-radius: 999px; background: var(--yellow); color: var(--navy); }
+.a-hero { padding-top: 32px; }
+.a-pronto { margin: 8px 0 32px; }
+.a-pronto-kicker { display: flex; justify-content: center; align-items: center; gap: 10px; margin-bottom: 14px; }
+.a-pronto .a-scan { color: #fff; }
+.a-pronto .a-scan rect:last-child { fill: #fff; }
+.a-pronto .signup-form { margin-top: 0; }
+
 /* A. Check your list — navy panel, chips, scan sweep and a result that pops in */
 .a-check {
   position: relative; overflow: hidden; color: #fff; background: var(--gradient);
