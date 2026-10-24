@@ -19,12 +19,12 @@
       browse: { 3: "Retiros de los últimos 3 meses", 12: "Retiros del último año" },
       noneRecent: "No hubo retiros en los últimos 3 meses con estos filtros.", seeYear: "Ver el último año",
       sev: { 1: "Grave · Clase I", 2: "Moderado · Clase II", 3: "Leve · Clase III", 0: "Sin clasificar" },
-      more: "Ver más", orig: "Texto original de la FDA:", products: (n) => `y ${n} ${n === 1 ? "producto más" : "productos más"}`,
+      more: "Ver más", orig: "Texto original de la FDA:", products: (n) => `y ${n} ${n === 1 ? "producto más" : "productos más"}`, allProds: (n) => `Ver los ${n} productos de este retiro`,
       notice: (num) => `Buscar el aviso en la FDA (${num})`, share: "Compartir", copied: "Enlace copiado",
       shareText: (x) => `Retiro de alimentos: ${x}. Revisa si te afecta en Alertas PR por StratumScan:`,
       allergen: "Alérgeno no declarado", micro: { listeria: "Posible Listeria", salmonella: "Posible Salmonella", ecoli: "Posible E. coli", botulism: "Riesgo de botulismo", mold: "Moho", cronobacter: "Posible Cronobacter" },
       foreign: "Objeto extraño", glass: "vidrio", plastic: "plástico", metal: "metal", stones: "piedras",
-      cgmp: "Fallas en buenas prácticas de manufactura", drug: "Contiene medicamentos no declarados", leadMetal: "Plomo",
+      cgmp: "Fallas en buenas prácticas de manufactura", colors: "Colorantes no declarados", drug: "Contiene medicamentos no declarados", leadMetal: "Plomo",
       allergens: { milk: "leche", soy: "soya", wheat: "trigo", egg: "huevo", peanut: "maní", "tree nut": "nueces", walnut: "nueces", almond: "almendra", cashew: "cajuil", hazelnut: "avellana", pistachio: "pistacho", pecan: "pecana", sesame: "ajonjolí", fish: "pescado", shellfish: "mariscos", shrimp: "camarón", coconut: "coco" },
       // Check your list
       suggest: ["Leche", "Queso", "Maní", "Huevo", "Pollo", "Camarones", "Arándanos", "Harina", "Chocolate", "Especias"],
@@ -62,12 +62,12 @@
       browse: { 3: "Recalls from the last 3 months", 12: "Recalls from the last year" },
       noneRecent: "No recalls in the last 3 months with these filters.", seeYear: "See the last year",
       sev: { 1: "Serious · Class I", 2: "Moderate · Class II", 3: "Minor · Class III", 0: "Unclassified" },
-      more: "Show more", orig: "Original FDA text:", products: (n) => `and ${n} more ${n === 1 ? "product" : "products"}`,
+      more: "Show more", orig: "Original FDA text:", products: (n) => `and ${n} more ${n === 1 ? "product" : "products"}`, allProds: (n) => `See all ${n} products in this recall`,
       notice: (num) => `Look up the notice at the FDA (${num})`, share: "Share", copied: "Link copied",
       shareText: (x) => `Food recall: ${x}. Check whether it affects you on Alertas PR by StratumScan:`,
       allergen: "Undeclared allergen", micro: { listeria: "Possible Listeria", salmonella: "Possible Salmonella", ecoli: "Possible E. coli", botulism: "Botulism risk", mold: "Mold", cronobacter: "Possible Cronobacter" },
       foreign: "Foreign object", glass: "glass", plastic: "plastic", metal: "metal", stones: "stones",
-      cgmp: "Good manufacturing practice failures", drug: "Contains undeclared drugs", leadMetal: "Lead",
+      cgmp: "Good manufacturing practice failures", colors: "Undeclared colors", drug: "Contains undeclared drugs", leadMetal: "Lead",
       allergens: null,
       suggest: ["Milk", "Cheese", "Peanuts", "Eggs", "Chicken", "Shrimp", "Blueberries", "Flour", "Chocolate", "Spices"],
       remove: (x) => `Remove ${x}`, emptyList: "Add at least one product to check.",
@@ -172,6 +172,7 @@
       return what.length ? `${t.foreign}: ${what.join(", ")}` : t.foreign;
     }
     if (/cgmp|good manufacturing/i.test(r)) return t.cgmp;
+    if (/undeclared\s+(?:fd&c\s+)?colou?rs?|fd&c\s+(?:yellow|red|blue)/i.test(r)) return t.colors;
     if (/\blead\b/i.test(r)) return t.leadMetal;
     return "";
   }
@@ -189,7 +190,7 @@
     reCache.set(term, re);
     return re;
   }
-  const haystack = (x) => norm(`${x.product} ${x.firm} ${x.reason} ${x.txt || ""}`);
+  const haystack = (x) => norm(`${x.product} ${x.firm} ${x.reason} ${x.txt || ""} ${(x.prods || []).join(" ")}`);
   const hitsFor = (x) => state.list.filter((term) => termRe(term).test(haystack(x)));
 
   function addTerm(raw) {
@@ -372,7 +373,8 @@
         <span class="a-ico a-ico-${type}" aria-hidden="true"><svg viewBox="0 0 24 24">${ICONS[type]}</svg></span>
         <div class="a-body">
           <div class="a-meta"><span class="a-sev a-sev-${x.cls}">${esc(t.sev[x.cls])}</span>${isNew(x) ? `<span class="a-flag">${esc(t.isNew)}</span>` : ""}<span class="a-where${x.pr || state.scope === "pr" ? " is-pr" : ""}">${esc(x.pr || state.scope === "pr" ? t.tagPR : t.tagNat)}</span><span>${esc(fmtDate(x.d, l))} · ${esc(x.firm)}</span></div>
-          <h2>${esc(title(x.product))}${x.n > 1 ? ` <span class="a-orig">${esc(t.products(x.n - 1))}</span>` : ""}</h2>
+          <h2>${esc(title(x.product))}${x.n > 1 && !(x.prods && x.prods.length > 1) ? ` <span class="a-orig">${esc(t.products(x.n - 1))}</span>` : ""}</h2>
+          ${prodList(x)}
           ${hits.length ? `<p class="a-hits">${esc(t.inList)} <b>${esc(hits.join(", "))}</b></p>` : ""}
           ${s ? `<p class="a-reason">${esc(s)}</p><p class="a-orig">${esc(t.orig)} ${esc(x.reason)}</p>` : `<p class="a-reason">${esc(x.reason)}</p>`}
           <details class="a-guide"><summary>${esc(t.guideSum)}</summary>
@@ -397,6 +399,15 @@
         else { await navigator.clipboard.writeText(`${text} ${url}`); b.textContent = t.copied; }
       } catch (err) { /* share sheet closed */ }
     };
+  }
+
+  /** Every product of a multi-product recall; the ones that match the visitor's list are marked,
+      and the list opens by itself when a match is hidden past the first product. */
+  function prodList(x) {
+    if (!x.prods || x.prods.length < 2) return "";
+    const marks = x.prods.map((p) => state.list.some((term) => termRe(term).test(norm(p))));
+    return `<details class="a-prods"${marks.slice(1).some(Boolean) ? " open" : ""}><summary>${esc(T[L()].allProds(Math.max(x.n, x.prods.length)))}</summary>
+      <ul>${x.prods.map((p, i) => `<li${marks[i] ? ' class="is-hit"' : ""}>${esc(p)}</li>`).join("")}</ul></details>`;
   }
 
   function setPeriod(p) {

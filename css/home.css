@@ -449,6 +449,10 @@
 .a-item h2 { font-size: 17px; font-weight: 700; line-height: 1.35; }
 .a-hits { font-size: 14px; color: var(--olive); background: var(--yellow-soft); padding: 6px 10px; border-radius: 8px; align-self: flex-start; }
 .a-reason { font-size: 15px; color: var(--muted); }
+.a-prods summary { cursor: pointer; font-size: 14px; font-weight: 700; color: var(--blue); }
+.a-prods ul { margin-top: 8px; display: flex; flex-direction: column; gap: 6px; }
+.a-prods li { font-size: 13.5px; line-height: 1.45; color: var(--ink-2); background: var(--bg); border-radius: 8px; padding: 8px 10px; overflow-wrap: anywhere; }
+.a-prods li.is-hit { background: var(--yellow-soft); color: var(--olive); box-shadow: inset 3px 0 0 var(--yellow); font-weight: 600; }
 .a-orig { font-size: 13px; color: var(--muted-2); }
 .a-guide { margin-top: 4px; border-top: 1px solid var(--line-2); padding-top: 10px; }
 .a-guide summary { cursor: pointer; font-size: 14px; font-weight: 700; color: var(--blue); }
