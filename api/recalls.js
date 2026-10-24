@@ -15,7 +15,13 @@
    Vercel's edge for 6 h. fetchScope/toEvents/fsisEvents are also used by scripts/translate/translate-names.mjs. */
 const API = "https://api.fda.gov/food/enforcement.json";
 const FSIS_API = "https://www.fsis.usda.gov/fsis/api/recall/v/1";
-const ANN_RSS = "https://www.fda.gov/about-fda/contact-fda/stay-informed/rss-feeds/food-safety-recalls/rss.xml";
+// FDA RSS feeds, tried in order: a food-only feed if it answers, else the all-products recalls feed
+// (filtered to food by NON_FOOD). The translation job logs which one worked.
+const ANN_RSS = [
+  "https://www.fda.gov/about-fda/contact-fda/stay-informed/rss-feeds/food-safety-recalls/rss.xml",
+  "https://www.fda.gov/about-fda/contact-fda/stay-informed/rss-feeds/recalls/rss.xml",
+];
+const NON_FOOD = /\b(?:tablets?|capsules?|injection|injectable|syringes?|vials?|devices?|catheters?|pumps?|implants?|surgical|ventilators?|monitors?|test kits?|ophthalmic|eye drops?|contact lens|inhalers?|pharmac\w*|prescription|drugs?|ointment|cream|lotion|sunscreen|cosmetics?|shampoo|toothpaste|hand sanitizer|tattoo|vaccines?|insulin|glucose meters?)\b/i;
 let ES = {};
 try { ES = require("../data/names-es.json").names || {}; } catch (err) { /* no translations yet */ }
 let FSIS_SAVED = { saved: null, records: [] };
@@ -132,11 +138,16 @@ let annCache = null;
 const unescapeXml = (s) => s.replace(/&(quot|amp|apos|#39|lt|gt|nbsp);/g, (m, k) => ENT[k]);
 // RSS text: CDATA or escaped HTML (sometimes escaped twice) → plain text
 const xmlText = (s) => fsisText(unescapeXml(String(s || "").replace(/^\s*<!\[CDATA\[([\s\S]*?)\]\]>\s*$/, "$1")));
-async function fetchAnnouncements() {
+async function fetchAnnouncements(log) {
   if (annCache && Date.now() - annCache.at < 3600 * 1000) return annCache.items;
-  const r = await fetch(ANN_RSS, { headers: { Accept: "application/rss+xml, application/xml" }, signal: AbortSignal.timeout(15000) });
-  if (!r.ok) throw new Error(`FDA RSS ${r.status}`);
-  const xml = await r.text();
+  let xml = "", feed = "";
+  for (const url of ANN_RSS) {
+    const r = await fetch(url, { headers: { Accept: "application/rss+xml, application/xml" }, signal: AbortSignal.timeout(15000) }).catch((e) => ({ ok: false, status: e.message }));
+    if (log) log(`RSS ${r.status} ${url}`);
+    if (r.ok) { xml = await r.text(); feed = url; break; }
+  }
+  if (!xml) throw new Error("no FDA RSS feed answered");
+  const allProducts = feed !== ANN_RSS[0];
   const from = ymd(new Date(Date.now() - 60 * 864e5));
   const tag = (block, name) => (block.match(new RegExp(`<${name}[^>]*>([\\s\\S]*?)</${name}>`)) || [])[1] || "";
   const items = [];
@@ -147,8 +158,10 @@ async function fetchAnnouncements() {
     const d = ymd(when);
     if (d < from) continue;
     const title = xmlText(tag(block, "title")).slice(0, 240);
+    if (allProducts && NON_FOOD.test(`${title} ${xmlText(tag(block, "description"))}`)) continue;
     items.push({ src: "ann", d, product: title, desc: xmlText(tag(block, "description")).slice(0, 400), url: link, ev: `ann-${link}` });
   }
+  if (log) log(`RSS items kept (last 60 days${allProducts ? ", food only" : ""}): ${items.length}`);
   annCache = { at: Date.now(), items: items.sort((a, b) => (a.d < b.d ? 1 : -1)) };
   return annCache.items;
 }

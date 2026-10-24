@@ -89,7 +89,7 @@ async function main() {
     for (const ev of recalls.fsisEvents(saved, scope)) for (const p of [ev.product, ...ev.prods]) names.add(p);
   }
   try { // the FDA's same-day company announcements (titles)
-    for (const a of await recalls.fetchAnnouncements()) names.add(a.product);
+    for (const a of await recalls.fetchAnnouncements((m) => console.log(m))) names.add(a.product);
   } catch (err) { console.warn(`announcements skipped: ${err.message}`); }
   let old = {};
   try { old = JSON.parse(fs.readFileSync(OUT, "utf8")).names || {}; } catch (err) { /* first run */ }
