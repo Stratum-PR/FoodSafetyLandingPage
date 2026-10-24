@@ -189,7 +189,7 @@
     reCache.set(term, re);
     return re;
   }
-  const haystack = (x) => norm(`${x.product} ${x.firm} ${x.reason}`);
+  const haystack = (x) => norm(`${x.product} ${x.firm} ${x.reason} ${x.txt || ""}`);
   const hitsFor = (x) => state.list.filter((term) => termRe(term).test(haystack(x)));
 
   function addTerm(raw) {
@@ -246,8 +246,7 @@
       box.classList.remove("is-scanning");
     }
     state.checked = true;
-    renderMine(); renderResult();
-    if (state.filter === "mine") render();
+    render(); // redraws the chips, the result and the cards' "En tu lista" tags
   }
 
   // ---- pulse ---------------------------------------------------------------
@@ -329,10 +328,12 @@
     if (state.data[scope]) return state.data[scope];
     if (scope === "pr") return (state.data.pr = await fetchScope("pr"));
     const [pr, nat] = await Promise.all([load("pr"), fetchScope("nat")]);
+    // an event can be in both lists; keep the nationwide copy (it has every product) and flag it
     const key = (x) => x.ev || `${x.num}`;
     const named = new Set(pr.items.map(key));
-    const items = pr.items.map((x) => ({ ...x, pr: true }))
-      .concat(nat.items.filter((x) => !named.has(key(x))))
+    const fromNat = new Set(nat.items.map(key));
+    const items = nat.items.map((x) => (named.has(key(x)) ? { ...x, pr: true } : x))
+      .concat(pr.items.filter((x) => !fromNat.has(key(x))).map((x) => ({ ...x, pr: true })))
       .sort((a, b) => (a.d < b.d ? 1 : a.d > b.d ? -1 : 0));
     return (state.data.all = { ok: true, updated: pr.updated || nat.updated, items });
   }

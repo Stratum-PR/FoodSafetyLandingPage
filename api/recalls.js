@@ -29,18 +29,29 @@ async function fetchScope(scope) {
   return { updated, results };
 }
 
+const clean = (s) => String(s || "").replace(/\s+/g, " ").trim();
+const TXT_MAX = 1500;
+
 function toEvents(results, scope) {
   const byEvent = new Map();
   for (const x of results) {
     if (scope === "pr" && !PR_RE.test(x.distribution_pattern || "")) continue; // "PR" can match other abbreviations
     const e = byEvent.get(x.event_id);
-    if (e) { e.n += 1; continue; }
+    // txt: search-only text (every product of the event + where it went), so brands such as
+    // "Great Value" on the 7th product, or chains named in the distribution, can be found
+    const p = clean(x.product_description).slice(0, 300);
+    if (e) {
+      e.n += 1;
+      if (e.txt.length < TXT_MAX && !e.txt.includes(p)) e.txt = `${e.txt} ${p}`.slice(0, TXT_MAX);
+      continue;
+    }
     byEvent.set(x.event_id, {
       d: x.recall_initiation_date, cls: { "Class I": 1, "Class II": 2, "Class III": 3 }[x.classification] || 0,
       firm: String(x.recalling_firm || "").replace(/\s+/g, " ").trim(), state: x.state || "", status: x.status || "",
       product: String(x.product_description || "").replace(/\s+/g, " ").trim().slice(0, 240),
       reason: String(x.reason_for_recall || "").replace(/\s+/g, " ").trim().slice(0, 300),
       num: x.recall_number, ev: x.event_id, n: 1,
+      txt: `${clean(x.distribution_pattern).slice(0, 400)} ${p}`.slice(0, TXT_MAX),
     });
   }
   return [...byEvent.values()].sort((a, b) => (a.d < b.d ? 1 : -1));
