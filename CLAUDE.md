@@ -17,6 +17,10 @@ the form/email flow and environment variables.
 - Static HTML/CSS/JS, no build step, no npm dependencies. Language is toggled client-side (`data-i18n`).
 - `/api/*.js` are Vercel Node serverless functions (CommonJS). `_`-prefixed files are not routes.
   `api/_lib.js` is the only file that talks to Resend (to be swapped for Azure later).
+- The home (`index.html` + `css/home.css`) markets StratumScan to quality managers (StoryBrand layout,
+  CTA "Agenda una demo" → `/api/demo`, no prices). `alertas.html` is the free public portal "Alertas PR":
+  `js/alertas.js` reads `/api/recalls?scope=pr|nat` (openFDA food enforcement, last 12 months, one row per
+  event, cached 6 h). The previous Walmart self-check home is on branch `archivo/landing-fsqms-2026-10`.
 - `js/selfcheck-data.js` and `js/guide.js` are UMD files shared by the browser and the API.
   The server builds the passport email from item keys only, never from client-sent text.
 
